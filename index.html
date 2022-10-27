@@ -90,7 +90,12 @@
       update: {
         title: "Update",
         image: "image/update.svg"
-      }
+      },
+      info: {
+        title: "Info",
+        image: "image/info.svg",
+        link: "info.html"
+      },
       // github: {
       //   title: "GitHub",
       //   image: "https://github.com/fluidicon.png",
@@ -113,7 +118,9 @@
     for (const game in games) {
       if (Object.hasOwnProperty.call(games, game)) {
         const value = games[game];
-        value.link = `games/${value.title}/Launch.html`;
+        if (value.title != 'Info') {
+          value.link = `games/${value.title}/Launch.html`;
+        }
       }
     }
 
@@ -135,7 +142,7 @@
       } else {
         document.getElementById('game').innerHTML = `<iframe src="${game.link}" />`;
         document.getElementById('container').style.display = 'none';
-        document.title = `${game.title} v${game.version}`;
+        document.title = `${game.title} ${game.version ? 'v' + game.version : ''}`;
       }
     }
 
