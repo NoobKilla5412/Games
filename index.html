@@ -43,47 +43,79 @@
       text-align: center;
       width: 109.203px;
     }
+
+    button {
+      border-width: 2px;
+      border-style: outset;
+      border-color: buttonborder;
+      border-image: initial;
+      border-radius: .5rem;
+    }
   </style>
 </head>
 
 <body>
-  <div id="container">
-    <div class="app">
-      <img src="image/bird.svg" style="background-color: black;" onclick="loadBird();"><br>
-      <caption>
-        Bird Game
-      </caption>
-    </div>
-    <div class="app">
-      <img src="image/europe.svg" style="background-color: black;" onclick="loadEuropeTakeover();"><br>
-      <caption>
-        Europe Takeover
-      </caption>
-    </div>
-    <div class="app">
-      <img src="image/gold.svg" style="background-color: black;" onclick="loadGoldMiner();"><br>
-      <caption>
-        Gold Miner
-      </caption>
-    </div>
-    <div class="app">
-      <img src="image/taco.svg" style="background-color: black;" onclick="loadIdleTaco();"><br>
-      <caption>
-        Idle Taco
-      </caption>
-    </div>
-    <div class="app">
-      <img src="image/taco.svg" style="background-color: black;" onclick="loadTacoClicker();"><br>
-      <caption>
-        Taco Clicker
-      </caption>
-    </div>
-  </div>
+  <div id="container"></div>
   <div id="game"></div>
   <div id="homeBar">
     <button onclick="home();">Home</button>
   </div>
   <script>
+    const games = {
+      bird: {
+        title: "Bird",
+        image: "bird"
+      },
+      europe: {
+        title: "Europe Takeover",
+        image: "europe"
+      },
+      goldMiner: {
+        title: "Gold Miner",
+        image: "goldMiner"
+      },
+      idleTaco: {
+        title: "Idle Taco",
+        image: "taco"
+      },
+      tacoClicker: {
+        title: "Taco Clicker",
+        image: "taco"
+      }
+    }
+    for (const game in games) {
+      if (Object.hasOwnProperty.call(games, game)) {
+        const value = games[game];
+        document.getElementById('container').innerHTML += `
+<div class="app">
+  <img src="image/${value.image}.svg" style="background-color: black;" id="${game}" ><br>
+  <caption>
+    ${value.title}
+  </caption>
+</div>`;
+      }
+    }
+
+    for (const game in games) {
+      if (Object.hasOwnProperty.call(games, game)) {
+        const value = games[game];
+        value.link = `games/${value.title}/Launch.html`;
+      }
+    }
+
+    for (const game in games) {
+      if (Object.hasOwnProperty.call(games, game)) {
+        const value = games[game];
+        document.getElementById(game).onclick = () => load(value.link);
+      }
+    }
+
+    function load(game) {
+      document.getElementById('game').innerHTML = `<iframe src="${game}" />`;
+      document.getElementById('container').style.display = 'none';
+    }
+
+
     function loadBird() {
       document.getElementById('game').innerHTML = '<iframe src="games/Bird/Launch.html" />';
       document.getElementById('container').style.display = 'none';
@@ -104,6 +136,7 @@
       document.getElementById('game').innerHTML = '<iframe src="games/Taco Clicker/Launch.html" />';
       document.getElementById('container').style.display = 'none';
     }
+
     function home() {
       document.getElementById('game').innerHTML = '';
       document.getElementById('container').style.display = 'block';
