@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Games</title>
   <style>
     body {
       margin: 0px;
@@ -81,6 +81,10 @@
       tacoClicker: {
         title: "Taco Clicker",
         image: "taco"
+      },
+      update: {
+        title: "Update",
+        image: "update"
       }
     }
     for (const game in games) {
@@ -106,35 +110,17 @@
     for (const game in games) {
       if (Object.hasOwnProperty.call(games, game)) {
         const value = games[game];
-        document.getElementById(game).onclick = () => load(value.link);
+        document.getElementById(game).onclick = () => load(value);
       }
     }
 
     function load(game) {
-      document.getElementById('game').innerHTML = `<iframe src="${game}" />`;
-      document.getElementById('container').style.display = 'none';
-    }
-
-
-    function loadBird() {
-      document.getElementById('game').innerHTML = '<iframe src="games/Bird/Launch.html" />';
-      document.getElementById('container').style.display = 'none';
-    }
-    function loadEuropeTakeover() {
-      document.getElementById('game').innerHTML = '<iframe src="games/Europe Takeover/Launch.html" />';
-      document.getElementById('container').style.display = 'none';
-    }
-    function loadGoldMiner() {
-      document.getElementById('game').innerHTML = '<iframe src="games/Gold Miner/Launch.html" />';
-      document.getElementById('container').style.display = 'none';
-    }
-    function loadIdleTaco() {
-      document.getElementById('game').innerHTML = '<iframe src="games/Idle Taco/Launch.html" />';
-      document.getElementById('container').style.display = 'none';
-    }
-    function loadTacoClicker() {
-      document.getElementById('game').innerHTML = '<iframe src="games/Taco Clicker/Launch.html" />';
-      document.getElementById('container').style.display = 'none';
+      if (game.image != 'update') {
+        document.getElementById('game').innerHTML = `<iframe src="${game.link}" />`;
+        document.getElementById('container').style.display = 'none';
+      } else {
+        location.href = 'https://github.com/NoobKilla5412/Games';
+      }
     }
 
     function home() {
