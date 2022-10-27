@@ -1,9 +1,12 @@
-var version = 1.5;
+var version = 1.6;
 var changes = {
   "1.4": {
     "content": "Make the obstacles thicker"
   },
   "1.5": {
+    "content": "Fix bugs"
+  },
+  "1.6": {
     "content": "Fix bugs"
   }
 };
