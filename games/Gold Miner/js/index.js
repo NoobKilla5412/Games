@@ -61,7 +61,7 @@ function animate() {
   c.fillRect(0, 0, canvas.width, canvas.height);
 
   playerController(miner);
-  if (everyInterval(Math.round(Math.random() * 1000))) {
+  if (everyInterval(25)) {
     newOre();
   }
   ores.forEach((ore, i) => {
@@ -73,7 +73,7 @@ function animate() {
   });
   miner.update();
   miner.menuButton.update();
-  moneyText.content = '$' + toValues(money);
+  moneyText.content = '$' + toValuesExt(money);
   moneyText.draw();
 
   things.forEach((thing, i, array) => {

@@ -74,8 +74,8 @@
       },
       goldMiner: {
         title: "Gold Miner",
-        image: "image/gold.svgMiner",
-        version: "0.5"
+        image: "image/goldMiner.svg",
+        version: "0.6"
       },
       idleTaco: {
         title: "Idle Taco",
@@ -87,6 +87,10 @@
         image: "image/taco.svg",
         version: "1.2"
       },
+      update: {
+        title: "Update",
+        image: "image/update.svg"
+      }
       // github: {
       //   title: "GitHub",
       //   image: "https://github.com/fluidicon.png",
@@ -121,10 +125,13 @@
     }
 
     // githubBr.style.display = 'initial';
+    updateBr.style.display = 'initial';
 
     function load(game) {
       if (game.title == 'GitHub') {
         location.href = 'https://github.com/NoobKilla5412/Games';
+      } else if (game.title == 'Update') {
+        location.reload();
       } else {
         document.getElementById('game').innerHTML = `<iframe src="${game.link}" />`;
         document.getElementById('container').style.display = 'none';
