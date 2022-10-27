@@ -1,6 +1,8 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
+var version = "0.1";
+document.title += ' v' + version;
 canvas.width = 1024;
 canvas.height = 576;
 

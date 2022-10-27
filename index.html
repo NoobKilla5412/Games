@@ -41,7 +41,7 @@
     div.app {
       display: inline-block;
       text-align: center;
-      width: 109.203px;
+      width: 141.203px;
     }
 
     button {
@@ -64,27 +64,32 @@
     const games = {
       bird: {
         title: "Bird",
-        image: "image/bird.svg"
+        image: "image/bird.svg",
+        version: "1.5"
       },
       europe: {
         title: "Europe Takeover",
-        image: "image/europe.svg"
+        image: "image/europe.svg",
+        version: "0.1"
       },
       goldMiner: {
         title: "Gold Miner",
-        image: "image/gold.svgMiner"
+        image: "image/gold.svgMiner",
+        version: "0.5"
       },
       idleTaco: {
         title: "Idle Taco",
-        image: "image/taco.svg"
+        image: "image/taco.svg",
+        version: "1.7.2"
       },
       tacoClicker: {
         title: "Taco Clicker",
-        image: "image/taco.svg"
+        image: "image/taco.svg",
+        version: "1.2"
       },
       github: {
         title: "GitHub",
-        image: "https://github.com/fluidicon.png"
+        image: "https://github.com/fluidicon.png",
       }
     }
     for (const game in games) {
@@ -95,7 +100,7 @@
 <div class="app">
   <img src="${value.image}" style="background-color: black;" id="${game}" ><br>
   <caption>
-    ${value.title}
+    ${value.title} ${value.version ? 'v' + value.version : ''}
   </caption>
 </div>`;
       }
@@ -123,6 +128,7 @@
       } else {
         document.getElementById('game').innerHTML = `<iframe src="${game.link}" />`;
         document.getElementById('container').style.display = 'none';
+        document.title = `${game.title} v${game.version}`;
       }
 
     }
@@ -130,6 +136,7 @@
     function home() {
       document.getElementById('game').innerHTML = '';
       document.getElementById('container').style.display = 'block';
+      document.title = 'Games';
     }
   </script>
 </body>
