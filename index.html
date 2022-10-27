@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0px;
+    }
+
+    #container {
+      width: 98%;
+      /* margin: 0px; */
+      margin: 1%;
+    }
+
+    #homeBar {
+      padding: 1%;
+      position: absolute;
+      bottom: 0px;
+      width: 98%;
+      background: #cccccc;
+      margin: 0px;
+      text-align: center;
+    }
+
+    img {
+      width: 75px;
+      height: 75px;
+      border-radius: .5rem;
+    }
+
+    iframe {
+      width: 98%;
+      height: 98vh;
+    }
+
+    picture {
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <picture>
+      <img src="image/taco.svg" style="background-color: black;" onclick="loadIdleTaco();"><br>
+      <caption>
+        Idle Taco
+      </caption>
+    </picture>
+    <picture>
+      <img src="image/taco.svg" style="background-color: black;" onclick="loadTacoClicker();"><br>
+      <caption>
+        Taco Clicker
+      </caption>
+    </picture>
+    <picture>
+      <img src="image/bird.svg" style="background-color: black;" onclick="loadBird();"><br>
+      <caption>
+        Bird Game
+      </caption>
+    </picture>
+  </div>
+  <div id="game"></div>
+  <div id="homeBar">
+    <button onclick="home();">Home</button>
+  </div>
+  <script>
+    function loadIdleTaco() {
+      document.getElementById('game').innerHTML = '<iframe src="Idle Taco/Launch.html" />';
+      document.getElementById('container').style.display = 'none';
+    }
+    function loadTacoClicker() {
+      document.getElementById('game').innerHTML = '<iframe src="Taco Clicker/Launch.html" />';
+      document.getElementById('container').style.display = 'none';
+    }
+    function loadBird() {
+      document.getElementById('game').innerHTML = '<iframe src="Bird/Launch.html" />';
+      document.getElementById('container').style.display = 'none';
+    }
+    function home() {
+      document.getElementById('game').innerHTML = '';
+      document.getElementById('container').style.display = 'block';
+    }
+  </script>
+</body>
+
+</html>
