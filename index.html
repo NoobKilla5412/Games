@@ -91,6 +91,7 @@
       if (Object.hasOwnProperty.call(games, game)) {
         const value = games[game];
         document.getElementById('container').innerHTML += `
+<br style="display:none" id="${game}Br" />
 <div class="app">
   <img src="image/${value.image}.svg" style="background-color: black;" id="${game}" ><br>
   <caption>
@@ -122,6 +123,7 @@
         location.href = 'https://github.com/NoobKilla5412/Games';
       }
     }
+    document.getElementById('updateBr').style.display = 'initial';
 
     function home() {
       document.getElementById('game').innerHTML = '';
