@@ -1,0 +1,6 @@
+<?xml version="1.0" standalone="no"?>
+<svg width="20" height="10" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="20" height="10" fill="green" />
+  <rect x="5" y="0" width="10" height="10" fill="transparent" stroke="black" />
+  <path d="M10 0L10 10, M12.5 2 l-5 0l0 3l5 0l0 3l-5 0" stroke="black" fill="transparent" />
+</svg>

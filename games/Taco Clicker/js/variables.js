@@ -1,0 +1,27 @@
+let version = '1.2';
+let multiplier = 10;
+let keys = [];
+let frameNo = 0;
+let money = 0;
+let diamonds = 0;
+let displayMoneyRate = 100;
+let moneyValue = 5;
+let idleMoneyValue = 0;
+let diamondValue = 0.0005;
+let evolveNum = 0;
+let moneyPerSecNextEvolve;
+let musicActive = false;
+let gameRunning = false;
+let keyChocolate = '1';
+let keyLettuce = '2';
+let keySourCream = '3';
+let keyMeat = '4';
+let keyAvocadoes = '5';
+let keySalsa = '6';
+let keyTacoYumminess = 'n';
+let keyTomatoes = 'm';
+let keyEvolve = 'e';
+let clickSound = new Audio('sound/click.wav');
+let clickUpgrade = new Audio('sound/upgradeClick.wav');
+let backgroundMusic;
+let buttons = {}

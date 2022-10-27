@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Idle Taco</title>
+	<style>
+		b {
+			font-size: 1rem;
+		}
+
+		#credits,
+		#info,
+		#options,
+		#stats,
+		#save,
+		#exit,
+		#evolveButton,
+		#maxUpgradesButton {
+			display: none;
+		}
+
+		#stats {
+			margin-left: 25%;
+		}
+
+		button {
+			background-color: gray;
+			border-radius: .3rem;
+		}
+
+		button.upgrades {
+			display: none;
+			width: 350px;
+			height: 100px;
+		}
+
+		.green {
+			background-color: green;
+			color: white;
+		}
+
+		.green:hover {
+			background-color: lightgreen;
+			color: black;
+		}
+
+		.gray {
+			background-color: gray;
+			color: black;
+		}
+
+		.gray:hover {
+			background-color: lightgray;
+		}
+
+		.blue {
+			background-color: lightblue;
+			color: black;
+		}
+
+		.blue:hover {
+			background-color: #e9f5f8;
+			color: black;
+		}
+
+		.large-money {
+			font-size: 1.5rem;
+		}
+
+		#chestScreen {
+			border: 1px white;
+			border-radius: .3rem;
+			background-color: black;
+			color: white;
+			width: 200px;
+			height: 100px;
+			display: none;
+		}
+
+		#closeChestScreen {
+			float: right;
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<svg width="200" height="100" version="1.1" xmlns="http://www.w3.org/2000/svg" style="float: right;">
+		<path d="M0 99l200 0Q100 0 0 99" fill="yellow" stroke="black" onclick="clickTaco()" />
+	</svg>
+	<p id="clickTacoTimer" style="float: right;"></p>
+	<div id="stats">
+		Stats:
+		<p id="money"></p>
+		<p id="moneyPerSec"></p>
+		<p id="diamonds"></p>
+		<p id="evolve"></p>
+		<p id="idle"></p>
+	</div>
+	<button onclick="startGame();clickSound.play();" id="start" class="gray">New save</button>
+	<button onclick="load();" id="load" class="gray">Load save</button>
+
+	<div id="upgradeButtons"></div><br>
+	<div id="diamondUpgrades"></div>
+	<br>
+	<br><br>
+	<button onclick="evolve();" id="evolveButton" class="gray">Evolve (E)</button>
+	<button onclick="toggleMaxUpgrades();" class="green" id="maxUpgradesButton">1x</button>
+	<!-- <button onclick="diamondToMoney()" class="gray">💎10% to <img src="money.svg" height="12pt" />5 x 💎10%</button> -->
+	<br><br>
+	<button onclick="info();clickSound.play();" class="gray">Info</button>
+	<button onclick="options();clickSound.play();" class="gray">Options</button>
+	<button onclick="save();clickSound.play()" id="save" class="gray">Save</button>
+	<button onclick="save();location.reload();clickSound.play()" id="exit" class="gray">Save & Exit</button>
+	<div id="info">
+		<h1>Info:</h1>
+		Click the buttons to upgrade your Taco.<br>
+		Every 5 seconds you can click the Taco to earn 5 seconds of earnings.<br>
+		<span id="version"></span><br>
+	</div><br><br>
+	<div id="options">
+		<button id="music" onclick="toggleMusic()" class="gray">Turn Music On</button><br>
+		<h3>Key Binds:</h3>
+		<div id="keyBindsDiv"></div>
+	</div>
+	<script src="js/variables.js"></script>
+	<script src="js/classes.js"></script>
+	<script src="js/upgrades.js"></script>
+	<script src="js/functions.js"></script>
+	<script src="js/save.js"></script>
+	<script src="js/toValues.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/index.js"></script>
+</body>
+
+</html>
