@@ -38,48 +38,70 @@
       height: 98vh;
     }
 
-    picture {
+    div.app {
       display: inline-block;
+      text-align: center;
+      width: 109.203px;
     }
   </style>
 </head>
 
 <body>
   <div id="container">
-    <picture>
-      <img src="image/taco.svg" style="background-color: black;" onclick="loadIdleTaco();"><br>
-      <caption>
-        Idle Taco
-      </caption>
-    </picture>
-    <picture>
-      <img src="image/taco.svg" style="background-color: black;" onclick="loadTacoClicker();"><br>
-      <caption>
-        Taco Clicker
-      </caption>
-    </picture>
-    <picture>
+    <div class="app">
       <img src="image/bird.svg" style="background-color: black;" onclick="loadBird();"><br>
       <caption>
         Bird Game
       </caption>
-    </picture>
+    </div>
+    <div class="app">
+      <img src="image/europe.svg" style="background-color: black;" onclick="loadEuropeTakeover();"><br>
+      <caption>
+        Europe Takeover
+      </caption>
+    </div>
+    <div class="app">
+      <img src="image/gold.svg" style="background-color: black;" onclick="loadGoldMiner();"><br>
+      <caption>
+        Gold Miner
+      </caption>
+    </div>
+    <div class="app">
+      <img src="image/taco.svg" style="background-color: black;" onclick="loadIdleTaco();"><br>
+      <caption>
+        Idle Taco
+      </caption>
+    </div>
+    <div class="app">
+      <img src="image/taco.svg" style="background-color: black;" onclick="loadTacoClicker();"><br>
+      <caption>
+        Taco Clicker
+      </caption>
+    </div>
   </div>
   <div id="game"></div>
   <div id="homeBar">
     <button onclick="home();">Home</button>
   </div>
   <script>
+    function loadBird() {
+      document.getElementById('game').innerHTML = '<iframe src="games/Bird/Launch.html" />';
+      document.getElementById('container').style.display = 'none';
+    }
+    function loadEuropeTakeover() {
+      document.getElementById('game').innerHTML = '<iframe src="games/Europe Takeover/Launch.html" />';
+      document.getElementById('container').style.display = 'none';
+    }
+    function loadGoldMiner() {
+      document.getElementById('game').innerHTML = '<iframe src="games/Gold Miner/Launch.html" />';
+      document.getElementById('container').style.display = 'none';
+    }
     function loadIdleTaco() {
-      document.getElementById('game').innerHTML = '<iframe src="Idle Taco/Launch.html" />';
+      document.getElementById('game').innerHTML = '<iframe src="games/Idle Taco/Launch.html" />';
       document.getElementById('container').style.display = 'none';
     }
     function loadTacoClicker() {
-      document.getElementById('game').innerHTML = '<iframe src="Taco Clicker/Launch.html" />';
-      document.getElementById('container').style.display = 'none';
-    }
-    function loadBird() {
-      document.getElementById('game').innerHTML = '<iframe src="Bird/Launch.html" />';
+      document.getElementById('game').innerHTML = '<iframe src="games/Taco Clicker/Launch.html" />';
       document.getElementById('container').style.display = 'none';
     }
     function home() {
