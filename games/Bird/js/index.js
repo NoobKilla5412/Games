@@ -106,10 +106,13 @@ var myGameArea = {
     /**
      * Try to set the highScore var
      */
-    if (controlMethod === 0)
-      localStorage.setItem("highScoreMouse", ((myObstacles.length / 2) - 1));
-    else
-      localStorage.setItem("highScoreArrows", ((myObstacles.length / 2) - 1));
+    if (controlMethod === 0) {
+      if (((myObstacles.length / 2) - 1) > localStorage.getItem("highScoreMouse"))
+        localStorage.setItem("highScoreMouse", ((myObstacles.length / 2) - 1));
+    } else {
+      if (((myObstacles.length / 2) - 1) > localStorage.getItem("highScoreArrows"))
+        localStorage.setItem("highScoreArrows", ((myObstacles.length / 2) - 1));
+    }
     /**
      * Stop the game
      */
