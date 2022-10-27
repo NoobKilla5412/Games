@@ -32,11 +32,14 @@ function main() {
     clickTacoTimer--;
   }
   document.getElementById('clickTacoTimer').innerText = Math.round(clickTacoTimer / 100);
-
-  if (displayMoneyRate >= moneyPerSecNextEvolve && evolveNum <= 100) {
+  if (displayMoneyRate >= moneyPerSecNextEvolve && !(evolveNum < tacos.length - 1)) {
+    document.getElementById('evolveButton').classList = 'darkBlue';
+  } else if (displayMoneyRate >= moneyPerSecNextEvolve) {
     document.getElementById('evolveButton').classList = 'green';
-  } else {
+  } else if (displayMoneyRate <= moneyPerSecNextEvolve) {
     document.getElementById('evolveButton').classList = 'gray';
+  } else if (!(evolveNum < tacos.length - 1)) {
+    document.getElementById('evolveButton').classList = 'darkBlue';
   }
   if (evolveNum == 0) {
     moneyValue = (cheese.total / 100 + 1) * (lettuce.total / 100 + 1) * (sourCream.total / 100 + 1) * meat.total * (tomatoes.total / 100 + 1) * (avocados.total / 100 + 1) * salsa.total;
@@ -62,7 +65,7 @@ function main() {
 
   document.getElementById('diamonds').innerHTML = '💎: <b>' + toValues(diamonds) + '</b>';
 
-  document.getElementById('evolve').innerHTML = 'Evolve: <b>' + toValues(evolveNum) + '</b>';
+  document.getElementById('evolve').innerHTML = `Evolve: <b>${tacos[evolveNum]} (${evolveNum + 1})</b>`;
 
   money += moneyValue;
   diamonds += diamondValue;

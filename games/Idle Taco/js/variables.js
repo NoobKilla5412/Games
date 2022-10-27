@@ -29,3 +29,9 @@ var buttons = {};
 var infoActive = false;
 var optionsActive = false;
 var maxUpgrades = false;
+const tacos = [
+  "Plain Taco",
+  "Meaty Taco",
+  "Soft Taco",
+  "Deluxe Soft Taco"
+];

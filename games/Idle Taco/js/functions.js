@@ -33,7 +33,7 @@ function resetValues() {
  * Test if the evolve count is not at 100
  */
 function evolve() {
-  if (evolveNum < 100) {
+  if (evolveNum < tacos.length - 1) {
     newEvolve()
   }
 }
