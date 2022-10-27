@@ -64,23 +64,27 @@
     const games = {
       bird: {
         title: "Bird",
-        image: "bird"
+        image: "image/bird.svg"
       },
       europe: {
         title: "Europe Takeover",
-        image: "europe"
+        image: "image/europe.svg"
       },
       goldMiner: {
         title: "Gold Miner",
-        image: "goldMiner"
+        image: "image/gold.svgMiner"
       },
       idleTaco: {
         title: "Idle Taco",
-        image: "taco"
+        image: "image/taco.svg"
       },
       tacoClicker: {
         title: "Taco Clicker",
-        image: "taco"
+        image: "image/taco.svg"
+      },
+      github: {
+        title: "GitHub",
+        image: "https://github.com/fluidicon.png"
       }
     }
     for (const game in games) {
@@ -89,7 +93,7 @@
         document.getElementById('container').innerHTML += `
 <br style="display:none" id="${game}Br" />
 <div class="app">
-  <img src="image/${value.image}.svg" style="background-color: black;" id="${game}" ><br>
+  <img src="${value.image}" style="background-color: black;" id="${game}" ><br>
   <caption>
     ${value.title}
   </caption>
@@ -111,9 +115,16 @@
       }
     }
 
+    githubBr.style.display = 'initial';
+
     function load(game) {
-      document.getElementById('game').innerHTML = `<iframe src="${game.link}" />`;
-      document.getElementById('container').style.display = 'none';
+      if (game.title == 'GitHub') {
+        location.href = 'https://github.com/NoobKilla5412/Games';
+      } else {
+        document.getElementById('game').innerHTML = `<iframe src="${game.link}" />`;
+        document.getElementById('container').style.display = 'none';
+      }
+
     }
 
     function home() {
