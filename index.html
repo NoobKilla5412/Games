@@ -87,10 +87,10 @@
         image: "image/taco.svg",
         version: "1.2"
       },
-      github: {
-        title: "GitHub",
-        image: "https://github.com/fluidicon.png",
-      }
+      // github: {
+      //   title: "GitHub",
+      //   image: "https://github.com/fluidicon.png",
+      // }
     }
     for (const game in games) {
       if (Object.hasOwnProperty.call(games, game)) {
@@ -130,7 +130,6 @@
         document.getElementById('container').style.display = 'none';
         document.title = `${game.title} v${game.version}`;
       }
-
     }
 
     function home() {
