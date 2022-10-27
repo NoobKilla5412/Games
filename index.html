@@ -81,10 +81,6 @@
       tacoClicker: {
         title: "Taco Clicker",
         image: "taco"
-      },
-      update: {
-        title: "Update",
-        image: "update"
       }
     }
     for (const game in games) {
@@ -116,14 +112,9 @@
     }
 
     function load(game) {
-      if (game.image != 'update') {
-        document.getElementById('game').innerHTML = `<iframe src="${game.link}" />`;
-        document.getElementById('container').style.display = 'none';
-      } else {
-        location.href = 'https://github.com/NoobKilla5412/Games';
-      }
+      document.getElementById('game').innerHTML = `<iframe src="${game.link}" />`;
+      document.getElementById('container').style.display = 'none';
     }
-    document.getElementById('updateBr').style.display = 'initial';
 
     function home() {
       document.getElementById('game').innerHTML = '';
