@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "Noob Killa's OS",
+  "short_name": "Noob Killa's OS",
+  "start_url": "/",
+  "display": "standalone",
+  "id": "/"
+  "Noob Killa's OS",
+  ]
+}
