@@ -40,6 +40,11 @@ const defaultApps = {
     image: "image/info.svg",
     link: "info.html"
   },
+  settings: {
+    title: "Settings",
+    image: "image/settings.svg",
+    link: "settings.html"
+  },
   appStore: {
     title: "App Store",
     image: "image/appStore.svg",
@@ -47,10 +52,6 @@ const defaultApps = {
   }
 };
 const apps = {
-  github: {
-    title: "GitHub",
-    image: "https://github.com/fluidicon.png",
-  },
   google: {
     title: "Google",
     image: "https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png",

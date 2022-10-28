@@ -189,10 +189,7 @@
     updateBr.style.display = 'initial';
 
     function load(game) {
-      if (game.title == 'GitHub') {
-        activeApp = 'GitHub';
-        location.href = 'https://github.com/NoobKilla5412/Games';
-      } else if (game.title == 'Update') {
+      if (game.title == 'Update') {
         location.reload();
       } else {
         document.getElementById('game').innerHTML = `<iframe src="${game.link}" />`;
