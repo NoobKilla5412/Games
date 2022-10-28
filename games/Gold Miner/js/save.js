@@ -1,7 +1,7 @@
 let data = {
   money: 0,
-  "miner.level": 0,
-  "miner.speedLvl": 0
+  "miner.level": 1,
+  "miner.speedLvl": 1
 };
 function load() {
   if (!localStorage.getItem('GoldMiner')) {
