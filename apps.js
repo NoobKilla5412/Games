@@ -28,6 +28,12 @@ const games = {
     id: "TacoClicker",
     image: "image/taco.svg",
     version: "1.2"
+  },
+  breakout: {
+    title: "Breakout",
+    id: "Breakout",
+    image: "https://img.gamedistribution.com/8f006852782547a7b8dbf392f7883e9e-512x512.jpeg",
+    version: "1.0"
   }
 };
 const defaultApps = {
