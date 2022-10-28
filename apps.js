@@ -47,10 +47,19 @@ const games = {
   },
   aquaParkIo: {
     title: "Aquapark.io",
+    dev: "Voodoo",
     id: "AquaparkIo",
     image: "https://aquapark.io/newicon64.png",
     version: "1.0",
     link: "https://aquapark.io"
+  },
+  waterSort: {
+    title: "Water Sort",
+    dev: "IEC GLOBAL PTY LTD",
+    id: "WaterSort",
+    image: "https://play-lh.googleusercontent.com/uoqdyvIOwi4Ql2fITVoyWDDz8Z4VkoISCN19Ud-1zlGKCgFsHxyuf6Nw7lH5ZkLWLDo",
+    version: "1.0",
+    link: "3rdPartyGames/Water Sort/Launch.html"
   }
 };
 const defaultApps = {

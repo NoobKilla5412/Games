@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<!--
+		Copyright (C) 2021 Minho Jo <whitestone8214@gmail.com>
+		
+		This program is free software: you can redistribute it and/or modify
+		it under the terms of the GNU General Public License as published by
+		the Free Software Foundation, either version 3 of the License, or
+		(at your option) any later version.
+		
+		This program is distributed in the hope that it will be useful,
+		but WITHOUT ANY WARRANTY; without even the implied warranty of
+		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+		GNU General Public License for more details.
+		
+		You should have received a copy of the GNU General Public License
+		along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	-->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="user-scalable=no">
+</head>
+
+<body></body>
+
+<script type="text/javascript">
+  // Inhouse classes
+  class Canon {
+    constructor() {
+      this.widthPage = window.innerWidth;
+      this.heightPage = window.innerHeight;
+      this.span = (this.widthPage < this.heightPage) ? (this.widthPage / 32) : (this.heightPage / 32);
+      this.marginX = this.widthPage % this.span;
+      this.marginY = this.heightPage % this.span;
+    }
+  }
+
+  // Inhouse members
+  let _canon, _overall;
+  let _colors;
+  let _bottles, _clone, _widthBottle, _heightBottle, _buttons, _from, _remaining;
+
+  // Inhouse methods
+  function widgetize(it, x, y, width, height) {
+    // Position
+    it.style.position = "absolute";
+    it.x = x;
+    it.y = y;
+    it.style.left = x + "px";
+    it.style.top = y + "px";
+    it.style.margin = "0 0 0 0";
+    it.style.display = "flex";
+
+    // Size
+    if (it.tagName == "CANVAS") {
+      it.width = width;
+      it.height = height;
+    }
+    else {
+      it.width = width;
+      it.height = height;
+      it.style.width = width + "px";
+      it.style.height = height + "px";
+    }
+  }
+  function another() {
+    // Waters
+    let _idle = new Array(14);
+    for (let _nth = 0; _nth < 14; _nth++) _idle[_nth] = 4;
+
+    // Bottles
+    _bottles = new Array(16);
+    _clone = new Array(16);
+    for (let _nth = 0; _nth < 16; _nth++) {
+      // Bottle
+      _bottles[_nth] = new Array(4);
+      _clone[_nth] = new Array(4);
+      for (let _uth = 0; _uth < 4; _uth++) {
+        // Fill with any color of waters
+        let _color = (_nth < 14) ? Math.floor(Math.random() * 14) : -1;
+        if (_color != -1) {
+          while (_idle[_color] <= 0) _color = Math.floor(Math.random() * 14);
+        }
+        _bottles[_nth][_uth] = _color;
+        _clone[_nth][_uth] = _color;
+        if (_color >= 0) _idle[_color]--;
+      }
+    }
+
+    // Reset the selection state
+    _from = [-1, 3, -1];
+
+    // Reset the counter for the number of remaining bottle(s)
+    _remaining = 14;
+  }
+  function again() {
+    // Bottles
+    _bottles = new Array(16);
+    for (let _nth = 0; _nth < 16; _nth++) {
+      // Bottle
+      _bottles[_nth] = new Array(4);
+      for (let _uth = 0; _uth < 4; _uth++) {
+        _bottles[_nth][_uth] = _clone[_nth][_uth];
+      }
+    }
+
+    // Reset the selection state
+    _from = [-1, 3, -1];
+
+    // Reset the counter for the number of remaining bottle(s)
+    _remaining = 14;
+  }
+  function rebottle(it) {
+    // Prepare
+    let _canvas = it.context;
+    _canvas.lineWidth = _canon.span / 8;
+    if (it.selected == 1) {
+      _canvas.strokeStyle = "#bf4040";
+      _canvas.fillStyle = "#bf4040";
+    }
+    else {
+      _canvas.strokeStyle = "#404040";
+      _canvas.fillStyle = "#404040";
+    }
+
+    // Bottle
+    _canvas.beginPath();
+    _canvas.moveTo(0, 0);
+    _canvas.lineTo(0, it.height);
+    _canvas.lineTo(it.width, it.height);
+    _canvas.lineTo(it.width, 0);
+    _canvas.stroke();
+
+    // Materials
+    let _xMaterial = _canon.span / 8;
+    let _yMaterial = it.height - (_canon.span / 8);
+    let _widthMaterial = it.width - (_canon.span / 4);
+    let _heightMaterial = (it.height - (_canon.span / 8)) / 4;
+    for (let _nthFloor = 0; _nthFloor < 4; _nthFloor++) {
+      // Water
+      let _color = "#dfdfdf";
+      if (_bottles[parseInt(it.id, 10)][_nthFloor] >= 0) _color = _colors[_bottles[parseInt(it.id, 10)][_nthFloor]];
+      _canvas.strokeStyle = _color;
+      _canvas.fillStyle = _color;
+
+      // Fill
+      _canvas.lineWidth = 1;
+      _canvas.strokeRect(_xMaterial, _yMaterial - _heightMaterial, _widthMaterial, _heightMaterial);
+      _canvas.fillRect(_xMaterial, _yMaterial - _heightMaterial, _widthMaterial, _heightMaterial);
+
+      // Next
+      _yMaterial -= _heightMaterial;
+    }
+  }
+  function rebottlist() {
+    for (let _nth = 0; _nth < 16; _nth++) rebottle(_buttons[_nth]);
+  }
+
+  // Prepare
+  _canon = new Canon();
+  _overall = document.body;
+
+  // Waters
+  _colors = [
+    "#bf4040", "#40bf40", "#4040bf", "#bfbf40", "#bf40bf", "#40bfbf",
+    "#804040", "#408040", "#404080", "#808040", "#804080", "#408080",
+    "#bfbfbf", "#404040"
+  ];
+
+  // Bottles
+  another();
+  _widthBottle = (_canon.widthPage - (_canon.span * 9)) / 8;
+  _heightBottle = (_canon.heightPage - (_canon.span * 5) - (_canon.span * 3)) / 2;
+  _buttons = new Array(16);
+  for (let _nth = 0; _nth < 16; _nth++) {
+    // Button for a bottle
+    let _b = document.createElement("canvas");
+    widgetize(
+      _b,
+      _canon.span + ((_widthBottle + _canon.span) * (_nth % 8)),
+      _canon.span + (_canon.span * 3) + _canon.span + ((_heightBottle + _canon.span) * Math.floor(_nth / 8)),
+      _widthBottle,
+      _heightBottle
+    );
+    _b.id = _nth.toString();
+    _b.context = _b.getContext("2d");
+    _b.selected = 0;
+    _b.closed = 0;
+    _b.addEventListener("click", function (_event) {
+      // If no bottle is selected
+      if (_from[0] == -1) {
+        // Nothing to do with closed bottle
+        if (this.closed == 1) return;
+
+        // This bottle
+        _from[0] = parseInt(this.id, 10);
+
+        // Water level
+        while (_bottles[_from[0]][_from[1]] == -1) {
+          _from[1]--;
+          if (_from[1] < 0) break;
+        }
+
+        // Water color
+        if (_from[1] >= 0) _from[2] = _bottles[_from[0]][_from[1]];
+
+        // Mark
+        this.selected = 1;
+        rebottle(this);
+      }
+
+      // When you tapped the selected bottle again
+      else if (parseInt(this.id, 10) == _from[0]) {
+        // Deselect
+        _from = [-1, 3, -1];
+
+        // Unmark
+        this.selected = 0;
+        rebottle(this);
+      }
+
+      // When you tapped another bottle while a bottle is selected
+      else {
+        // Bottles
+        let _from1 = _bottles[_from[0]];
+        let _to = _bottles[parseInt(this.id, 10)];
+
+        // Water level
+        let _level = 3;
+        while (_level >= 0) {
+          if (_to[_level] != -1) break;
+          _level--;
+        }
+        if (_level <= 3) {
+          // Water color
+          let _color = -1;
+          if (_level >= 0) _color = _to[_level];
+
+          // Safe to fill?
+          let _safe = ((_level <= -1) || (_from1[_from[1]] == _color)) ? 1 : 0;
+
+          if (_safe == 1) {
+            // Fill!
+            //if (_level <= -1) _level = 0;
+            while (_level < 3) {
+              // Stop if no water left
+              if (_from[1] <= -1) break;
+
+              // Stop if water color is different
+              if ((_level >= 0) && (_from1[_from[1]] != _from[2])) break;
+
+              // Fill! Really
+              _to[_level + 1] = _from[2];
+              _from1[_from[1]] = -1;
+              _from[1]--;
+              _level++;
+            }
+          }
+        }
+
+        // Unmark
+        _buttons[_from[0]].selected = 0;
+        rebottle(_buttons[_from[0]]);
+
+        // Render
+        rebottle(this);
+
+        // Deselect
+        _from = [-1, 3, -1];
+
+        // Filled with one color?
+        if ((_to[0] == _to[1]) && (_to[0] == _to[2]) && (_to[0] == _to[3])) {
+          // Close the bottle and discount the number of remaining bottle(s)
+          this.closed = 1;
+          _remaining--;
+
+          // If all bottles are closed
+          if (_remaining <= 0) {
+            // Congraturate and start new stage
+            alert("Very good.");
+            another();
+            rebottlist();
+          }
+        }
+      }
+    });
+
+    _buttons[_nth] = _b;
+    _overall.appendChild(_b);
+  }
+
+  // Button for a bottle
+  for (let _nth = 0; _nth < 16; _nth++) {
+    _buttons[_nth].selected = 0;
+    _buttons[_nth].closed = 0;
+  }
+
+  rebottlist();
+
+  let _new = document.createElement("div");
+  widgetize(_new, _canon.span, _canon.span, (_canon.widthPage / 2) - _canon.span, _canon.span * 3);
+  _new.style.color = "#bfbfbf";
+  _new.style.backgroundColor = "#404040";
+  _new.style.display = "flex";
+  _new.style.alignItems = "center";
+  _new.style.justifyContent = "center";
+  _new.style.fontSize = _canon.span + "px";
+  _new.innerHTML = "New";
+  _new.addEventListener("click", function (_event) {
+    another();
+
+    // Button for a bottle
+    for (let _nth = 0; _nth < 16; _nth++) {
+      _buttons[_nth].selected = 0;
+      _buttons[_nth].closed = 0;
+    }
+
+    rebottlist();
+  });
+  _overall.appendChild(_new);
+
+  let _retry = document.createElement("div");
+  widgetize(_retry, (_canon.widthPage / 2) + _canon.span, _canon.span, (_canon.widthPage / 2) - (_canon.span * 2), _canon.span * 3);
+  _retry.style.color = "#bfbfbf";
+  _retry.style.backgroundColor = "#404040";
+  _retry.style.display = "flex";
+  _retry.style.alignItems = "center";
+  _retry.style.justifyContent = "center";
+  _retry.style.fontSize = _canon.span + "px";
+  _retry.innerHTML = "Retry";
+  _retry.addEventListener("click", function (_event) {
+    again();
+
+    // Button for a bottle
+    for (let _nth = 0; _nth < 16; _nth++) {
+      _buttons[_nth].selected = 0;
+      _buttons[_nth].closed = 0;
+    }
+
+    rebottlist();
+  });
+  _overall.appendChild(_retry);
+
+  // Overall page
+  document.title = "OpenSortPuzzle, version 0.0.0";
+  widgetize(_overall, 0, 0, _canon.widthPage, _canon.heightPage);
+  _overall.style.backgroundColor = "#dfdfdf";
+</script>
+
+</html>
