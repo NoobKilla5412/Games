@@ -144,6 +144,22 @@
 	<script src="js/toValues.js"></script>
 	<script src="js/main.js"></script>
 	<script src="js/index.js"></script>
+	<script>
+		var settings = { darkMode: false };
+		if (!localStorage.getItem('settings')) {
+			localStorage.setItem('settings', JSON.stringify(settings));
+		} else {
+			settings = JSON.parse(localStorage.getItem('settings'));
+		}
+
+		if (settings.darkMode) {
+			document.body.style.background = 'black';
+			document.body.style.color = 'white';
+		} else {
+			document.body.style.background = 'white';
+			document.body.style.color = 'black';
+		}
+	</script>
 </body>
 
 </html>

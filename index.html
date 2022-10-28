@@ -97,8 +97,25 @@
   <div id="r-click-div"></div>
   <script src="apps.js"></script>
   <script>
-    let activeApp;
-    let appLibrary = {};
+    var settings = { darkMode: false };
+    if (!localStorage.getItem('settings')) {
+      localStorage.setItem('settings', JSON.stringify(settings));
+    } else {
+      settings = JSON.parse(localStorage.getItem('settings'));
+    }
+
+    if (settings.darkMode) {
+      document.body.style.background = 'black';
+      document.body.style.color = 'white';
+      for (let i = 0; i < document.getElementsByTagName('img').length; i++) {
+        document.getElementsByTagName('img')[i].style.backgroundColor = 'white';
+      }
+    } else {
+      document.body.style.background = 'white';
+      document.body.style.color = 'black';
+    }
+    var activeApp;
+    var appLibrary = {};
     if (!localStorage.getItem('apps')) {
       localStorage.setItem('apps', JSON.stringify(appLibrary));
     } else {
@@ -111,7 +128,7 @@
           document.getElementById('container').innerHTML += `
 <br style="display:none" id="${game}Br" />
 <div class="app">
-  <img src="${value.image}" id="${game}" /><br>
+  <img src="${value.image}" id="${game}" class="image" /><br>
   <caption>
     ${value.title} ${value.version ? 'v' + value.version : ''}
   </caption>
@@ -129,7 +146,7 @@
         document.getElementById('container').innerHTML += `
 <br style="display:none" id="${app}Br" />
 <div class="app">
-  <img src="${value.image}" id="${app}" ><br>
+  <img src="${value.image}" id="${app}" class="image" ><br>
   <caption>
     ${value.title} ${value.version ? 'v' + value.version : ''}
   </caption>
@@ -143,7 +160,7 @@
           document.getElementById('container').innerHTML += `
 <br style="display:none" id="${app}Br" />
 <div class="app">
-  <img src="${value.image}" id="${app}" ><br>
+  <img src="${value.image}" id="${app}" class="image" ><br>
   <caption>
     ${value.title} ${value.version ? 'v' + value.version : ''}
   </caption>
@@ -194,8 +211,8 @@
         document.getElementById('game').innerHTML = `<iframe src="${game.link}" />`;
         document.getElementById('container').style.display = 'none';
         document.title = `${game.title} ${game.version ? 'v' + game.version : ''}`;
-        activeApp = game.title;
       }
+      activeApp = game.title;
     }
 
     function deleteGame(game, type = 'game') {
@@ -212,7 +229,7 @@
     }
 
     function home() {
-      if (activeApp != 'App Store') {
+      if (activeApp != 'App Store' && activeApp != 'Settings') {
         document.getElementById('game').innerHTML = '';
         document.getElementById('container').style.display = 'block';
       } else {
