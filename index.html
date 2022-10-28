@@ -237,7 +237,8 @@
     function home() {
       if (activeApp != 'App Store' && activeApp != 'Settings') {
         document.getElementById('game').innerHTML = '';
-        document.getElementById('container').style.display = 'block';
+        document.getElementById('containerGames').style.display = 'flex';
+        document.getElementById('containerApps').style.display = 'flex';
       } else {
         location.reload();
       }
