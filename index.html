@@ -17,10 +17,13 @@
       margin: 0px;
     }
 
-    #container {
+    #containerGames,
+    #containerApps {
       width: 98%;
       /* margin: 0px; */
       margin: 1%;
+      display: flex;
+      align-content: flex-start;
     }
 
     .container-fluid,
@@ -57,7 +60,7 @@
     div.app {
       display: inline-block;
       text-align: center;
-      width: 141.203px;
+      width: 100px;
     }
 
     button {
@@ -88,7 +91,8 @@
 
 <body>
   <div class="container-fluid">
-    <div id="container"></div>
+    <div id="containerGames"></div>
+    <div id="containerApps"></div>
     <div id="game"></div>
   </div>
   <div id="homeBar">
@@ -122,7 +126,7 @@
       if (Object.hasOwnProperty.call(games, game)) {
         const value = games[game];
         if (appLibrary[value.title]) {
-          document.getElementById('container').innerHTML += `
+          document.getElementById('containerGames').innerHTML += `
 <br style="display:none" id="${game}Br" />
 <div class="app">
   <img src="${value.image}" id="${game}" class="image" /><br>
@@ -140,7 +144,7 @@
     for (const app in defaultApps) {
       if (Object.hasOwnProperty.call(defaultApps, app)) {
         const value = defaultApps[app];
-        document.getElementById('container').innerHTML += `
+        document.getElementById('containerApps').innerHTML += `
 <br style="display:none" id="${app}Br" />
 <div class="app">
   <img src="${value.image}" id="${app}" class="image" ><br>
@@ -154,7 +158,7 @@
       if (Object.hasOwnProperty.call(apps, app)) {
         const value = apps[app];
         if (appLibrary[value.title]) {
-          document.getElementById('container').innerHTML += `
+          document.getElementById('containerApps').innerHTML += `
 <br style="display:none" id="${app}Br" />
 <div class="app">
   <img src="${value.image}" id="${app}" class="image" ><br>
@@ -206,7 +210,8 @@
         location.reload();
       } else {
         document.getElementById('game').innerHTML = `<iframe src="${game.link}" />`;
-        document.getElementById('container').style.display = 'none';
+        document.getElementById('containerGames').style.display = 'none';
+        document.getElementById('containerApps').style.display = 'none';
         document.title = `${game.title} ${game.version ? 'v' + game.version : ''}`;
       }
       activeApp = game.title;

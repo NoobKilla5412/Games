@@ -47,6 +47,13 @@
 
 <body>
   <div class="container-fluid">
+    <h1>
+      Games:
+    </h1>
+    <div id="games" class="row"></div>
+    <h1>
+      Apps:
+    </h1>
     <div id="apps" class="row"></div>
   </div>
   <script src="apps.js"></script>
@@ -68,7 +75,7 @@
     for (const game in games) {
       if (Object.hasOwnProperty.call(games, game)) {
         const value = games[game];
-        document.getElementById('apps').innerHTML += `
+        document.getElementById('games').innerHTML += `
 <div class="appRow col-2">
   <img src="${value.image}"> ${value.title} <button class="get" id="${game}">Get</button>
 </div>
