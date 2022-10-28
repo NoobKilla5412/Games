@@ -2,9 +2,7 @@
   "$schema": "https://json.schemastore.org/web-manifest-combined.json",
   "name": "Noob Killa's OS",
   "short_name": "Noob Killa's OS",
-  "start_url": "/",
+  "start_url": "/Games/",
   "display": "standalone",
-  "id": "/"
-  "Noob Killa's OS",
-  ]
+  "id": "/Games/"
 }
