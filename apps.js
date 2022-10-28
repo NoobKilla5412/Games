@@ -33,7 +33,15 @@ const games = {
     title: "Breakout",
     id: "Breakout",
     image: "https://img.gamedistribution.com/8f006852782547a7b8dbf392f7883e9e-512x512.jpeg",
-    version: "1.0"
+    version: "1.0",
+    link: "3rdPartyGames/Breakout/Launch.html"
+  },
+  tetris: {
+    title: "Tetris",
+    id: "Tetris",
+    image: "https://m.media-amazon.com/images/I/61M3rDwh4qL.png",
+    version: "1.0",
+    link: "3rdPartyGames/Tetris/Launch.html"
   }
 };
 const defaultApps = {
