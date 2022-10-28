@@ -65,7 +65,6 @@ function newEvolve() {
 function startGame() {
   document.getElementById('stats').style.display = 'block'
   document.getElementById('save').style.display = 'inline'
-  document.getElementById('exit').style.display = 'inline'
   document.getElementById('evolveButton').style.display = 'inline'
   document.getElementById('maxUpgradesButton').style.display = 'inline';
   for (let i = 0; i < upgrades.length + diamondUpgrades.length; i++) {
