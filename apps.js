@@ -31,6 +31,7 @@ const games = {
   },
   breakout: {
     title: "Breakout",
+    dev: "<a href=\"https://gist.github.com/straker\" target=\"_blank\">straker</a>",
     id: "Breakout",
     image: "https://img.gamedistribution.com/8f006852782547a7b8dbf392f7883e9e-512x512.jpeg",
     version: "1.0",
@@ -38,6 +39,7 @@ const games = {
   },
   tetris: {
     title: "Tetris",
+    dev: "<a href=\"https://github.com/sandywalker\" target=\"_blank\">sandywalker</a>",
     id: "Tetris",
     image: "https://m.media-amazon.com/images/I/61M3rDwh4qL.png",
     version: "1.0",
@@ -68,21 +70,25 @@ const defaultApps = {
 const apps = {
   google: {
     title: "Google",
+    dev: "Google LLC",
     image: "https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png",
     link: "https://www.google.com/webhp?igu=1"
   },
   bing: {
     title: "Bing",
+    dev: "Microsoft Corporation",
     image: "https://www.bing.com/favicon.ico",
     link: "https://www.bing.com/"
   },
   wikipedia: {
     title: "Wikipedia",
+    dev: "Wikimedia Foundation",
     image: "https://www.wikipedia.org/static/apple-touch/wikipedia.png",
     link: "https://www.wikipedia.org/"
   },
   mechNoSense: {
     title: "MechNoSense",
+    dev: "Brandon",
     image: "https://uploads.mechnosense.org/images/apple-touch-icon-min.png",
     link: "https://www.mechnosense.org/"
   }

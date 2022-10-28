@@ -28,6 +28,7 @@
       border: 2px black solid;
       border-radius: .3rem;
       margin-left: 5px;
+      flex-flow: row wrap;
     }
 
     /* .appRow:nth-child(odd) {
@@ -85,9 +86,12 @@
         if (appLibrary[value.title]) {
           hasGame = true;
         }
+        if (!value.dev) {
+          value.dev = '<a href="https://github.com/NoobKilla5412" target="_blank">Noob Killa</a>';
+        }
         document.getElementById('games').innerHTML += `
-<div class="appRow col-2">
-  <img src="${value.image}"> ${value.title} ${hasGame ? '' : `<button class="get" id="${game}">Get</button>`}
+<div class="appRow col-3">
+  <img src="${value.image}"> <div>${value.title}<br> <div>${value.dev}</div></div> ${hasGame ? '' : `<button class="get" id="${game}">Get</button>`}
 </div>
         `
       }
@@ -100,8 +104,8 @@
           hasApp = true;
         }
         document.getElementById('apps').innerHTML += `
-<div class="appRow col-2">
-  <img src="${value.image}"> ${value.title} ${hasApp ? '' : `<button class="get" id="${app}">Get</button>`}
+<div class="appRow col-3">
+  <img src="${value.image}"> <div>${value.title}<br> <div>${value.dev}</div></div> ${hasApp ? '' : `<button class="get" id="${app}">Get</button>`}
 </div>
         `
       }
