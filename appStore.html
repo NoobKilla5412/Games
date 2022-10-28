@@ -64,6 +64,12 @@
     } else {
       settings = JSON.parse(localStorage.getItem('settings'));
     }
+    var appLibrary = {};
+    if (!localStorage.getItem('apps')) {
+      localStorage.setItem('apps', JSON.stringify({}));
+    } else {
+      appLibrary = JSON.parse(localStorage.getItem('apps'));
+    }
 
     if (settings.darkMode) {
       document.body.style.background = 'black';
@@ -75,9 +81,13 @@
     for (const game in games) {
       if (Object.hasOwnProperty.call(games, game)) {
         const value = games[game];
+        let hasGame = false;
+        if (appLibrary[value.title]) {
+          hasGame = true;
+        }
         document.getElementById('games').innerHTML += `
 <div class="appRow col-2">
-  <img src="${value.image}"> ${value.title} <button class="get" id="${game}">Get</button>
+  <img src="${value.image}"> ${value.title} ${hasGame ? '' : `<button class="get" id="${game}">Get</button>`}
 </div>
         `
       }
@@ -85,9 +95,13 @@
     for (const app in apps) {
       if (Object.hasOwnProperty.call(apps, app)) {
         const value = apps[app];
+        let hasApp = false;
+        if (appLibrary[value.title]) {
+          hasApp = true;
+        }
         document.getElementById('apps').innerHTML += `
 <div class="appRow col-2">
-  <img src="${value.image}"> ${value.title} <button class="get" id="${app}">Get</button>
+  <img src="${value.image}"> ${value.title} ${hasApp ? '' : `<button class="get" id="${app}">Get</button>`}
 </div>
         `
       }
@@ -96,25 +110,24 @@
     for (const game in games) {
       if (Object.hasOwnProperty.call(games, game)) {
         const value = games[game];
-        document.getElementById(game).onclick = () => get(value);
+        if (!appLibrary[value.title])
+          document.getElementById(game).onclick = () => get(value);
       }
     }
     for (const app in apps) {
       if (Object.hasOwnProperty.call(apps, app)) {
         const value = apps[app];
-        document.getElementById(app).onclick = () => get(value);
+        if (!appLibrary[value.title])
+          document.getElementById(app).onclick = () => get(value);
       }
-    }
-    let appLibrary = {};
-    if (!localStorage.getItem('apps')) {
-      localStorage.setItem('apps', JSON.stringify({}));
-    } else {
-      appLibrary = JSON.parse(localStorage.getItem('apps'));
     }
 
     function get(game) {
-      appLibrary[game.title] = true;
-      localStorage.setItem('apps', JSON.stringify(appLibrary));
+      if (!appLibrary[game.title]) {
+        appLibrary[game.title] = true;
+        localStorage.setItem('apps', JSON.stringify(appLibrary));
+        location.reload();
+      }
     }
   </script>
 </body>
