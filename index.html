@@ -210,6 +210,10 @@
         document.title = `${game.title} ${game.version ? 'v' + game.version : ''}`;
       }
       activeApp = game.title;
+      document.head.removeChild(document.getElementsByTagName('title')[0]);
+      let newTitle = document.createElement('title');
+      newTitle.innerHTML = `${game.title} &#8211; Noob Killa&rsquo;s OS`;
+      document.head.appendChild(newTitle);
     }
 
     function deleteGame(game, type = 'game') {
@@ -232,7 +236,10 @@
       } else {
         location.reload();
       }
-      document.title = 'Games';
+      document.head.removeChild(document.getElementsByTagName('title')[0]);
+      let newTitle = document.createElement('title');
+      newTitle.innerHTML = 'Noob Killa\'s OS'
+      document.head.appendChild(newTitle);
     }
 
     for (const game in games) {
