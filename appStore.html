@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Store</title>
+  <style>
+    img {
+      width: 75px;
+      height: 75px;
+      border-radius: .5rem;
+      background-color: black;
+      margin-right: 5px;
+    }
+
+    div.appRow {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+      border: 2px black solid;
+      width: 300px;
+    }
+
+    .get {
+      margin-left: auto;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="apps"></div>
+  <!-- <div class="appRow">
+    <img src="image/bird.svg"> Bird <button class="get" onclick="">Get</button>
+  </div>
+  <div class="appRow">
+    <img src="image/europe.svg"> Europe Takeover <button class="get" onclick="">Get</button>
+  </div>
+  <div class="appRow">
+    <img src="image/goldMiner.svg"> Gold Miner <button class="get" onclick="">Get</button>
+  </div>
+  <div class="appRow">
+    <img src="image/taco.svg"> Idle Taco <button class="get" onclick="">Get</button>
+  </div>
+  <div class="appRow">
+    <img src="image/taco.svg"> Taco Clicker <button class="get" onclick="">Get</button>
+  </div> -->
+  <script>
+    const games = {
+      bird: {
+        title: "Bird",
+        image: "image/bird.svg",
+        version: "1.6"
+      },
+      europe: {
+        title: "Europe Takeover",
+        image: "image/europe.svg",
+        version: "0.1"
+      },
+      goldMiner: {
+        title: "Gold Miner",
+        image: "image/goldMiner.svg",
+        version: "0.6"
+      },
+      idleTaco: {
+        title: "Idle Taco",
+        image: "image/taco.svg",
+        version: "1.7.3"
+      },
+      tacoClicker: {
+        title: "Taco Clicker",
+        image: "image/taco.svg",
+        version: "1.2"
+      }
+    }
+    const apps = {
+      github: {
+        title: "GitHub",
+        image: "https://github.com/fluidicon.png",
+      },
+      google: {
+        title: "Google",
+        image: "https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png"
+      }
+    }
+    for (const game in games) {
+      if (Object.hasOwnProperty.call(games, game)) {
+        const value = games[game];
+        document.getElementById('apps').innerHTML += `
+<div class="appRow">
+  <img src="${value.image}"> ${value.title} <button class="get" id="${game}">Get</button>
+</div>
+        `
+      }
+    }
+    for (const app in apps) {
+      if (Object.hasOwnProperty.call(apps, app)) {
+        const value = apps[app];
+        document.getElementById('apps').innerHTML += `
+<div class="appRow">
+  <img src="${value.image}"> ${value.title} <button class="get" id="${app}">Get</button>
+</div>
+        `
+      }
+    }
+
+    for (const game in games) {
+      if (Object.hasOwnProperty.call(games, game)) {
+        const value = games[game];
+        document.getElementById(game).onclick = () => get(value);
+      }
+    }
+    for (const app in apps) {
+      if (Object.hasOwnProperty.call(apps, app)) {
+        const value = apps[app];
+        document.getElementById(app).onclick = () => get(value);
+      }
+    }
+    let appLibrary = {};
+    if (!localStorage.getItem('apps')) {
+      localStorage.setItem('apps', JSON.stringify({}));
+    } else {
+      appLibrary = JSON.parse(localStorage.getItem('apps'));
+    }
+
+    function get(game) {
+      appLibrary[game.title] = true;
+      localStorage.setItem('apps', JSON.stringify(appLibrary));
+    }
+  </script>
+</body>
+
+</html>

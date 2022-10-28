@@ -23,6 +23,7 @@ for (const key in changes) {
 var myGamePiece;
 var myObstacles = [];
 var myScore;
+var scores = { mouse: 0, arrows: 0 };
 var isPaused = false;
 var pauseGame;
 var lengthOfGap = 150;
@@ -39,10 +40,12 @@ function startGame() {
   myGamePiece = new Component(30, 30, "red", 50, 120); // Spawn the player
   myScore = new Component("30px", "Consolas", "black", 280, 40, "text"); // Score
   winScore = new Component("30px", "Consolas", "black", 450, 200, "text");
-  if (!localStorage.getItem('highScoreMouse'))
-    localStorage.setItem('highScoreMouse', 0);
-  else {
-    highScore = parseInt(localStorage.getItem('highScoreMouse'));
+  if (!localStorage.getItem('Bird')) {
+    localStorage.setItem('Bird', JSON.stringify(scores));
+    scores = JSON.parse(localStorage.getItem('Bird'));
+  } else {
+    scores = JSON.parse(localStorage.getItem('Bird'));
+    highScore = parseInt(scores.mouse);
   }
   myGameArea.start();
   document.getElementById('start').style.display = 'none';
@@ -56,10 +59,12 @@ function useArrows() {
   myGamePiece = new Component(30, 30, "red", 50, 120); // Spawn the player
   myScore = new Component("30px", "Consolas", "black", 280, 40, "text"); // Score
   winScore = new Component("30px", "Consolas", "black", 450, 200, "text");
-  if (!localStorage.getItem('highScoreArrows'))
-    localStorage.setItem('highScoreArrows', 0);
-  else {
-    highScore = parseInt(localStorage.getItem('highScoreArrows'));
+  if (!localStorage.getItem('Bird')) {
+    localStorage.setItem('Bird', JSON.stringify(scores));
+    scores = JSON.parse(localStorage.getItem('Bird'));
+  } else {
+    scores = JSON.parse(localStorage.getItem('Bird'));
+    highScore = parseInt(scores.arrows);
   }
   myGameArea.start();
   document.getElementById('start').style.display = 'none';
@@ -110,11 +115,17 @@ var myGameArea = {
      * Try to set the highScore var
      */
     if (controlMethod === 0) {
-      if (((myObstacles.length / 2) - 1) > localStorage.getItem("highScoreMouse"))
-        localStorage.setItem("highScoreMouse", ((myObstacles.length / 2) - 1));
+      if (((myObstacles.length / 2) - 1) > parseInt(JSON.parse(localStorage.getItem("Bird")).mouse)) {
+        scores = JSON.parse(localStorage.getItem("Bird"));
+        scores.mouse = ((myObstacles.length / 2) - 1);
+        localStorage.setItem("Bird", JSON.stringify(scores));
+      }
     } else {
-      if (((myObstacles.length / 2) - 1) > localStorage.getItem("highScoreArrows"))
-        localStorage.setItem("highScoreArrows", ((myObstacles.length / 2) - 1));
+      if (((myObstacles.length / 2) - 1) > parseInt(JSON.parse(localStorage.getItem("Bird")).arrows)) {
+        scores = JSON.parse(localStorage.getItem("Bird"));
+        scores.arrows = ((myObstacles.length / 2) - 1);
+        localStorage.setItem("Bird", JSON.stringify(scores));
+      }
     }
     /**
      * Stop the game
