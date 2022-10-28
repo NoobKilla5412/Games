@@ -47,44 +47,8 @@
   <div class="appRow">
     <img src="image/taco.svg"> Taco Clicker <button class="get" onclick="">Get</button>
   </div> -->
+  <script src="apps.js"></script>
   <script>
-    const games = {
-      bird: {
-        title: "Bird",
-        image: "image/bird.svg",
-        version: "1.6"
-      },
-      europe: {
-        title: "Europe Takeover",
-        image: "image/europe.svg",
-        version: "0.1"
-      },
-      goldMiner: {
-        title: "Gold Miner",
-        image: "image/goldMiner.svg",
-        version: "0.6"
-      },
-      idleTaco: {
-        title: "Idle Taco",
-        image: "image/taco.svg",
-        version: "1.7.3"
-      },
-      tacoClicker: {
-        title: "Taco Clicker",
-        image: "image/taco.svg",
-        version: "1.2"
-      }
-    }
-    const apps = {
-      github: {
-        title: "GitHub",
-        image: "https://github.com/fluidicon.png",
-      },
-      google: {
-        title: "Google",
-        image: "https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png"
-      }
-    }
     for (const game in games) {
       if (Object.hasOwnProperty.call(games, game)) {
         const value = games[game];
