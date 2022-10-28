@@ -209,7 +209,11 @@
       if (game.title == 'Update') {
         location.reload();
       } else {
-        document.getElementById('game').innerHTML = `<iframe src="${game.link}" />`;
+        if (game.options) {
+          document.getElementById('game').innerHTML = `<iframe src="${game.link}" ${game.options} />`;
+        } else {
+          document.getElementById('game').innerHTML = `<iframe src="${game.link}" />`;
+        }
         document.getElementById('containerGames').style.display = 'none';
         document.getElementById('containerApps').style.display = 'none';
         document.title = `${game.title} ${game.version ? 'v' + game.version : ''}`;

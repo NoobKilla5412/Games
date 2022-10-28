@@ -66,5 +66,10 @@ const apps = {
     title: "Wikipedia",
     image: "https://www.wikipedia.org/static/apple-touch/wikipedia.png",
     link: "https://www.wikipedia.org/"
+  },
+  mechNoSense: {
+    title: "MechNoSense",
+    image: "https://uploads.mechnosense.org/images/apple-touch-icon-min.png",
+    link: "https://www.mechnosense.org/"
   }
 };
