@@ -44,6 +44,13 @@ const games = {
     image: "https://m.media-amazon.com/images/I/61M3rDwh4qL.png",
     version: "1.0",
     link: "3rdPartyGames/Tetris/Launch.html"
+  },
+  aquaParkIo: {
+    title: "Aquapark.io",
+    id: "AquaparkIo",
+    image: "https://aquapark.io/newicon64.png",
+    version: "1.0",
+    link: "https://aquapark.io"
   }
 };
 const defaultApps = {
