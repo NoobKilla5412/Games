@@ -57,9 +57,14 @@ const apps = {
     image: "https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png",
     link: "https://www.google.com/webhp?igu=1"
   },
+  bing: {
+    title: "Bing",
+    image: "https://www.bing.com/favicon.ico",
+    link: "https://www.bing.com/"
+  },
   wikipedia: {
     title: "Wikipedia",
-    image: "",
-    link: ""
+    image: "https://www.wikipedia.org/static/apple-touch/wikipedia.png",
+    link: "https://www.wikipedia.org/"
   }
 };

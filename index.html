@@ -248,6 +248,14 @@
         }
       }
     }
+    for (const app in defaultApps) {
+      if (Object.hasOwnProperty.call(defaultApps, app)) {
+        const value = defaultApps[app];
+        document.getElementById(app).addEventListener('contextmenu', (e) => {
+          e.preventDefault();
+        });
+      }
+    }
 
     window.addEventListener('click', (e) => {
       for (const game in games) {
@@ -255,6 +263,13 @@
           const value = games[game];
           if (appLibrary[value.title])
             document.getElementById(`rmenu-${game}`).className = 'hide';
+        }
+      }
+      for (const app in apps) {
+        if (Object.hasOwnProperty.call(apps, app)) {
+          const value = apps[app];
+          if (appLibrary[value.title])
+            document.getElementById(`rmenu-${app}`).className = 'hide';
         }
       }
     });
