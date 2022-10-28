@@ -160,6 +160,5 @@ function load() {
     }
   }
   clickSound.play();
-  document.getElementById('load').style.display = 'none';
   startGame();
 }

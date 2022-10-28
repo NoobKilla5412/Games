@@ -67,8 +67,7 @@ function main() {
 
   document.getElementById('evolve').innerHTML = `Evolve: <b>${tacos[evolveNum]} (${evolveNum + 1})</b>`;
 
-  money += moneyValue;
-  diamonds += diamondValue;
+
 
   if (keys && keys[keyCheese]) {
     cheese.upgrade();
@@ -102,4 +101,8 @@ function main() {
     maxUpgradesButton.innerHTML = 'Max';
   else
     maxUpgradesButton.innerHTML = '1x';
+}
+function addMoney() {
+  money += moneyValue;
+  diamonds += diamondValue;
 }

@@ -97,7 +97,7 @@
 	</style>
 </head>
 
-<body>
+<body onload="load();">
 	<svg width="200" height="100" version="1.1" xmlns="http://www.w3.org/2000/svg" style="float: right;">
 		<path d="M0 99l200 0Q100 0 0 99" fill="yellow" stroke="black" onclick="clickTaco()" />
 	</svg>
@@ -110,8 +110,8 @@
 		<p id="evolve"></p>
 		<p id="idle"></p>
 	</div>
-	<button onclick="startGame();clickSound.play();" id="start" class="gray">New save</button>
-	<button onclick="load();" id="load" class="gray">Load save</button>
+	<!-- <button onclick="startGame();clisckSound.play();" id="start" class="gray">New save</button> -->
+	<!-- <button onclick="load();" id="load" class="gray">Load save</button> -->
 
 	<div id="upgradeButtons"></div><br>
 	<div id="diamondUpgrades"></div>

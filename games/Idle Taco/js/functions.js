@@ -63,8 +63,6 @@ function newEvolve() {
  * Start the game
  */
 function startGame() {
-  document.getElementById('start').style.display = 'none'
-  document.getElementById('load').style.display = 'none'
   document.getElementById('stats').style.display = 'block'
   document.getElementById('save').style.display = 'inline'
   document.getElementById('exit').style.display = 'inline'
@@ -74,6 +72,7 @@ function startGame() {
     document.getElementsByClassName('upgrades')[i].style.display = 'inline';
   }
   interval = setInterval(main, 10);
+  interval1 = setInterval(addMoney, 10);
 
   window.addEventListener('keydown', function (e) {
     keys = (keys || [])
@@ -91,6 +90,14 @@ function startGame() {
  */
 function everyInterval(n) {
   if ((frameNo / n) % 1 == 0) { return true }
+  return false
+}
+/**
+ * Every interval Accurate
+ * @param {*} n The interval
+ */
+function everyIntervalAccurate(n) {
+  if ((new Date().getTime() / n) % 1 == 0) { return true }
   return false
 }
 /**

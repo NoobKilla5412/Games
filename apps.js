@@ -21,7 +21,7 @@ const games = {
     title: "Idle Taco",
     id: "IdleTaco",
     image: "image/taco.svg",
-    version: "1.7.3"
+    version: "1.7.4"
   },
   tacoClicker: {
     title: "Taco Clicker",
