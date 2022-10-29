@@ -4,5 +4,6 @@
   "short_name": "Noob Killa's OS",
   "start_url": "/Games/",
   "display": "standalone",
-  "id": "/Games/"
+  "id": "/Games/",
+  "description": "Noob Killa's OS"
 }
