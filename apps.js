@@ -60,6 +60,14 @@ const games = {
     image: "https://play-lh.googleusercontent.com/uoqdyvIOwi4Ql2fITVoyWDDz8Z4VkoISCN19Ud-1zlGKCgFsHxyuf6Nw7lH5ZkLWLDo",
     version: "1.0",
     link: "3rdPartyGames/Water Sort/Launch.html"
+  },
+  memory: {
+    title: "Fruit Matcher",
+    dev: "<a href=\"https://github.com/mmenavas\" target=\"_blank\">mmenavas</a>",
+    id: "memory",
+    image: "3rdPartyGames/Memory/images/card.svg",
+    version: "1.0",
+    link: "3rdPartyGames/Memory/Launch.html"
   }
 };
 const defaultApps = {
