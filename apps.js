@@ -65,9 +65,9 @@ const games = {
     title: "Fruit Matcher",
     dev: "<a href=\"https://github.com/mmenavas\" target=\"_blank\">mmenavas</a>",
     id: "memory",
-    image: "3rdPartyGames/Memory/images/card.svg",
+    image: "3rdPartyGames/Fruit Matcher/images/card.svg",
     version: "1.0",
-    link: "3rdPartyGames/Memory/Launch.html"
+    link: "3rdPartyGames/Fruit Matcher/Launch.html"
   }
 };
 const defaultApps = {
