@@ -17,10 +17,10 @@ let troops = []
 let elements = []
 let keys = []
 
-let moneyText = new CanvasText(0, 30, 30, 'black', '$' + toValues(money))
-let goldMine = new GoldMine(100, 100, 'goldMine')
-let goldStorage = new GoldStorage(100, 400, 'goldStorage')
-let goldMine1 = new GoldMine(250, 100, 'goldMine1')
+let moneyText = new CanvasText(0, 30, 30, 'black', '$' + toValues(money));
+let goldMine = new GoldMine(100, 100, 'goldMine');
+let goldStorage = new GoldStorage(100, 400, 'goldStorage');
+let goldMine1 = new GoldMine(250, 100, 'goldMine1');
 let barracks = new Barracks(400, 100, 'barracks');
 
 let things = [goldMine, goldMine1, barracks, goldStorage]

@@ -29,6 +29,12 @@ const games = {
     image: "image/taco.svg",
     version: "1.2"
   },
+  emojiMatch: {
+    title: "Emoji Match",
+    id: "emojiMatch",
+    image: "",
+    version: "0.1"
+  },
   breakout: {
     title: "Breakout",
     dev: "<a href=\"https://gist.github.com/straker\" target=\"_blank\">straker</a>",
