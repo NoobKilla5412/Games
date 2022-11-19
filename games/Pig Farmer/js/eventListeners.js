@@ -32,3 +32,13 @@ document.getElementById('save3').addEventListener('click', (e) => {
   id = 2;
   load(id);
 });
+const maxButton = document.getElementById('max');
+maxButton.addEventListener('click', (e) => {
+  if (upgradeType == 'x1') {
+    upgradeType = 'max';
+    maxButton.innerHTML = 'Max';
+  } else if (upgradeType == 'max') {
+    upgradeType = 'x1';
+    maxButton.innerHTML = 'x1';
+  }
+});
