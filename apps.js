@@ -35,6 +35,13 @@ const games = {
     image: "",
     version: "0.1"
   },
+  pigFarmer: {
+    title: "Pig Farmer",
+    dev: 'Snowman 8326',
+    id: "pigFarmer",
+    image: "",
+    version: "0.1"
+  },
   breakout: {
     title: "Breakout",
     dev: "<a href=\"https://gist.github.com/straker\" target=\"_blank\">straker</a>",
