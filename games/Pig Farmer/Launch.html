@@ -9,7 +9,7 @@
   <style>
     body {
       background-color: peachpuff;
-      height: calc(98vh - 50px);
+      /* height: calc(98vh - 50px); */
     }
 
     div {
@@ -35,41 +35,48 @@
       margin-top: 50px;
     }
 
-    #slide2 {
+    .hide {
       display: none;
     }
 
-    #slide1 {
-      display: none;
-    }
-
-    #next {
-      display: none;
+    .text-center {
+      text-align: center;
     }
 
     #menu {
       display: none;
       text-align: center;
     }
+
+    #saves {
+      margin-top: 100px;
+    }
   </style>
 </head>
 
 <body>
-  <div id="slide1" class="slide">
+  <div id="slide1" class="slide hide">
     Billy is a pig.
     <!-- Picture of pig -->
   </div>
-  <div id="slide2" class="slide">
+  <div id="slide2" class="slide hide">
     He loves to grow vegetables in his garden. Help him grow his vegetables!
   </div>
-  <div id="menu">
+  <div id="menu" class="hide">
     <h1>Pig Farmer</h1>
-    <button>Start</button><br><br>
-    <button>Options</button>
+    <button id="start">Start</button><br><br>
+    <button id="options">Options</button>
   </div>
-  <button id="next">Next</button>
+  <div id="saves" class="hide text-center">
+    <button id="new-save">New Save</button><br><br>
+    <button id="save1">Save 1</button><br>
+    <button id="save2">Save 2</button><br>
+    <button id="save3">Save 3</button>
+  </div>
+  <button id="next" class="hide">Next</button>
   <script src="js/toValues.js"></script>
   <script src="js/save.js"></script>
+  <script src="js/EventListeners.js"></script>
   <script src="js/index.js"></script>
 </body>
 

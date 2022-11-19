@@ -1,3 +1,4 @@
+// Noob Killa's file
 var data = {
   hasDoneIntro: false
 };
@@ -6,10 +7,11 @@ function save() {
     localStorage.setItem('pigFarmer', JSON.stringify(data));
   } else {
     data = {
-      hasDoneIntro
+      hasDoneIntro: hasDoneIntro
     }
     localStorage.setItem('pigFarmer', JSON.stringify(data));
   }
+  console.log('Saved');
 }
 function load() {
   data = JSON.parse(localStorage.getItem('pigFarmer')) || data;
