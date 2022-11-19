@@ -1,19 +1,28 @@
 // Noob Killa's file
-var data = {
-  hasDoneIntro: false
-};
-function save() {
+var data = [
+]
+function save(id) {
   if (!localStorage.getItem('pigFarmer')) {
     localStorage.setItem('pigFarmer', JSON.stringify(data));
   } else {
-    data = {
-      hasDoneIntro: hasDoneIntro
-    }
+    data = [
+    ]
     localStorage.setItem('pigFarmer', JSON.stringify(data));
+    localStorage.setItem('hasDonePigIntro', hasDoneIntro);
   }
   console.log('Saved');
 }
-function load() {
+function load(id) {
   data = JSON.parse(localStorage.getItem('pigFarmer')) || data;
-  hasDoneIntro = data.hasDoneIntro;
+}
+function newSave(id) {
+  if (!localStorage.getItem('pigFarmer')) {
+    localStorage.setItem('pigFarmer', JSON.stringify(data));
+  } else {
+    data = [
+    ]
+    localStorage.setItem('pigFarmer', JSON.stringify(data));
+    localStorage.setItem('hasDonePigIntro', hasDoneIntro);
+  }
+  console.log('Saved');
 }

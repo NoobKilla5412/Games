@@ -17,8 +17,9 @@
     }
 
     #next {
-      margin-left: calc(100% - 90px);
-      margin-top: calc(82vh);
+      right: 10px;
+      bottom: 10px;
+      position: absolute;
     }
 
     button {
@@ -51,7 +52,16 @@
     #saves {
       margin-top: 100px;
     }
+
+    #credits {
+      left: 10px;
+      bottom: 10px;
+      position: absolute;
+    }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"
+    integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -65,18 +75,20 @@
   <div id="menu" class="hide">
     <h1>Pig Farmer</h1>
     <button id="start">Start</button><br><br>
-    <button id="options">Options</button>
+    <button id="options">Options</button><br>
+    <button id="credits">Credits</button>
   </div>
   <div id="saves" class="hide text-center">
-    <button id="new-save">New Save</button><br><br>
     <button id="save1">Save 1</button><br>
     <button id="save2">Save 2</button><br>
     <button id="save3">Save 3</button>
   </div>
   <button id="next" class="hide">Next</button>
   <script src="js/toValues.js"></script>
+  <script src="js/parse.js"></script>
   <script src="js/save.js"></script>
-  <script src="js/EventListeners.js"></script>
+  <script src="js/eventListeners.js"></script>
+  <script src="js/music.js"></script>
   <script src="js/index.js"></script>
 </body>
 
