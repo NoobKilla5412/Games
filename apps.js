@@ -40,7 +40,7 @@ const games = {
     dev: 'Snowman 8326',
     id: "pigFarmer",
     image: "",
-    version: "0.1"
+    version: "0.5"
   },
   breakout: {
     title: "Breakout",
