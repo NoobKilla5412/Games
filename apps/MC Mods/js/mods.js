@@ -1,19 +1,23 @@
 const forgeMods = {
   biomeMod: {
     title: "Biomes",
-    image: ""
+    image: "",
+    version: "1.17.1"
   },
   dragonMod: {
     title: "Dragons",
-    image: ""
+    image: "",
+    version: "1.17.1"
   },
   petMod: {
     title: "Pets",
-    image: ""
+    image: "",
+    version: "1.17.1"
   },
   armorMod: {
     title: "More Armor",
-    image: ""
+    image: "",
+    version: "1.17.1"
   }
 };
 const fabricMods = {

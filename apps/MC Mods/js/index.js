@@ -10,7 +10,8 @@ for (const key in forgeMods) {
         <img src="${element.image}">
         <div>
           ${element.title}:<br>
-          <a href="mods/${key}/${key}.jar">Download</a>
+          <a href="mods/${key}/${key}.jar">Download</a><br>
+          Version: ${element.version}
         </div>
       </div>`;
   }
@@ -28,7 +29,8 @@ for (const key in fabricMods) {
         <img src="${element.image}">
         <div>
           ${element.title}:<br>
-          <a href="mods/${key}/${key}.jar">Download</a>
+          <a href="mods/${key}/${key}.jar">Download</a><br>
+          Version: ${element.version}
         </div>
       </div>`;
   }
