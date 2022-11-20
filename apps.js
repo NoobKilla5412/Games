@@ -40,7 +40,7 @@ const games = {
     dev: 'Snowman 8326',
     id: "pigFarmer",
     image: "",
-    version: "0.6",
+    version: "0.8",
     otherData: [
       "hasDonePigIntro",
       "pigFarmerOptions"

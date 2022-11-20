@@ -25,6 +25,8 @@ function load(id) {
   document.getElementById('game').style.display = 'block';
   document.getElementById('saves').style.display = 'none';
   music.menu[0].stop();
+  if (options.music)
+    music.menu[0].play();
   run();
   saveInterval = setInterval(() => {
     save(id);

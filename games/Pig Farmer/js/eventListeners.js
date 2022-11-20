@@ -58,8 +58,10 @@ document.addEventListener('keydown', (e) => {
     clearInterval(interval);
     if (loaded) {
       save(id);
-      if (options.music)
+      music.menu[0].stop();
+      if (options.music) {
         music.menu[0].play();
+      }
       loaded = false;
     }
     document.getElementById('game').style.display = 'none';

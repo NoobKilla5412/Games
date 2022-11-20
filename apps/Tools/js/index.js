@@ -1,5 +1,3 @@
-// Noob Killa's file
-var i = 1;
 var upgrades = {
   pigs: {
     lvl: 1,
@@ -99,36 +97,6 @@ var upgrades = {
     effectiveness: (i - 1) / 5
   }
 };
-
-function upgrade(upgrade) {
-  upgrade = upgrades[upgrade];
-  if (upgradeType == 'x1') {
-    if (money >= upgrade.cost) {
-      upgrade.lvl++;
-      money -= upgrade.cost;
-      upgrade.cost *= upgrade.costUp;
-    }
-  } else if (upgradeType == 'max') {
-    while (money >= upgrade.cost) {
-      upgrade.lvl++;
-      money -= upgrade.cost;
-      upgrade.cost *= upgrade.costUp;
-    }
-  }
-}
-
-for (const key in upgrades) {
-  if (Object.hasOwnProperty.call(upgrades, key)) {
-    const element = upgrades[key];
-    const upgradesDiv = document.getElementById('upgrades');
-    upgradesDiv.innerHTML += `<button id="${key}" class="upgrade-button"></button>`;
-  }
-}
-for (const key in upgrades) {
-  if (Object.hasOwnProperty.call(upgrades, key)) {
-    const element = upgrades[key];
-    document.getElementById(key).addEventListener('click', (e) => {
-      upgrade(key);
-    });
-  }
-}
+const out = document.querySelector('output');
+console.log(upgrades.length);
+var i = 1;
