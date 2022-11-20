@@ -40,7 +40,11 @@ const games = {
     dev: 'Snowman 8326',
     id: "pigFarmer",
     image: "",
-    version: "0.5"
+    version: "0.5",
+    otherData: [
+      "hasDonePigIntro",
+      "pigFarmerOptions"
+    ]
   },
   breakout: {
     title: "Breakout",
@@ -105,6 +109,10 @@ const defaultApps = {
   }
 };
 const apps = {
+  baseball: {
+    title: "Baseball",
+    image: "",
+  },
   google: {
     title: "Google",
     dev: "Google LLC",

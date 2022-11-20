@@ -9,9 +9,10 @@ document.getElementById('next').addEventListener('click', (e) => {
     document.getElementById('slide2').style.display = 'none';
     document.getElementById('menu').style.display = 'block';
     document.getElementById('next').style.display = 'none';
-    music.menu[0].play();
+    if (options.music)
+      music.menu[0].play();
     hasDoneIntro = true;
-    save();
+    localStorage.setItem('hasDonePigIntro', hasDoneIntro);
   }
 });
 
@@ -32,6 +33,43 @@ document.getElementById('save3').addEventListener('click', (e) => {
   id = 2;
   load(id);
 });
+document.getElementById('credits').addEventListener('click', (e) => {
+  document.getElementById('menu').style.display = 'none';
+  document.getElementById('creditsScreen').style.display = 'block';
+});
+document.getElementById('options').addEventListener('click', (e) => {
+  document.getElementById('menu').style.display = 'none';
+  document.getElementById('optionsScreen').style.display = 'block';
+});
+document.getElementById('music').addEventListener('click', (e) => {
+  if (!options.music) {
+    options.music = true;
+    music.menu[0].stop();
+    music.menu[0].play();
+  } else {
+    options.music = false;
+    music.menu[0].stop();
+  }
+  saveOptions();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key == 'Escape') {
+    clearInterval(interval);
+    if (loaded) {
+      save(id);
+      if (options.music)
+        music.menu[0].play();
+      loaded = false;
+    }
+    document.getElementById('game').style.display = 'none';
+    document.getElementById('creditsScreen').style.display = 'none';
+    document.getElementById('optionsScreen').style.display = 'none';
+    document.getElementById('saves').style.display = 'none';
+    document.getElementById('menu').style.display = 'block';
+  }
+});
+
 const maxButton = document.getElementById('max');
 maxButton.addEventListener('click', (e) => {
   if (upgradeType == 'x1') {

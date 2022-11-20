@@ -1,5 +1,6 @@
+var interval;
 function run() {
-  var interval = setInterval(() => {
+  interval = setInterval(() => {
     for (const key in upgrades) {
       if (Object.hasOwnProperty.call(upgrades, key)) {
         const element = upgrades[key];

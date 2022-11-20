@@ -205,6 +205,8 @@
     for (const app in apps) {
       if (Object.hasOwnProperty.call(apps, app)) {
         const value = apps[app];
+        if (!value.link)
+          value.link = `apps/${value.title}/Launch.html`;
         if (appLibrary[value.title]) {
           document.getElementById(app).onclick = () => load(value);
           document.getElementById('delete-' + app).onclick = () => deleteGame(value, 'app');
@@ -241,6 +243,11 @@
         if (type == 'game') {
           if (!confirm(`Do you want to keep save data for ${game.title}? Ok for save, Cancel for delete`)) {
             localStorage.removeItem(game.id);
+            if (game.otherData) {
+              game.otherData.forEach(dataName => {
+                localStorage.removeItem(dataName);
+              });
+            }
           }
         }
         location.reload();

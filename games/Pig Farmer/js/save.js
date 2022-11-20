@@ -1,4 +1,7 @@
 // Noob Killa's file
+var options = {
+  music: true
+};
 var data = [
   { money: 0, upgrades },
   { money: 0, upgrades },
@@ -9,12 +12,12 @@ function save(id) {
     localStorage.setItem('pigFarmer', JSON.stringify(data));
   } else {
     data[id] = { money, upgrades };
-
     localStorage.setItem('pigFarmer', JSON.stringify(data));
     localStorage.setItem('hasDonePigIntro', hasDoneIntro);
   }
   console.log('Saved');
 }
+var loaded = false;
 function load(id) {
   data = JSON.parse(localStorage.getItem('pigFarmer')) || data;
   money = data[id].money;
@@ -26,12 +29,21 @@ function load(id) {
   saveInterval = setInterval(() => {
     save(id);
   }, 2500);
+  loaded = true;
+}
+function loadOptions() {
+  if (!localStorage.getItem('pigFarmerOptions'))
+    localStorage.setItem('pigFarmerOptions', JSON.stringify(options));
+  options = JSON.parse(localStorage.getItem('pigFarmerOptions')) || options;
+}
+function saveOptions() {
+  localStorage.setItem('pigFarmerOptions', JSON.stringify(options));
 }
 function newSave(id) {
   if (!localStorage.getItem('pigFarmer')) {
     localStorage.setItem('pigFarmer', JSON.stringify(data));
   } else {
-    data[id] = { money };
+    data[id] = { money, upgrades };
     localStorage.setItem('pigFarmer', JSON.stringify(data));
     localStorage.setItem('hasDonePigIntro', hasDoneIntro);
   }
