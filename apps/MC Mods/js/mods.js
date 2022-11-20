@@ -1,10 +1,21 @@
-const mods = {
+const forgeMods = {
+  biomeMod: {
+    title: "Biomes",
+    image: ""
+  },
+  dragonMod: {
+    title: "Dragons",
+    image: ""
+  },
   petMod: {
     title: "Pets",
     image: ""
   },
-  biomeMod: {
-    title: "Biomes",
+  armorMod: {
+    title: "More Armor",
     image: ""
   }
+};
+const fabricMods = {
+
 };
