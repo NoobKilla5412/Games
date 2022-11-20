@@ -90,7 +90,7 @@ const games = {
     title: "Minecraft",
     dev: "",
     id: "minecraft",
-    image: "",
+    image: "https://play-lh.googleusercontent.com/VSwHQjcAttxsLE47RuS4PqpC4LT7lCoSjE7Hx5AW_yCxtDvcnsHHvm5CTuL5BPN-uRTP",
     version: "1.5.2",
     link: "https://burritoedition.github.io/emu/Minecraft/web/index.html"
   }
@@ -123,7 +123,7 @@ const apps = {
   },
   MCMods: {
     title: "MC Mods",
-    image: ""
+    image: "image/MCMods.png"
   },
   google: {
     title: "Google",
