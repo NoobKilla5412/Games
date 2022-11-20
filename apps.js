@@ -85,6 +85,14 @@ const games = {
     image: "3rdPartyGames/Fruit Matcher/images/card.svg",
     version: "1.0",
     link: "3rdPartyGames/Fruit Matcher/Launch.html"
+  },
+  minecraft: {
+    title: "Minecraft",
+    dev: "",
+    id: "minecraft",
+    image: "",
+    version: "1.5.2",
+    link: "https://burritoedition.github.io/emu/Minecraft/web/index.html"
   }
 };
 const defaultApps = {
@@ -111,7 +119,11 @@ const defaultApps = {
 const apps = {
   baseball: {
     title: "Baseball",
-    image: "",
+    image: ""
+  },
+  MCMods: {
+    title: "MC Mods",
+    image: ""
   },
   google: {
     title: "Google",
