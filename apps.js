@@ -148,5 +148,11 @@ const apps = {
     dev: "Brandon",
     image: "https://uploads.mechnosense.org/images/apple-touch-icon-min.png",
     link: "https://www.mechnosense.org/"
+  },
+  sayWatt: {
+    title: "Say Watt",
+    dev: "Brandon",
+    image: "https://saywatt.mechnosense.org/logo.png",
+    link: "https://saywatt.mechnosense.org/"
   }
 };
