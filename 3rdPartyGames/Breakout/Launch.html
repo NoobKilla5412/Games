@@ -24,7 +24,7 @@
   <canvas width="400" height="500" id="game"></canvas>
   <script>
     const canvas = document.getElementById('game');
-    const context = canvas.getContext('2d');
+    const c = canvas.getContext('2d');
 
     // each row is 14 bricks long. the level consists of 6 blank rows then 8 rows
     // of 4 colors: red, orange, green, and yellow
@@ -116,7 +116,7 @@
 
     // game loop
     function loop() {
-      context.clearRect(0, 0, canvas.width, canvas.height);
+      c.clearRect(0, 0, canvas.width, canvas.height);
 
       // move paddle by it's velocity
       paddle.x += paddle.dx;
@@ -192,25 +192,25 @@
       }
 
       // draw walls
-      context.fillStyle = 'lightgrey';
-      context.fillRect(0, 0, canvas.width, wallSize);
-      context.fillRect(0, 0, wallSize, canvas.height);
-      context.fillRect(canvas.width - wallSize, 0, wallSize, canvas.height);
+      c.fillStyle = 'lightgrey';
+      c.fillRect(0, 0, canvas.width, wallSize);
+      c.fillRect(0, 0, wallSize, canvas.height);
+      c.fillRect(canvas.width - wallSize, 0, wallSize, canvas.height);
 
       // draw ball if it's moving
       if (ball.dx || ball.dy) {
-        context.fillRect(ball.x, ball.y, ball.width, ball.height);
+        c.fillRect(ball.x, ball.y, ball.width, ball.height);
       }
 
       // draw bricks
-      bricks.forEach(function (brick) {
-        context.fillStyle = brick.color;
-        context.fillRect(brick.x, brick.y, brick.width, brick.height);
+      bricks.forEach((brick) => {
+        c.fillStyle = brick.color;
+        c.fillRect(brick.x, brick.y, brick.width, brick.height);
       });
 
       // draw paddle
-      context.fillStyle = 'cyan';
-      context.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+      c.fillStyle = 'cyan';
+      c.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
     }
 
     // listen to keyboard events to move the paddle

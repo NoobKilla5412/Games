@@ -1,0 +1,44 @@
+{
+  "baseball": {
+    "title": "Baseball",
+    "image": ""
+  },
+  "MCMods": {
+    "title": "MC Mods",
+    "image": "image/MCMods.png"
+  },
+  "google": {
+    "title": "Google",
+    "dev": "Google LLC",
+    "image": "https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png",
+    "link": "https://www.google.com/webhp?igu=1"
+  },
+  "bing": {
+    "title": "Bing",
+    "dev": "Microsoft Corporation",
+    "image": "https://www.bing.com/favicon.ico",
+    "link": "https://www.bing.com/"
+  },
+  "wikipedia": {
+    "title": "Wikipedia",
+    "dev": "Wikimedia Foundation",
+    "image": "https://www.wikipedia.org/static/apple-touch/wikipedia.png",
+    "link": "https://www.wikipedia.org/"
+  },
+  "mechNoSense": {
+    "title": "MechNoSense",
+    "dev": "Brandon",
+    "image": "https://uploads.mechnosense.org/images/apple-touch-icon-min.png",
+    "link": "https://www.mechnosense.org/"
+  },
+  "sayWatt": {
+    "title": "Say Watt",
+    "dev": "Brandon",
+    "image": "https://saywatt.mechnosense.org/logo.png",
+    "link": "https://saywatt.mechnosense.org/"
+  },
+  "test": {
+    "title": "Test",
+    "image": ""
+  }
+}

@@ -53,9 +53,9 @@
   reset.addEventListener('click', handleSettingsSubmission);
 
   // Handle clicking on card
-  var handleFlipCard = function (event) {
+  var handleFlipCard = function (e) {
 
-    event.preventDefault();
+    e.preventDefault();
 
     var status = $.play(this.index);
     console.log(status);

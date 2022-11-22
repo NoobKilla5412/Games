@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test</title>
+</head>
+
+<body>
+  <canvas></canvas>
+  <script>
+    const canvas = document.querySelector('canvas');
+    const c = canvas.getContext('2d');
+
+    const level = [
+      ['R', 'G'],
+      ['B', 'Y']
+    ];
+
+    const colorMap = {
+      'R': 'red',
+      'B': 'blue',
+      'G': 'green',
+      'Y': 'yellow'
+    };
+
+    const brickGap = 2;
+    const brickWidth = 16;
+    const brickHeight = 16;
+
+    const wallSize = 12;
+    const bricks = [];
+
+    for (let row = 0; row < level.length; row++) {
+      for (let col = 0; col < level[row].length; col++) {
+        const colorCode = level[row][col];
+
+        bricks.push({
+          x: wallSize + (brickWidth + brickGap) * col,
+          y: wallSize + (brickHeight + brickGap) * row,
+          color: colorMap[colorCode],
+          width: brickWidth,
+          height: brickHeight
+        });
+      }
+    }
+
+    setInterval(() => {
+      bricks.forEach(brick => {
+        c.fillStyle = brick.color;
+        c.fillRect(brick.x, brick.y, brick.width, brick.height);
+      })
+    }, 10);
+  </script>
+</body>
+
+</html>

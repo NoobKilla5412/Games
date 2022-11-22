@@ -83,55 +83,62 @@
       document.body.style.background = 'white';
       document.body.style.color = 'black';
     }
-    for (const game in games) {
-      if (Object.hasOwnProperty.call(games, game)) {
-        const value = games[game];
-        let hasGame = false;
-        if (appLibrary[value.title]) {
-          hasGame = true;
+    fetch('/json/games.json')
+      .then((response) => response.json())
+      .then((games) => {
+        for (const game in games) {
+          if (Object.hasOwnProperty.call(games, game)) {
+            const value = games[game];
+            let hasGame = false;
+            if (appLibrary[value.title]) {
+              hasGame = true;
+            }
+            if (!value.dev) {
+              value.dev = '<a href="https://github.com/NoobKilla5412" target="_blank">Noob Killa</a>';
+            }
+            document.getElementById('games').innerHTML += `
+  <div class="appRow col-3">
+    <img src="${value.image}"> <div>${value.title}<br> <div>${value.dev}</div></div> ${hasGame ? '' : `<button class="get" id="${game}">Get</button>`}
+  </div>
+          `
+          }
         }
-        if (!value.dev) {
-          value.dev = '<a href="https://github.com/NoobKilla5412" target="_blank">Noob Killa</a>';
+        for (const game in games) {
+          if (Object.hasOwnProperty.call(games, game)) {
+            const value = games[game];
+            if (!appLibrary[value.title])
+              document.getElementById(game).onclick = () => get(value);
+          }
         }
-        document.getElementById('games').innerHTML += `
-<div class="appRow col-3">
-  <img src="${value.image}"> <div>${value.title}<br> <div>${value.dev}</div></div> ${hasGame ? '' : `<button class="get" id="${game}">Get</button>`}
-</div>
-        `
-      }
-    }
-    for (const app in apps) {
-      if (Object.hasOwnProperty.call(apps, app)) {
-        const value = apps[app];
-        let hasApp = false;
-        if (appLibrary[value.title]) {
-          hasApp = true;
+      });
+    fetch('/json/apps.json')
+      .then((response) => response.json())
+      .then((apps) => {
+        for (const app in apps) {
+          if (Object.hasOwnProperty.call(apps, app)) {
+            const value = apps[app];
+            let hasApp = false;
+            if (appLibrary[value.title]) {
+              hasApp = true;
+            }
+            if (!value.dev) {
+              value.dev = '<a href="https://github.com/NoobKilla5412" target="_blank">Noob Killa</a>';
+            }
+            document.getElementById('apps').innerHTML += `
+    <div class="appRow col-3">
+      <img src="${value.image}"> <div>${value.title}<br> <div>${value.dev}</div></div> ${hasApp ? '' : `<button class="get" id="${app}">Get</button>`}
+    </div>
+            `
+          }
         }
-        if (!value.dev) {
-          value.dev = '<a href="https://github.com/NoobKilla5412" target="_blank">Noob Killa</a>';
+        for (const app in apps) {
+          if (Object.hasOwnProperty.call(apps, app)) {
+            const value = apps[app];
+            if (!appLibrary[value.title])
+              document.getElementById(app).onclick = () => get(value);
+          }
         }
-        document.getElementById('apps').innerHTML += `
-<div class="appRow col-3">
-  <img src="${value.image}"> <div>${value.title}<br> <div>${value.dev}</div></div> ${hasApp ? '' : `<button class="get" id="${app}">Get</button>`}
-</div>
-        `
-      }
-    }
-
-    for (const game in games) {
-      if (Object.hasOwnProperty.call(games, game)) {
-        const value = games[game];
-        if (!appLibrary[value.title])
-          document.getElementById(game).onclick = () => get(value);
-      }
-    }
-    for (const app in apps) {
-      if (Object.hasOwnProperty.call(apps, app)) {
-        const value = apps[app];
-        if (!appLibrary[value.title])
-          document.getElementById(app).onclick = () => get(value);
-      }
-    }
+      });
 
     function get(game) {
       if (!appLibrary[game.title]) {
