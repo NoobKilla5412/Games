@@ -1,6 +1,6 @@
 var version = "0.2";
-var testing = true;
-// var testing = false;
+// var testing = true;
+var testing = false;
 if (testing) {
   document.getElementById('intro1').style.display = 'none';
   document.getElementById('intro2').style.display = 'none';
