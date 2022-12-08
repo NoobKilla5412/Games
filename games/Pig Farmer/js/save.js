@@ -13,7 +13,7 @@ function save(id) {
   } else {
     data[id] = { money, upgrades };
     localStorage.setItem('pigFarmer', JSON.stringify(data));
-    localStorage.setItem('hasDonePigIntro', hasDoneIntro);
+    localStorage.setItem('pigFarmer:hasDoneIntro', hasDoneIntro);
   }
   console.log('Saved');
 }
@@ -34,12 +34,12 @@ function load(id) {
   loaded = true;
 }
 function loadOptions() {
-  if (!localStorage.getItem('pigFarmerOptions'))
-    localStorage.setItem('pigFarmerOptions', JSON.stringify(options));
-  options = JSON.parse(localStorage.getItem('pigFarmerOptions')) || options;
+  if (!localStorage.getItem('pigFarmer:options'))
+    localStorage.setItem('pigFarmer:options', JSON.stringify(options));
+  options = JSON.parse(localStorage.getItem('pigFarmer:options')) || options;
 }
 function saveOptions() {
-  localStorage.setItem('pigFarmerOptions', JSON.stringify(options));
+  localStorage.setItem('pigFarmer:options', JSON.stringify(options));
 }
 function newSave(id) {
   if (!localStorage.getItem('pigFarmer')) {
@@ -47,7 +47,7 @@ function newSave(id) {
   } else {
     data[id] = { money, upgrades };
     localStorage.setItem('pigFarmer', JSON.stringify(data));
-    localStorage.setItem('hasDonePigIntro', hasDoneIntro);
+    localStorage.setItem('pigFarmer:hasDoneIntro', hasDoneIntro);
   }
   console.log('Saved');
 }

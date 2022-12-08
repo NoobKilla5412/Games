@@ -11,4 +11,4 @@ app.get('/', function (req, res) {
 app.use('/', express.static(__dirname + '/'));
 serv.listen(2000);
 
-setInterval(() => { }, 10000);
+// setInterval(() => { }, 10000);

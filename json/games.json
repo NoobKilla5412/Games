@@ -23,6 +23,15 @@
     "image": "image/taco.svg",
     "version": "1.7.4"
   },
+  "idleTaco2": {
+    "title": "Idle Taco 2",
+    "id": "idleTaco2",
+    "image": "image/taco.svg",
+    "version": "0.1",
+    "otherData": [
+      "idleTaco2:lang"
+    ]
+  },
   "tacoClicker": {
     "title": "Taco Clicker",
     "id": "TacoClicker",
@@ -42,8 +51,8 @@
     "image": "",
     "version": "0.8",
     "otherData": [
-      "hasDonePigIntro",
-      "pigFarmerOptions"
+      "pigFarmer:hasDoneIntro",
+      "pigFarmer:options"
     ]
   },
   "breakout": {

@@ -7,6 +7,10 @@
     "title": "MC Mods",
     "image": "image/MCMods.png"
   },
+  "familyTree": {
+    "title": "Family Tree",
+    "image": "image/familyTree.png"
+  },
   "google": {
     "title": "Google",
     "dev": "Google LLC",
@@ -24,12 +28,6 @@
     "dev": "Wikimedia Foundation",
     "image": "https://www.wikipedia.org/static/apple-touch/wikipedia.png",
     "link": "https://www.wikipedia.org/"
-  },
-  "mechNoSense": {
-    "title": "MechNoSense",
-    "dev": "Brandon",
-    "image": "https://uploads.mechnosense.org/images/apple-touch-icon-min.png",
-    "link": "https://www.mechnosense.org/"
   },
   "sayWatt": {
     "title": "Say Watt",
