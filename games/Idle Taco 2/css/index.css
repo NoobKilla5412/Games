@@ -76,11 +76,11 @@ body {
 }
 
 #intro1 #name1 {
-  font-size: 256px;
+  font-size: 25vh;
 }
 
 #intro1 #name2 {
-  font-size: 128px;
+  font-size: 12.5vh;
 }
 
 #intro2 #name1 {
