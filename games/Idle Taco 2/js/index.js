@@ -1,5 +1,6 @@
-// var testing = true;
-var testing = false;
+var version = "0.2";
+var testing = true;
+// var testing = false;
 if (testing) {
   document.getElementById('intro1').style.display = 'none';
   document.getElementById('intro2').style.display = 'none';
@@ -24,7 +25,14 @@ function loadText(lang) {
       if (Object.hasOwnProperty.call(currentLang, key)) {
         const keys = key.split('.');
         const element = currentLang[key];
-        document.querySelector(`${keys[0] == 'generic' ? '' : '#' + keys[0]} #${keys[1]}${keys[2] ? ' #' + keys[2] : ''}`).innerHTML = element;
+        if (keys[1] != 'back')
+          document.querySelector(`${keys[0] == 'generic' ? '' : '#' + keys[0]} #${keys[1]}${keys[2] ? ' #' + keys[2] : ''}`).innerHTML = element;
+        else {
+          for (let i = 0; i < backBtns.length; i++) {
+            const btn = backBtns[i];
+            btn.innerHTML = currentLang["generic.back"];
+          }
+        }
       }
     }
     document.title = currentLang["menu.title"];
@@ -33,11 +41,19 @@ function loadText(lang) {
       if (Object.hasOwnProperty.call(langs['en-US'], key)) {
         const keys = key.split('.');
         const element = langs['en-US'][key];
-        document.querySelector(`${keys[0] == 'generic' ? '' : '#' + keys[0]} #${keys[1]}${keys[2] ? ' #' + keys[2] : ''}`).innerHTML = key;
+        if (keys[1] != 'back')
+          document.querySelector(`${keys[0] == 'generic' ? '' : '#' + keys[0]} #${keys[1]}${keys[2] ? ' #' + keys[2] : ''}`).innerHTML = key;
+        else {
+          for (let i = 0; i < backBtns.length; i++) {
+            const btn = backBtns[i];
+            btn.innerHTML = "generic.back";
+          }
+        }
       }
     }
     document.title = "menu.title";
   }
+  document.getElementById('version').innerHTML += version;
   langSetting = lang;
   localStorage.setItem('tacoGame2:lang', JSON.stringify(langSetting));
 }
@@ -59,6 +75,7 @@ function parseCommand(command) {
 var langSetting = JSON.parse(localStorage.getItem('tacoGame2:lang')) || ['en-US', 0];
 const select = document.querySelector('#options #lang');
 select.options.selectedIndex = langSetting[1];
+const backBtns = document.getElementsByClassName('back');
 loadText(langSetting);
 // loadText('es-ES');
 //#region menu
@@ -70,16 +87,25 @@ document.querySelector('#menu #optionsBtn').addEventListener('click', (e) => {
   document.getElementById('options').style.display = 'block';
 });
 document.querySelector('#menu #creditsBtn').addEventListener('click', (e) => {
-  console.log(langSetting[0] == 'dev' ? 'menu.creditsBtn' : langs[langSetting[0]]["menu.creditsBtn"]);
+  document.getElementById('menu').style.display = 'none';
+  document.getElementById('credits').style.display = 'block';
 });
 //#endregion menu
+for (let i = 0; i < backBtns.length; i++) {
+  const btn = backBtns[i];
+  btn.addEventListener('click', (e) => {
+    document.getElementById('options').style.display = 'none';
+    document.getElementById('credits').style.display = 'none';
+    document.getElementById('menu').style.display = 'block';
+  });
+  // btn.innerHTML = langs[langSetting[0]]["generic.back"];
+}
 //#region options
-document.querySelector('#options #back').addEventListener('click', (e) => {
-  document.getElementById('options').style.display = 'none';
-  document.getElementById('menu').style.display = 'block';
-});
 document.querySelector('#options #lang').addEventListener('change', (e) => {
   const select = document.querySelector('#options #lang');
   loadText([select.options[select.options.selectedIndex].id, select.options.selectedIndex]);
 });
-  //#endregion options
+//#endregion options
+//#region credits
+
+//#endregion credits
