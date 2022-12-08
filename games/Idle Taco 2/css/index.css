@@ -93,6 +93,18 @@ body {
   text-align: center;
 }
 
+#title {
+  font-size: 10vh;
+}
+
+#menu button.gray,
+#options button.gray,
+#options #lang {
+  width: 20%;
+  height: 6vh;
+  font-size: larger;
+}
+
 button,
 select {
   margin-bottom: 10px;
@@ -100,7 +112,7 @@ select {
 
 .gray {
   background-color: gray;
-  border-radius: 1rem;
+  /* border-radius: 1rem; */
   color: black;
 }
 
