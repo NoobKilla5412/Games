@@ -27,7 +27,7 @@
     "title": "Idle Taco 2",
     "id": "idleTaco2",
     "image": "image/taco.svg",
-    "version": "0.1",
+    "version": "0.2",
     "otherData": [
       "idleTaco2:lang"
     ]
@@ -60,7 +60,6 @@
     "dev": "<a href=\"https://gist.github.com/straker\" target=\"_blank\">straker</a>",
     "id": "Breakout",
     "image": "https://img.gamedistribution.com/8f006852782547a7b8dbf392f7883e9e-512x512.jpeg",
-    "version": "1.0",
     "link": "3rdPartyGames/Breakout/Launch.html"
   },
   "tetris": {
@@ -68,7 +67,6 @@
     "dev": "<a href=\"https://github.com/sandywalker\" target=\"_blank\">sandywalker</a>",
     "id": "Tetris",
     "image": "https://m.media-amazon.com/images/I/61M3rDwh4qL.png",
-    "version": "1.0",
     "link": "3rdPartyGames/Tetris/Launch.html"
   },
   "aquaParkIo": {
@@ -76,7 +74,6 @@
     "dev": "Voodoo",
     "id": "AquaparkIo",
     "image": "https://aquapark.io/newicon64.png",
-    "version": "1.0",
     "link": "https://aquapark.io"
   },
   "waterSort": {
@@ -84,7 +81,6 @@
     "dev": "IEC GLOBAL PTY LTD",
     "id": "WaterSort",
     "image": "https://play-lh.googleusercontent.com/uoqdyvIOwi4Ql2fITVoyWDDz8Z4VkoISCN19Ud-1zlGKCgFsHxyuf6Nw7lH5ZkLWLDo",
-    "version": "1.0",
     "link": "3rdPartyGames/Water Sort/Launch.html"
   },
   "memory": {
@@ -92,7 +88,6 @@
     "dev": "<a href=\"https://github.com/mmenavas\" target=\"_blank\">mmenavas</a>",
     "id": "memory",
     "image": "3rdPartyGames/Fruit Matcher/images/card.svg",
-    "version": "1.0",
     "link": "3rdPartyGames/Fruit Matcher/Launch.html"
   },
   "minecraft": {
@@ -108,7 +103,6 @@
     "dev": "html5games.com",
     "id": "omNomRun",
     "image": "https://img.cdn.famobi.com/portal/html5games/images/tmp/OmNomRunTeaser.jpg?v=0.2-34fd2422",
-    "version": "1.0",
     "link": "https://games.cdn.famobi.com/html5games/o/om-nom-run/v1240/?fg_domain=play.famobi.com&fg_aid=A1000-111&fg_uid=abe80572-560a-444d-baf7-2fa4a7b2c02f&fg_pid=e37ab3ce-88cd-4438-9b9c-a37df5d33736&fg_beat=165&original_ref=https%3A%2F%2Fplay.famobi.com%2Fom-nom-run"
   },
   "gardenBloom": {
@@ -116,7 +110,6 @@
     "dev": "html5games.com",
     "id": "gardenBloom",
     "image": "https://img.cdn.famobi.com/portal/html5games/images/tmp/GardenBloomTeaser.jpg?v=0.2-34fd2422",
-    "version": "1.0",
     "link": "https://games.cdn.famobi.com/html5games/g/garden-bloom/v520/?fg_domain=play.famobi.com&fg_aid=A1000-100&fg_uid=3f504f07-d674-4a4d-a02e-89e7414d8f26&fg_pid=5a106c0b-28b5-48e2-ab01-ce747dda340f&fg_beat=164&original_ref=https%3A%2F%2Fhtml5games.com%2F"
   },
   "bubbleTower3D": {
@@ -124,31 +117,27 @@
     "dev": "html5games.com",
     "id": "bubbleTower3D",
     "image": "https://img.cdn.famobi.com/portal/html5games/images/tmp/BubbleTower3dTeaser.jpg?v=0.2-34fd2422",
-    "version": "1.0",
-    "link": "https://games.cdn.famobi.com/html5games/b/bubble-tower-3d/v050/?fg_domain=play.famobi.com&fg_aid=A1000-100&fg_uid=1385d98a-b5f2-4339-bce7-b99a8dd2e8b0&fg_pid=5a106c0b-28b5-48e2-ab01-ce747dda340f&fg_beat=167&original_ref=https%3A%2F%2Fhtml5games.com%2F"
+    "link": "https://games.cdn.famobi.com/html5games/b/bubble-tower-3d/v050/?fg_domain=play.famobi.com&fg_aid=A1000-100&fg_uid=1385d98a-b5f2-4339-bce7-b99a8dd2e8b0&fg_pid=5a106c0b-28b5-48e2-ab01-ce747dda340f&fg_beat=165&original_ref=https%3A%2F%2Fplay.famobi.com%2Fhtml5game%2F1385d98a-b5f2-4339-bce7-b99a8dd2e8b0%2FA1000-10"
   },
   "cannonBalls3D": {
     "title": "Cannon Balls 3D",
     "dev": "html5games.com",
     "id": "cannonBalls3D",
     "image": "https://img.cdn.famobi.com/portal/html5games/images/tmp/CannonBalls3dTeaser.jpg?v=0.2-34fd2422",
-    "version": "1.0",
-    "link": "https://games.cdn.famobi.com/html5games/c/cannon-balls-3d/v190/?fg_domain=play.famobi.com&fg_aid=A1000-100&fg_uid=3ffa11c2-61da-4974-892b-473582253371&fg_pid=5a106c0b-28b5-48e2-ab01-ce747dda340f&fg_beat=167&original_ref=https%3A%2F%2Fhtml5games.com%2F"
+    "link": "https://games.cdn.famobi.com/html5games/c/cannon-balls-3d/v190/?fg_domain=play.famobi.com&fg_aid=A1000-100&fg_uid=3ffa11c2-61da-4974-892b-473582253371&fg_pid=5a106c0b-28b5-48e2-ab01-ce747dda340f&fg_beat=164&original_ref=https%3A%2F%2Fplay.famobi.com%2Fhtml5game%2F3ffa11c2-61da-4974-892b-473582253371%2FA1000-10"
   },
   "towerCrash3D": {
     "title": "Tower Crash 3D",
     "dev": "html5games.com",
     "id": "towerCrash3D",
     "image": "https://img.cdn.famobi.com/portal/html5games/images/tmp/TowerCrash3dTeaser.jpg?v=0.2-34fd2422",
-    "version": "1.0",
-    "link": "https://games.cdn.famobi.com/html5games/t/tower-crash-3d/v290/?fg_domain=play.famobi.com&fg_aid=A1000-100&fg_uid=68a7c06e-ec27-4fa4-99a5-a5e9702ac4ef&fg_pid=5a106c0b-28b5-48e2-ab01-ce747dda340f&fg_beat=014&original_ref=https%3A%2F%2Fhtml5games.com%2F"
+    "link": "https://games.cdn.famobi.com/html5games/t/tower-crash-3d/v290/?fg_domain=play.famobi.com&fg_aid=A1000-100&fg_uid=68a7c06e-ec27-4fa4-99a5-a5e9702ac4ef&fg_pid=5a106c0b-28b5-48e2-ab01-ce747dda340f&fg_beat=164&original_ref=https%3A%2F%2Fplay.famobi.com%2Fhtml5game%2F68a7c06e-ec27-4fa4-99a5-a5e9702ac4ef%2FA1000-10"
   },
   "elementBlocks": {
     "title": "Element Blocks",
     "dev": "html5games.com",
     "id": "elementBlocks",
     "image": "https://img.cdn.famobi.com/portal/html5games/images/tmp/ElementBlocksTeaser.jpg?v=0.2-34fd2422",
-    "version": "1.0",
-    "link": "https://games.cdn.famobi.com/html5games/e/element-blocks/v290/?fg_domain=play.famobi.com&fg_aid=A1000-100&fg_uid=8c70b6c7-5792-4c40-b891-496eef2fb5ed&fg_pid=5a106c0b-28b5-48e2-ab01-ce747dda340f&fg_beat=011&original_ref=https%3A%2F%2Fhtml5games.com%2F"
+    "link": "https://games.cdn.famobi.com/html5games/e/element-blocks/v290/?fg_domain=play.famobi.com&fg_aid=A1000-100&fg_uid=8c70b6c7-5792-4c40-b891-496eef2fb5ed&fg_pid=5a106c0b-28b5-48e2-ab01-ce747dda340f&fg_beat=163&original_ref=https%3A%2F%2Fplay.famobi.com%2Fhtml5game%2F8c70b6c7-5792-4c40-b891-496eef2fb5ed%2FA1000-10"
   }
 }

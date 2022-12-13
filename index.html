@@ -34,6 +34,11 @@
       padding: 0px;
     }
 
+    .container-fluid {
+      height: calc(100vh - 65px);
+      overflow-y: scroll;
+    }
+
     #homeBar {
       padding: 16px;
       position: absolute;
@@ -57,7 +62,12 @@
       width: 100%;
       left: 0px;
       right: 0px;
-      height: calc(100vh - 62px);
+      height: calc(100vh - 65px);
+    }
+
+    #game {
+      height: calc(100vh - 65px);
+      display: none;
     }
 
     div.app {
@@ -99,11 +109,11 @@
 </head>
 
 <body>
-  <div class="container-fluid">
+  <div class="container-fluid" id="container">
     <div id="containerGames"></div>
     <div id="containerApps"></div>
-    <div id="game"></div>
   </div>
+  <div id="game"></div>
   <div id="homeBar">
     <button onclick="home();" id="home"></button>
   </div>
@@ -128,6 +138,69 @@
     }
     var activeApp;
     var appLibrary = {};
+    function mouseX(e) {
+      if (e.pageX) {
+        return e.pageX;
+      } else if (e.clientX) {
+        return e.clientX + (document.documentElement.scrollLeft ?
+          document.documentElement.scrollLeft :
+          document.body.scrollLeft);
+      } else {
+        return null;
+      }
+    }
+
+    function mouseY(e) {
+      if (e.pageY) {
+        return e.pageY;
+      } else if (e.clientY) {
+        return e.clientY + (document.documentElement.scrollTop ?
+          document.documentElement.scrollTop :
+          document.body.scrollTop);
+      } else {
+        return null;
+      }
+    }
+    function load(game) {
+      if (game.title == 'Update') {
+        location.reload();
+      } else {
+        if (game.options) {
+          document.getElementById('game').innerHTML = `<iframe src="${game.link}" ${game.options} />`;
+        } else {
+          document.getElementById('game').innerHTML = `<iframe src="${game.link}" />`;
+        }
+        document.getElementById('containerGames').style.display = 'none';
+        document.getElementById('containerApps').style.display = 'none';
+        document.title = `${game.title} ${game.version ? 'v' + game.version : ''}`;
+      }
+      activeApp = game.title;
+      document.head.removeChild(document.getElementsByTagName('title')[0]);
+      let newTitle = document.createElement('title');
+      newTitle.innerHTML = `${game.title} &#8211; Noob Killa&rsquo;s OS`;
+      document.head.appendChild(newTitle);
+      document.getElementById('game').style.display = 'block';
+      document.getElementById('container').style.display = 'none';
+    }
+
+    function deleteGame(game, type = 'game') {
+      if (confirm(`Are you sure you want to delete ${game.title}?`)) {
+        appLibrary[game.title] = false;
+        localStorage.setItem('apps', JSON.stringify(appLibrary));
+        if (type == 'game') {
+          if (!confirm(`Do you want to keep save data for ${game.title}? Ok for save, Cancel for delete`)) {
+            localStorage.removeItem(game.id);
+            if (game.otherData) {
+              game.otherData.forEach(dataName => {
+                localStorage.removeItem(dataName);
+              });
+            }
+            game?.delAction();
+          }
+        }
+        location.reload();
+      }
+    }
     function home() {
       if (activeApp != 'App Store' && activeApp != 'Settings') {
         document.getElementById('game').innerHTML = '';
@@ -140,6 +213,8 @@
       let newTitle = document.createElement('title');
       newTitle.innerHTML = 'Noob Killa\'s OS'
       document.head.appendChild(newTitle);
+      document.getElementById('game').style.display = 'none';
+      document.getElementById('container').style.display = 'block';
     }
     fetch('json/apps.json')
       .then((response) => response.json())
@@ -243,43 +318,6 @@
 
                 updateBr.style.display = 'initial';
 
-                function load(game) {
-                  if (game.title == 'Update') {
-                    location.reload();
-                  } else {
-                    if (game.options) {
-                      document.getElementById('game').innerHTML = `<iframe src="${game.link}" ${game.options} />`;
-                    } else {
-                      document.getElementById('game').innerHTML = `<iframe src="${game.link}" />`;
-                    }
-                    document.getElementById('containerGames').style.display = 'none';
-                    document.getElementById('containerApps').style.display = 'none';
-                    document.title = `${game.title} ${game.version ? 'v' + game.version : ''}`;
-                  }
-                  activeApp = game.title;
-                  document.head.removeChild(document.getElementsByTagName('title')[0]);
-                  let newTitle = document.createElement('title');
-                  newTitle.innerHTML = `${game.title} &#8211; Noob Killa&rsquo;s OS`;
-                  document.head.appendChild(newTitle);
-                }
-
-                function deleteGame(game, type = 'game') {
-                  if (confirm(`Are you sure you want to delete ${game.title}?`)) {
-                    appLibrary[game.title] = false;
-                    localStorage.setItem('apps', JSON.stringify(appLibrary));
-                    if (type == 'game') {
-                      if (!confirm(`Do you want to keep save data for ${game.title}? Ok for save, Cancel for delete`)) {
-                        localStorage.removeItem(game.id);
-                        if (game.otherData) {
-                          game.otherData.forEach(dataName => {
-                            localStorage.removeItem(dataName);
-                          });
-                        }
-                      }
-                    }
-                    location.reload();
-                  }
-                }
 
                 for (const game in games) {
                   if (Object.hasOwnProperty.call(games, game)) {
@@ -332,34 +370,9 @@
                     }
                   }
                 });
-
-                function mouseX(e) {
-                  if (e.pageX) {
-                    return e.pageX;
-                  } else if (e.clientX) {
-                    return e.clientX + (document.documentElement.scrollLeft ?
-                      document.documentElement.scrollLeft :
-                      document.body.scrollLeft);
-                  } else {
-                    return null;
-                  }
-                }
-
-                function mouseY(e) {
-                  if (e.pageY) {
-                    return e.pageY;
-                  } else if (e.clientY) {
-                    return e.clientY + (document.documentElement.scrollTop ?
-                      document.documentElement.scrollTop :
-                      document.body.scrollTop);
-                  } else {
-                    return null;
-                  }
-                }
               });
           });
       });
-
   </script>
 </body>
 

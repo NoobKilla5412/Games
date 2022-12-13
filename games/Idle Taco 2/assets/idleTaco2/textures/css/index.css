@@ -51,13 +51,20 @@ body {
 
 #intro1 {
   animation: logo 2s 1 forwards ease-in;
-  display: flex;
+  display: none;
   color: rgba(60, 255, 0, 0);
   height: 100vh;
   align-items: center;
   justify-content: center;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+}
+
+#clickMe {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
 }
 
 #intro2 {
@@ -99,7 +106,12 @@ body {
 }
 
 #menu #title {
-  font-size: 10vh;
+  font-size: 69.2px;
+}
+
+#menu {
+  overflow-y: auto;
+  height: 100vh;
 }
 
 #version {
@@ -118,13 +130,13 @@ body {
 #options button.gray,
 #credits button.gray,
 #options #lang {
-  width: 23%;
-  height: 6vh;
-  font-size: larger;
+  width: 368px;
+  height: 42px;
+  font-size: 20.76px;
 }
 
 #langLabel {
-  font-size: larger;
+  font-size: 20.76px;
 }
 
 button,
@@ -132,12 +144,21 @@ select {
   margin-bottom: 10px;
 }
 
+option {
+  background-size: cover;
+  border: 0px;
+  background-color: white;
+  color: black;
+}
+
 .gray {
-  background-color: gray;
-  /* border-radius: 1rem; */
+  background-image: url('../gui/btn-gray.png');
+  background-size: cover;
+  border: 0px;
+  background-color: white;
   color: black;
 }
 
 .gray:hover {
-  background-color: lightgray;
+  background-image: url('../gui/btn-lightgray.png');
 }

@@ -1,11 +1,11 @@
-const langs = {
+{
   "en-US": {
     "menu.title": "Idle Taco 2",
     "menu.startBtn": "Start",
     "menu.optionsBtn": "Options",
     "menu.creditsBtn": "Credits",
-    "menu.version": "Version: ",
-    "menu.copy": "&copy;2022 Noob Killa Studios",
+    "bottom.version": "Version: ",
+    "bottom.copy": "&copy;2022 Noob Killa Studios",
     "options.title": "Options",
     "options.music": "Toggle Music",
     "options.langLabel": "Language: ",
@@ -17,6 +17,9 @@ const langs = {
     "credits.originalIdea": "Original Idea: Egg Egg Egg Studio",
     "credits.mainDesign": "Main Design: Noob Killa Studios and Ojas Bhat",
     "credits.music": "Music:",
+    "credits.minigames": "Minigames:",
+    "credits.crossyTaco": "Crossy Taco: Ojas Bhat",
+    "credits.misc": "Misc:",
     "credits.code": "Code: Noob Killa Studios",
     "credits.assets": "Assets: Egg Egg Egg Studio"
   },
@@ -25,8 +28,8 @@ const langs = {
     "menu.startBtn": "Comienzo",
     "menu.optionsBtn": "Opciones",
     "menu.creditsBtn": "Créditos",
-    "menu.version": "Version: ",
-    "menu.copy": "&copy;2022 Noob Killa Studios",
+    "bottom.version": "Version: ",
+    "bottom.copy": "&copy;2022 Noob Killa Studios",
     "options.title": "Opciones",
     "options.music": "Alternar música",
     "options.langLabel": "Idioma: ",
@@ -38,7 +41,10 @@ const langs = {
     "credits.originalIdea": "Idea original: Egg Egg Egg Studio",
     "credits.mainDesign": "Diseño principal: Noob Killa Studios and Ojas Bhat",
     "credits.music": "Música:",
+    "credits.minigames": "Minigames:",
+    "credits.crossyTaco": "Crossy Taco: Ojas Bhat",
+    "credits.misc": "Misc:",
     "credits.code": "Código: Noob Killa Studios",
     "credits.assets": "Activos: Egg Egg Egg Studio"
   }
-};
+}

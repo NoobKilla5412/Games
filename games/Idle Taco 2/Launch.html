@@ -6,10 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title></title>
-  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="assets/idleTaco2/textures/css/index.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"
+    integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
+  <div id="clickMe">
+    Click to enable sound
+  </div>
   <div id="intro1">
     <div id="name">
       <div id="name1">
@@ -32,8 +38,6 @@
     <button class="gray" id="startBtn"></button><br>
     <button class="gray" id="optionsBtn"></button><br>
     <button class="gray" id="creditsBtn"></button>
-    <div id="version"></div>
-    <div id="copy"></div>
   </div>
   <div id="options">
     <h1 id="title"></h1>
@@ -51,11 +55,18 @@
     <p id="originalIdea"></p>
     <p id="mainDesign"></p>
     <h2 id="music"></h2>
+    <h3 id="minigames"></h3>
+    <p id="crossyTaco"></p>
+    <h2 id="misc"></h2>
     <p id="code"></p>
     <p id="assets"></p>
     <button class="gray back"></button>
   </div>
-  <script src="langs.js"></script>
+  <div id="bottom">
+    <div id="version"></div>
+    <div id="copy"></div>
+  </div>
+  <script src="js/music.js"></script>
   <script src="js/index.js"></script>
 </body>
 

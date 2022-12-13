@@ -17,6 +17,10 @@
     "image": "https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png",
     "link": "https://www.google.com/webhp?igu=1"
   },
+  "books": {
+    "title": "Books",
+    "image": "image/books.svg"
+  },
   "bing": {
     "title": "Bing",
     "dev": "Microsoft Corporation",

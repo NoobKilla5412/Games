@@ -58,16 +58,26 @@
     </h1>
     <div id="apps" class="row"></div>
   </div>
-  <button
-    onclick="for (let i = 0;i < document.getElementsByClassName('get').length;i++){document.getElementsByClassName('get')[i].click();}"
-    style="float: right;"></button>
+  <button onclick="getAll()" style="float: right;"></button>
   <script src="apps.js"></script>
   <script>
+    function getAll() {
+      for (let i = 0; i < document.getElementsByClassName('get').length; i++) {
+        document.getElementsByClassName('get')[i].click();
+      }
+    }
     var settings = { darkMode: false };
     if (!localStorage.getItem('settings')) {
       localStorage.setItem('settings', JSON.stringify(settings));
     } else {
       settings = JSON.parse(localStorage.getItem('settings'));
+    }
+    if (settings.darkMode) {
+      document.body.style.background = 'black';
+      document.body.style.color = 'white';
+    } else {
+      document.body.style.background = 'white';
+      document.body.style.color = 'black';
     }
     var appLibrary = {};
     if (!localStorage.getItem('apps')) {
@@ -76,13 +86,6 @@
       appLibrary = JSON.parse(localStorage.getItem('apps'));
     }
 
-    if (settings.darkMode) {
-      document.body.style.background = 'black';
-      document.body.style.color = 'white';
-    } else {
-      document.body.style.background = 'white';
-      document.body.style.color = 'black';
-    }
     fetch('/json/games.json')
       .then((response) => response.json())
       .then((games) => {

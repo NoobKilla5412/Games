@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <style>
+    @font-face {
+      font-family: "Pacifico";
+      src: url("fonts/Pacifico-Regular.ttf");
+    }
+
+    body {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    #reader,
+    #btns {
+      display: none;
+    }
+
+    #reader {
+      padding: 10px 20px;
+    }
+
+    #prev,
+    #back {
+      float: left;
+    }
+
+    #back {
+      margin-left: 5px;
+    }
+
+    #next {
+      float: right;
+    }
+
+    #pageNum1,
+    #pageNum2 {
+      position: absolute;
+      margin-top: auto;
+      text-align: center;
+      width: calc(50% - 130.34px);
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    #pageNum1 {
+      border-right: 1px black solid;
+      left: 130.34px;
+    }
+
+    #pageNum2 {
+      right: 79.34px;
+    }
+
+    #selectBook {
+      padding-left: 10px;
+      padding-top: 10px;
+    }
+
+    .page {
+      width: calc(50% - 20px);
+      padding: 10px;
+    }
+
+    #page1 {
+      float: left;
+      border-right: 1px black solid;
+      height: calc(100vh - 85px);
+      width: calc(50% - 21px);
+    }
+
+    #page2 {
+      float: right;
+    }
+
+    #btns {
+      padding: 16px;
+      position: absolute;
+      bottom: 0px;
+      width: calc(100% - 32px);
+      margin: 0px;
+      text-align: center;
+    }
+
+    .nav {
+      width: 59.34;
+    }
+
+    p {
+      font-size: 14pt;
+    }
+  </style>
+</head>
+
+<body>
+  <dialog id="goto">
+    <form method="dialog">
+      <p>
+        <label for="pageNum">Goto</label>
+        <input type="number" id="pageNum">
+      </p>
+      <div>
+        <button id="confirmBtn" value="default">Confirm</button>
+        <button value="cancel">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+  <div id="selectBook">
+    <select id="select"></select>
+    <button id="go">Go</button>
+  </div>
+  <div id="reader"></div>
+  <div id="btns"></div>
+  <script src="js/parse2.js"></script>
+  <script src="js/index.js"></script>
+</body>
+
+</html>
