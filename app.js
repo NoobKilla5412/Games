@@ -6,9 +6,9 @@ const { Server } = require("socket.io");
 const io = new Server(serv);
 
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
-app.use('/', express.static(__dirname + '/'));
+app.use('/', express.static(__dirname + '/public/'));
 serv.listen(2000);
 
 // setInterval(() => { }, 10000);
