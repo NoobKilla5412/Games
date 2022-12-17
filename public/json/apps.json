@@ -5,21 +5,25 @@
   },
   "MCMods": {
     "title": "MC Mods",
-    "image": "image/MCMods.png"
+    "image": "/image/MCMods.png"
   },
   "familyTree": {
     "title": "Family Tree",
-    "image": "image/familyTree.png"
+    "image": "/image/familyTree.png"
+  },
+  "books": {
+    "title": "Books",
+    "image": "/image/books.svg"
+  },
+  "music": {
+    "title": "Music",
+    "image": "/image/music.svg"
   },
   "google": {
     "title": "Google",
     "dev": "Google LLC",
     "image": "https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png",
     "link": "https://www.google.com/webhp?igu=1"
-  },
-  "books": {
-    "title": "Books",
-    "image": "image/books.svg"
   },
   "bing": {
     "title": "Bing",
