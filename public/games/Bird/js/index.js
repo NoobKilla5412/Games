@@ -1,16 +1,16 @@
 var version = 1.6;
 var changes = {
-  "1.4": {
-    "content": "Make the obstacles thicker"
+  1.4: {
+    content: "Make the obstacles thicker"
   },
-  "1.5": {
-    "content": "Fix bugs"
+  1.5: {
+    content: "Fix bugs"
   },
-  "1.6": {
-    "content": "Fix bugs"
+  1.6: {
+    content: "Fix bugs"
   }
 };
-var changeLogTop = '<br>';
+var changeLogTop = "<br>";
 for (const key in changes) {
   if (Object.hasOwnProperty.call(changes, key)) {
     const value = changes[key];
@@ -40,16 +40,16 @@ function startGame() {
   myGamePiece = new Component(30, 30, "red", 50, 120); // Spawn the player
   myScore = new Component("30px", "Consolas", "black", 280, 40, "text"); // Score
   winScore = new Component("30px", "Consolas", "black", 450, 200, "text");
-  if (!localStorage.getItem('Bird')) {
-    localStorage.setItem('Bird', JSON.stringify(scores));
-    scores = JSON.parse(localStorage.getItem('Bird'));
+  if (!localStorage.getItem("Bird")) {
+    localStorage.setItem("Bird", JSON.stringify(scores));
+    scores = JSON.parse(localStorage.getItem("Bird"));
   } else {
-    scores = JSON.parse(localStorage.getItem('Bird'));
+    scores = JSON.parse(localStorage.getItem("Bird"));
     highScore = parseInt(scores.mouse);
   }
   myGameArea.start();
-  document.getElementById('start').style.display = 'none';
-  document.getElementById('controls').style.display = 'none';
+  document.getElementById("start").style.display = "none";
+  document.getElementById("controls").style.display = "none";
 }
 /**
  * Start the game using arrows
@@ -59,16 +59,16 @@ function useArrows() {
   myGamePiece = new Component(30, 30, "red", 50, 120); // Spawn the player
   myScore = new Component("30px", "Consolas", "black", 280, 40, "text"); // Score
   winScore = new Component("30px", "Consolas", "black", 450, 200, "text");
-  if (!localStorage.getItem('Bird')) {
-    localStorage.setItem('Bird', JSON.stringify(scores));
-    scores = JSON.parse(localStorage.getItem('Bird'));
+  if (!localStorage.getItem("Bird")) {
+    localStorage.setItem("Bird", JSON.stringify(scores));
+    scores = JSON.parse(localStorage.getItem("Bird"));
   } else {
-    scores = JSON.parse(localStorage.getItem('Bird'));
+    scores = JSON.parse(localStorage.getItem("Bird"));
     highScore = parseInt(scores.arrows);
   }
   myGameArea.start();
-  document.getElementById('start').style.display = 'none';
-  document.getElementById('controls').style.display = 'none';
+  document.getElementById("start").style.display = "none";
+  document.getElementById("controls").style.display = "none";
 }
 /**
  * The game canvas
@@ -84,22 +84,22 @@ var myGameArea = {
     if (controlMethod === 0) {
       this.canvas.style.cursor = "none";
     }
-    this.canvas.id = 'gameScreen';
+    this.canvas.id = "gameScreen";
     this.context = this.canvas.getContext("2d");
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     this.frameNo = 0;
     this.interval = setInterval(updateGameArea);
-    window.addEventListener('keydown', function (e) {
-      myGameArea.keys = (myGameArea.keys || [])
+    window.addEventListener("keydown", function (e) {
+      myGameArea.keys = myGameArea.keys || [];
       myGameArea.keys[e.keyCode] = true;
-    })
-    window.addEventListener('keyup', function (e) {
+    });
+    window.addEventListener("keyup", function (e) {
       myGameArea.keys[e.keyCode] = false;
-    })
-    window.addEventListener('mousemove', function (e) {
+    });
+    window.addEventListener("mousemove", function (e) {
       myGameArea.x = e.pageX;
       myGameArea.y = e.pageY;
-    })
+    });
   },
   clear: function () {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -115,15 +115,15 @@ var myGameArea = {
      * Try to set the highScore var
      */
     if (controlMethod === 0) {
-      if (((myObstacles.length / 2) - 1) > parseInt(JSON.parse(localStorage.getItem("Bird")).mouse)) {
+      if (myObstacles.length / 2 - 1 > parseInt(JSON.parse(localStorage.getItem("Bird")).mouse)) {
         scores = JSON.parse(localStorage.getItem("Bird"));
-        scores.mouse = ((myObstacles.length / 2) - 1);
+        scores.mouse = myObstacles.length / 2 - 1;
         localStorage.setItem("Bird", JSON.stringify(scores));
       }
     } else {
-      if (((myObstacles.length / 2) - 1) > parseInt(JSON.parse(localStorage.getItem("Bird")).arrows)) {
+      if (myObstacles.length / 2 - 1 > parseInt(JSON.parse(localStorage.getItem("Bird")).arrows)) {
         scores = JSON.parse(localStorage.getItem("Bird"));
-        scores.arrows = ((myObstacles.length / 2) - 1);
+        scores.arrows = myObstacles.length / 2 - 1;
         localStorage.setItem("Bird", JSON.stringify(scores));
       }
     }
@@ -132,7 +132,7 @@ var myGameArea = {
      */
     clearInterval(this.interval);
   }
-}
+};
 
 class Component {
   constructor(width, height, color, x, y, type) {
@@ -191,15 +191,15 @@ class Component {
    */
   crashWith(otherobj) {
     var myleft = this.x;
-    var myright = this.x + (this.width);
+    var myright = this.x + this.width;
     var mytop = this.y;
-    var mybottom = this.y + (this.height);
+    var mybottom = this.y + this.height;
     var otherleft = otherobj.x;
-    var otherright = otherobj.x + (otherobj.width);
+    var otherright = otherobj.x + otherobj.width;
     var othertop = otherobj.y;
-    var otherbottom = otherobj.y + (otherobj.height);
+    var otherbottom = otherobj.y + otherobj.height;
     var crash = true;
-    if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+    if (mybottom < othertop || mytop > otherbottom || myright < otherleft || myleft > otherright) {
       crash = false;
     }
     return crash;
@@ -228,11 +228,11 @@ function updateGameArea() {
    * make it harder each level
    */
   if (everyInterval(lengthOfGap * 10)) {
-    oBSSpeed -= .1;
+    oBSSpeed -= 0.1;
     lengthOfGap -= 10;
   }
   if (lengthOfGap < 10) {
-    lengthOfGap = 10
+    lengthOfGap = 10;
   }
   /**
    * generate the obstacles
@@ -255,17 +255,22 @@ function updateGameArea() {
   //myScore.text = "OBSTACLES: " + myObstacles.length / 2;
   myGamePiece.speedX = 0; // reset the player's X speed
   myGamePiece.speedY = 0; // reset the player's Y speed
-  if (controlMethod === 1 && !isPaused) { // if using arrows and not paused
-    if (myGameArea.keys && myGameArea.keys[37]) { // Up arrow
+  if (controlMethod === 1 && !isPaused) {
+    // if using arrows and not paused
+    if (myGameArea.keys && myGameArea.keys[37]) {
+      // Up arrow
       myGamePiece.speedX = -BlockSpeed; // Left
     }
-    if (myGameArea.keys && myGameArea.keys[39]) { // Right arrow
+    if (myGameArea.keys && myGameArea.keys[39]) {
+      // Right arrow
       myGamePiece.speedX = BlockSpeed; // Right
     }
-    if (myGameArea.keys && myGameArea.keys[38]) { // Up arrow
+    if (myGameArea.keys && myGameArea.keys[38]) {
+      // Up arrow
       myGamePiece.speedY = -BlockSpeed; // Up
     }
-    if (myGameArea.keys && myGameArea.keys[40]) { // Down arrow
+    if (myGameArea.keys && myGameArea.keys[40]) {
+      // Down arrow
       myGamePiece.speedY = BlockSpeed; // Down
     }
     /**
@@ -304,7 +309,8 @@ function updateGameArea() {
       myObstacles[i].newPos();
       myObstacles[i].update();
     }
-  } else { // normal game
+  } else {
+    // normal game
     for (i = 0; i < myObstacles.length; i += 1) {
       myObstacles[i].speedX = oBSSpeed;
       myObstacles[i].newPos();
@@ -315,32 +321,36 @@ function updateGameArea() {
   }
   myGamePiece.update(); // redraw the player
   // see if you have won:
-  if (controlMethod == 0 && ((myObstacles.length / 2) - 1) >= 100) {
+  if (controlMethod == 0 && myObstacles.length / 2 - 1 >= 100) {
     winScore.text = "You Win! :D";
     myGameArea.clear();
     winScore.update();
     myGameArea.stop();
-  } else { // normal
+  } else {
+    // normal
     // update the text of the scoreboard:
-    myScore.text = "SCORE: " + ((myObstacles.length / 2) - 1) + " LEVEL: " + (Math.trunc((((myObstacles.length / 2) - 1) / 10)) + 1) + " HIGH SCORE: " + highScore;
+    myScore.text = "SCORE: " + (myObstacles.length / 2 - 1) + " LEVEL: " + (Math.trunc((myObstacles.length / 2 - 1) / 10) + 1) + " HIGH SCORE: " + highScore;
     // document.getElementById('speed').innerHTML = "Speed: " + Math.round(10 * oBSSpeed) / 10;
     myScore.update(); // update the scoreboard
   }
   // win if using the arrows:
-  if (controlMethod == 1 && ((myObstacles.length / 2) - 1) >= 80) {
+  if (controlMethod == 1 && myObstacles.length / 2 - 1 >= 80) {
     winScore.text = "You Win! :D";
     myGameArea.clear();
     winScore.update();
     myGameArea.stop();
-  } else { // normal
+  } else {
+    // normal
     // update the text of the scoreboard:
-    myScore.text = "SCORE: " + ((myObstacles.length / 2) - 1) + " LEVEL: " + (Math.trunc((((myObstacles.length / 2) - 1) / 10)) + 1) + " HIGH SCORE: " + highScore;
+    myScore.text = "SCORE: " + (myObstacles.length / 2 - 1) + " LEVEL: " + (Math.trunc((myObstacles.length / 2 - 1) / 10) + 1) + " HIGH SCORE: " + highScore;
     myScore.update(); // update the scoreboard
   }
 }
 
-
-function everyInterval(n) { // timings function
-  if ((myGameArea.frameNo / n) % 1 == 0) { return true; }
+function everyInterval(n) {
+  // timings function
+  if ((myGameArea.frameNo / n) % 1 == 0) {
+    return true;
+  }
   return false;
 }
