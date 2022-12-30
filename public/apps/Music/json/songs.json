@@ -1,0 +1,14 @@
+{
+  "taco_crossing_midday_under_the_sun": {
+    "title": "Taco Crossing - Midday Under the Sun",
+    "id": "taco_crossing_midday_under_the_sun",
+    "link": "/games/Idle Taco 2/assets/crossyTaco/music/Taco_crossing - midday_under_the_sun_.mp3",
+    "composer": "Ojas Bhat"
+  },
+  "taco_crossing_the_destruction_of_a_delicious_Taco": {
+    "title": "Taco Crossing - The Destruction Of a Delicious Taco",
+    "id": "taco_crossing_the_destruction_of_a_delicious_Taco",
+    "link": "/games/Idle Taco 2/assets/crossyTaco/music/The_destruction_of_a_delicious_Taco.mp3",
+    "composer": "Ojas Bhat"
+  }
+}
