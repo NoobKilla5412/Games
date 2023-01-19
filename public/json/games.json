@@ -65,9 +65,16 @@
   "tetris": {
     "title": "Tetris",
     "dev": "<a href=\"https://github.com/sandywalker\" target=\"_blank\">sandywalker</a>",
-    "id": "Tetris",
+    "id": "tetris",
     "image": "https://m.media-amazon.com/images/I/61M3rDwh4qL.png",
     "link": "3rdPartyGames/Tetris/Launch.html"
+  },
+  "blueBoyAdventure": {
+    "title": "Blue Boy Adventure",
+    "dev": "",
+    "id": "blueBoyAdventure",
+    "image": "image/blueBoyAdventure.png",
+    "link": "https://codehs.com/sandbox/noobkilla/blue-boy-adventure-2-v10/run"
   },
   "aquaParkIo": {
     "title": "Aquapark.io",
