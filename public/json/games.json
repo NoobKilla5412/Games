@@ -74,7 +74,7 @@
     "dev": "",
     "id": "blueBoyAdventure",
     "image": "image/blueBoyAdventure.png",
-    "link": "data:text/html,<script>open('https://codehs.com/sandbox/noobkilla/blue-boy-adventure-2-v10/run');</script>"
+    "link": "https://codehs.com/sandbox/noobkilla/blue-boy-adventure-2-v10/embed/?display_mode=editorOnly&read_only=True&show_file_tree=False"
   },
   "aquaParkIo": {
     "title": "Aquapark.io",
