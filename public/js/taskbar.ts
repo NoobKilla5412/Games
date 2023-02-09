@@ -26,7 +26,7 @@ function openApp(app: string, appName: string) {
   xBtn.height = 20;
   xBtn.addEventListener("click", () => {
     windows.splice(i, 1);
-    updateWindows();
+    windowsElem.removeChild(frame);
   });
   titleBar.appendChild(xBtn);
   titleBar.style.padding = "5px";
@@ -40,7 +40,7 @@ function openApp(app: string, appName: string) {
   iframe.style.border = "none";
   frame.append(iframe);
   windows.push({ frame, i, maximized: false });
-  updateWindows();
+  windowsElem.append(frame);
   dragElement(frame, i);
 }
 

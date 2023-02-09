@@ -98,11 +98,5 @@ function maximize(frame: HTMLDivElement, i: number, move: boolean = true) {
     windows[i].maximized = true;
   }
 }
-function updateWindows() {
-  windowsElem.innerHTML = "";
-  windows.forEach((window) => {
-    windowsElem.append(window.frame);
-  });
-}
 loadTaskbarApps();
 loadDesktopFiles();
