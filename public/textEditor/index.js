@@ -19,11 +19,8 @@ document.getElementById("open").addEventListener("click", () => {
 document.getElementById("delete").addEventListener("click", () => {
     deleteFile1();
 });
-function getFileName1(filePath) {
-    return filePath.split("/")[filePath.split("/").length - 1] || "";
-}
 document.getElementById("rename").addEventListener("click", () => {
-    rename(file, prompt(`Rename file ${getFileName1(file.slice(5))} to`) || "");
+    rename1(file, prompt(`Rename file ${getFileName1(file.slice(5))} to`) || "");
 });
 window.addEventListener("keydown", (e) => {
     if (e.key == "s" && e.ctrlKey) {
