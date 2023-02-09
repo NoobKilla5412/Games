@@ -42,7 +42,7 @@ function openApp(app: string, appName: string) {
   iframe.style.border = "none";
   frame.append(iframe);
   setInterval(() => {
-    nameElem.innerHTML = iframe.contentDocument?.title || "";
+    nameElem.innerHTML = iframe.contentDocument?.title || appName;
   }, 100);
   windows.push({ frame, i, maximized: false });
   windowsElem.append(frame);
