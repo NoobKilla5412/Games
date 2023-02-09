@@ -91,15 +91,15 @@ function home() {
   document.getElementById("game").style.display = "none";
   document.getElementById("container").style.display = "block";
 }
-fetch("json/apps.json")
+fetch("/phone/json/apps.json")
   .then((response) => response.json())
   .then((data) => {
     apps = data;
-    fetch("json/defaultApps.json")
+    fetch("/phone/json/defaultApps.json")
       .then((response) => response.json())
       .then((data1) => {
         defaultApps = data1;
-        fetch("json/games.json")
+        fetch("/phone/json/games.json")
           .then((response) => response.json())
           .then((data2) => {
             games = data2;

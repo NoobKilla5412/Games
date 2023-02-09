@@ -1,156 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>App Store</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>App Store</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"></script>
+    <style>
+      img {
+        width: 75px;
+        height: 75px;
+        border: 1px black solid;
+        border-radius: 0.5rem;
+        background-color: black;
+        margin-right: 5px;
+      }
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script>
-  <style>
-    img {
-      width: 75px;
-      height: 75px;
-      border: 1px black solid;
-      border-radius: .5rem;
-      background-color: black;
-      margin-right: 5px;
-    }
+      div.appRow {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+        border: 2px black solid;
+        border-radius: 0.3rem;
+        margin-left: 5px;
+        flex-flow: row wrap;
+      }
 
-    div.appRow {
-      display: flex;
-      align-items: center;
-      margin-bottom: 5px;
-      border: 2px black solid;
-      border-radius: .3rem;
-      margin-left: 5px;
-      flex-flow: row wrap;
-    }
-
-    /* .appRow:nth-child(odd) {
+      /* .appRow:nth-child(odd) {
       display: inline-block;
     } */
 
-    .get {
-      margin-left: auto;
-      margin-right: 5px;
-    }
-
-    button {
-      border-radius: .5rem;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="container-fluid">
-    <h1>
-      Games:
-    </h1>
-    <div id="games" class="row"></div>
-    <h1>
-      Apps:
-    </h1>
-    <div id="apps" class="row"></div>
-  </div>
-  <button onclick="getAll()" style="float: right;"></button>
-  <script src="/phone/apps.js"></script>
-  <script>
-    function getAll() {
-      for (let i = 0; i < document.getElementsByClassName('get').length; i++) {
-        document.getElementsByClassName('get')[i].click();
+      .get {
+        margin-left: auto;
+        margin-right: 5px;
       }
-    }
-    var settings = { darkMode: false };
-    if (!localStorage.getItem('settings')) {
-      localStorage.setItem('settings', JSON.stringify(settings));
-    } else {
-      settings = JSON.parse(localStorage.getItem('settings'));
-    }
-    if (settings.darkMode) {
-      document.body.style.background = 'black';
-      document.body.style.color = 'white';
-    } else {
-      document.body.style.background = 'white';
-      document.body.style.color = 'black';
-    }
-    var appLibrary = {};
-    if (!localStorage.getItem('apps')) {
-      localStorage.setItem('apps', JSON.stringify({}));
-    } else {
-      appLibrary = JSON.parse(localStorage.getItem('apps'));
-    }
 
-    fetch('/json/games.json')
-      .then((response) => response.json())
-      .then((games) => {
-        for (const game in games) {
-          if (Object.hasOwnProperty.call(games, game)) {
-            const value = games[game];
-            let hasGame = false;
-            if (appLibrary[value.title]) {
-              hasGame = true;
-            }
-            if (!value.dev) {
-              value.dev = '<a href="https://github.com/NoobKilla5412" target="_blank">Noob Killa</a>';
-            }
-            document.getElementById('games').innerHTML += `
-  <div class="appRow col-3">
-    <img src="${value.image}"> <div>${value.title}<br> <div>${value.dev}</div></div> ${hasGame ? '' : `<button class="get" id="${game}">Get</button>`}
-  </div>
-          `
-          }
-        }
-        for (const game in games) {
-          if (Object.hasOwnProperty.call(games, game)) {
-            const value = games[game];
-            if (!appLibrary[value.title])
-              document.getElementById(game).onclick = () => get(value);
-          }
-        }
-      });
-    fetch('/json/apps.json')
-      .then((response) => response.json())
-      .then((apps) => {
-        for (const app in apps) {
-          if (Object.hasOwnProperty.call(apps, app)) {
-            const value = apps[app];
-            let hasApp = false;
-            if (appLibrary[value.title]) {
-              hasApp = true;
-            }
-            if (!value.dev) {
-              value.dev = '<a href="https://github.com/NoobKilla5412" target="_blank">Noob Killa</a>';
-            }
-            document.getElementById('apps').innerHTML += `
-    <div class="appRow col-3">
-      <img src="${value.image}"> <div>${value.title}<br> <div>${value.dev}</div></div> ${hasApp ? '' : `<button class="get" id="${app}">Get</button>`}
+      button {
+        border-radius: 0.5rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <h1>Games:</h1>
+      <div id="games" class="row"></div>
+      <h1>Apps:</h1>
+      <div id="apps" class="row"></div>
     </div>
-            `
-          }
+    <button onclick="getAll()" style="float: right"></button>
+    <script src="/phone/apps.js"></script>
+    <script>
+      function getAll() {
+        for (let i = 0; i < document.getElementsByClassName("get").length; i++) {
+          document.getElementsByClassName("get")[i].click();
         }
-        for (const app in apps) {
-          if (Object.hasOwnProperty.call(apps, app)) {
-            const value = apps[app];
-            if (!appLibrary[value.title])
-              document.getElementById(app).onclick = () => get(value);
-          }
-        }
-      });
-
-    function get(game) {
-      if (!appLibrary[game.title]) {
-        appLibrary[game.title] = true;
-        localStorage.setItem('apps', JSON.stringify(appLibrary));
-        location.reload();
       }
-    }
-  </script>
-</body>
+      var settings = { darkMode: false };
+      if (!localStorage.getItem("settings")) {
+        localStorage.setItem("settings", JSON.stringify(settings));
+      } else {
+        settings = JSON.parse(localStorage.getItem("settings"));
+      }
+      if (settings.darkMode) {
+        document.body.style.background = "black";
+        document.body.style.color = "white";
+      } else {
+        document.body.style.background = "white";
+        document.body.style.color = "black";
+      }
+      var appLibrary = {};
+      if (!localStorage.getItem("apps")) {
+        localStorage.setItem("apps", JSON.stringify({}));
+      } else {
+        appLibrary = JSON.parse(localStorage.getItem("apps"));
+      }
 
+      fetch("/phone/json/games.json")
+        .then((response) => response.json())
+        .then((games) => {
+          for (const game in games) {
+            if (Object.hasOwnProperty.call(games, game)) {
+              const value = games[game];
+              let hasGame = false;
+              if (appLibrary[value.title]) {
+                hasGame = true;
+              }
+              if (!value.dev) {
+                value.dev = '<a href="https://github.com/NoobKilla5412" target="_blank">Noob Killa</a>';
+              }
+              document.getElementById("games").innerHTML += `
+  <div class="appRow col-3">
+    <img src="/${value.image}"> <div>${value.title}<br> <div>${value.dev}</div></div> ${hasGame ? "" : `<button class="get" id="${game}">Get</button>`}
+  </div>
+          `;
+            }
+          }
+          for (const game in games) {
+            if (Object.hasOwnProperty.call(games, game)) {
+              const value = games[game];
+              if (!appLibrary[value.title]) document.getElementById(game).onclick = () => get(value);
+            }
+          }
+        });
+      fetch("/phone/json/apps.json")
+        .then((response) => response.json())
+        .then((apps) => {
+          for (const app in apps) {
+            if (Object.hasOwnProperty.call(apps, app)) {
+              const value = apps[app];
+              let hasApp = false;
+              if (appLibrary[value.title]) {
+                hasApp = true;
+              }
+              if (!value.dev) {
+                value.dev = '<a href="https://github.com/NoobKilla5412" target="_blank">Noob Killa</a>';
+              }
+              document.getElementById("apps").innerHTML += `
+    <div class="appRow col-3">
+      <img src="/${value.image}"> <div>${value.title}<br> <div>${value.dev}</div></div> ${hasApp ? "" : `<button class="get" id="${app}">Get</button>`}
+    </div>
+            `;
+            }
+          }
+          for (const app in apps) {
+            if (Object.hasOwnProperty.call(apps, app)) {
+              const value = apps[app];
+              if (!appLibrary[value.title]) document.getElementById(app).onclick = () => get(value);
+            }
+          }
+        });
+
+      function get(game) {
+        if (!appLibrary[game.title]) {
+          appLibrary[game.title] = true;
+          localStorage.setItem("apps", JSON.stringify(appLibrary));
+          location.reload();
+        }
+      }
+    </script>
+  </body>
 </html>
