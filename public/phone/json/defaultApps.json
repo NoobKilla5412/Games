@@ -1,21 +1,21 @@
 {
   "update": {
     "title": "Update",
-    "image": "image/update.svg"
+    "image": "/image/update.svg"
   },
   "info": {
     "title": "Info",
-    "image": "image/info.svg",
+    "image": "/image/info.svg",
     "link": "info.html"
   },
   "settings": {
     "title": "Settings",
-    "image": "image/settings.svg",
+    "image": "/image/settings.svg",
     "link": "settings.html"
   },
   "appStore": {
     "title": "App Store",
-    "image": "image/appStore.svg",
+    "image": "/image/appStore.svg",
     "link": "appStore.html"
   }
 }
