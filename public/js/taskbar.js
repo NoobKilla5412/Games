@@ -46,7 +46,12 @@ function openApp(app, appName) {
 }
 const apps = {
     "Text Editor": {
-        link: (file) => `/textEditor/index.html${file ? "?file=" + file : ""}`
+        link: (file) => `/textEditor/index.html${file ? "?file=" + file : ""}`,
+        icon: "/file.png"
+    },
+    Bird: {
+        link: () => `/games/Bird/index.html`,
+        icon: "/image/bird.svg"
     }
 };
 function objectIncludes(obj, key) {
@@ -74,7 +79,7 @@ function loadTaskbarApps() {
             var tempElem = document.createElement("img");
             tempElem.style.display = "inline-block";
             tempElem.style.marginRight = "5px";
-            tempElem.src = "file.png";
+            tempElem.src = data.link;
             tempElem.height = 35;
             tempElem.width = 35;
             tempElem.title = app;
