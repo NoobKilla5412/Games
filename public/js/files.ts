@@ -36,7 +36,7 @@ function openFile(userOpen: boolean, elem: HTMLElement) {
 }
 
 function createFile(dir: string) {
-  var tempFileName = prompt("name?");
+  var tempFileName = prompt("Name of the file?");
   if (!tempFileName) return;
   if (localStorage.getItem("file:" + dir + tempFileName) == null) {
     localStorage.setItem("file:" + dir + tempFileName, "");

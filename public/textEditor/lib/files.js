@@ -72,19 +72,26 @@ function getFileDir(filePath) {
     fileDir.splice(fileDir.length - 1, 1);
     return fileDir.join("/") + "/";
 }
+function getFileName1(filePath) {
+    return filePath.split("/")[filePath.split("/").length - 1] || "";
+}
+function getFileExt1(fileName) {
+    var names = fileName.split(".");
+    if (names.length > 1)
+        return names[names.length - 1];
+    return "";
+}
 function rename1(filePath, to) {
     if (localStorage.getItem("file:" + to) != null) {
         alert("That file already exists.");
     }
-    else if (to && localStorage.getItem(filePath) != null) {
-        if (to.split(".")[to.split(".").length - 1] != filePath.split(".")[filePath.split(".").length - 1]) {
+    else if (to && localStorage.getItem("file:" + filePath) != null) {
+        if (getFileExt(getFileName(to)) != getFileExt(getFileName(filePath))) {
             if (!confirm("This file has a different file extension than the old name. Are you sure that you want to do this?"))
                 return;
         }
-        var data = localStorage.getItem(filePath);
-        localStorage.removeItem(filePath);
-        localStorage.setItem(getFileDir(filePath) + to, data);
-        file = "file:" + to;
-        reloadText();
+        var data = localStorage.getItem("file:" + filePath);
+        localStorage.removeItem("file:" + filePath);
+        localStorage.setItem("file:" + to, data);
     }
 }
