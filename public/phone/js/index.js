@@ -133,7 +133,7 @@ fetch("json/apps.json")
                 document.getElementById("containerApps").innerHTML += `
             <br style="display:none" id="${app}Br" />
             <div class="app">
-              <img src="${value.image}" id="${app}" class="image" ><br>
+              <img src="/${value.image}" id="${app}" class="image" ><br>
               <caption>
                 ${value.title} ${value.version ? "v" + value.version : ""}
               </caption>
@@ -147,7 +147,7 @@ fetch("json/apps.json")
                   document.getElementById("containerApps").innerHTML += `
             <br style="display:none" id="${app}Br" />
             <div class="app">
-              <img src="${value.image}" id="${app}" class="image" ><br>
+              <img src="/${value.image}" id="${app}" class="image" ><br>
               <caption>
                 ${value.title} ${value.version ? "v" + value.version : ""}
               </caption>
@@ -163,7 +163,7 @@ fetch("json/apps.json")
             for (const game in games) {
               if (Object.hasOwnProperty.call(games, game)) {
                 const value = games[game];
-                if (!value.link) value.link = `games/${value.title}/Launch.html`;
+                if (!value.link) value.link = `/games/${value.title}/`;
 
                 if (appLibrary[value.title]) {
                   document.getElementById(game).onclick = () => load(value);
@@ -181,7 +181,7 @@ fetch("json/apps.json")
             for (const app in apps) {
               if (Object.hasOwnProperty.call(apps, app)) {
                 const value = apps[app];
-                if (!value.link) value.link = `apps/${value.title}/Launch.html`;
+                if (!value.link) value.link = `/apps/${value.title}/Launch.html`;
                 if (appLibrary[value.title]) {
                   document.getElementById(app).onclick = () => load(value);
                   document.getElementById("delete-" + app).onclick = () => deleteGame(value, "app");
