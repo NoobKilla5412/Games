@@ -115,7 +115,7 @@ fetch("/phone/json/apps.json")
                   document.getElementById("containerGames").innerHTML += `
             <br style="display:none" id="${game}Br" />
             <div class="app">
-              <img src="/${value.image}" id="${game}" class="image" /><br>
+              <img src="${value.image}" id="${game}" class="image" /><br>
               <caption>
                 ${value.title} ${value.version ? "v" + value.version : ""}
               </caption>
@@ -133,7 +133,7 @@ fetch("/phone/json/apps.json")
                 document.getElementById("containerApps").innerHTML += `
             <br style="display:none" id="${app}Br" />
             <div class="app">
-              <img src="/${value.image}" id="${app}" class="image" ><br>
+              <img src="${value.image}" id="${app}" class="image" ><br>
               <caption>
                 ${value.title} ${value.version ? "v" + value.version : ""}
               </caption>
@@ -147,7 +147,7 @@ fetch("/phone/json/apps.json")
                   document.getElementById("containerApps").innerHTML += `
             <br style="display:none" id="${app}Br" />
             <div class="app">
-              <img src="/${value.image}" id="${app}" class="image" ><br>
+              <img src="${value.image}" id="${app}" class="image" ><br>
               <caption>
                 ${value.title} ${value.version ? "v" + value.version : ""}
               </caption>

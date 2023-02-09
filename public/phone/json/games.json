@@ -2,31 +2,31 @@
   "bird": {
     "title": "Bird",
     "id": "Bird",
-    "image": "image/bird.svg",
+    "image": "/image/bird.svg",
     "version": "1.6"
   },
   "europe": {
     "title": "Europe Takeover",
     "id": "EuropeTakeover",
-    "image": "image/europe.svg",
+    "image": "/image/europe.svg",
     "version": "0.1"
   },
   "goldMiner": {
     "title": "Gold Miner",
     "id": "GoldMiner",
-    "image": "image/goldMiner.svg",
+    "image": "/image/goldMiner.svg",
     "version": "0.6"
   },
   "idleTaco": {
     "title": "Idle Taco",
     "id": "idleTaco",
-    "image": "image/taco.svg",
+    "image": "/image/taco.svg",
     "version": "1.7.4"
   },
   "idleTaco2": {
     "title": "Idle Taco 2",
     "id": "idleTaco2",
-    "image": "image/taco.svg",
+    "image": "/image/taco.svg",
     "version": "0.2",
     "otherData": [
       "idleTaco2:lang"
@@ -35,7 +35,7 @@
   "tacoClicker": {
     "title": "Taco Clicker",
     "id": "TacoClicker",
-    "image": "image/taco.svg",
+    "image": "/image/taco.svg",
     "version": "1.2"
   },
   "emojiMatch": {
@@ -73,7 +73,7 @@
     "title": "Blue Boy Adventure",
     "dev": "",
     "id": "blueBoyAdventure",
-    "image": "image/blueBoyAdventure.png",
+    "image": "/image/blueBoyAdventure.png",
     "link": "https://codehs.com/sandbox/noobkilla/blue-boy-adventure-2-v10/embed/?display_mode=editorOnly&read_only=True&show_file_tree=False"
   },
   "aquaParkIo": {

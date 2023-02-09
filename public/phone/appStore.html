@@ -100,7 +100,7 @@
               }
               document.getElementById("games").innerHTML += `
   <div class="appRow col-3">
-    <img src="/${value.image}"> <div>${value.title}<br> <div>${value.dev}</div></div> ${hasGame ? "" : `<button class="get" id="${game}">Get</button>`}
+    <img src="${value.image}"> <div>${value.title}<br> <div>${value.dev}</div></div> ${hasGame ? "" : `<button class="get" id="${game}">Get</button>`}
   </div>
           `;
             }
@@ -127,7 +127,7 @@
               }
               document.getElementById("apps").innerHTML += `
     <div class="appRow col-3">
-      <img src="/${value.image}"> <div>${value.title}<br> <div>${value.dev}</div></div> ${hasApp ? "" : `<button class="get" id="${app}">Get</button>`}
+      <img src="${value.image}"> <div>${value.title}<br> <div>${value.dev}</div></div> ${hasApp ? "" : `<button class="get" id="${app}">Get</button>`}
     </div>
             `;
             }
