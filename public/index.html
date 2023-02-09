@@ -4,34 +4,34 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OS</title>
+    <title>30-Minute OS</title>
     <style>
       body {
         margin: 0px;
       }
 
       #desktop {
-        height: calc(100vh - 50px);
+        height: calc(100vh - 40px);
         width: 100%;
-        background: url("wallpaper.jpg");
+        background: url('wallpaper.jpg');
       }
 
       #taskbar {
-        height: 50px;
+        height: 40px;
       }
 
       #desktop-contextmenu,
       #file-contextmenu {
-        width: 100px;
+        width: 140px;
         position: absolute;
         border: 1px black solid;
-        border-radius: 0.3rem;
+        border-radius: .3rem;
         background-color: white;
       }
 
       .menu-item {
         border: 1px black solid;
-        border-radius: 0.3rem;
+        border-radius: .3rem;
         width: calc(100% - 10px);
         cursor: pointer;
         padding: 5px;
@@ -43,6 +43,8 @@
 
       .file {
         background-color: white;
+        margin-top: 5px;
+        margin-left: 5px;
       }
 
       .prevent-select {
@@ -53,14 +55,15 @@
     </style>
   </head>
   <body>
-    <div id="desktop"></div>
+    <div id="desktop" class="prevent-select"></div>
     <div id="windows"></div>
-    <div id="taskbar"></div>
-    <div id="desktop-contextmenu" class="hide">
+    <div id="taskbar" class="prevent-select"></div>
+    <div id="desktop-contextmenu" class="hide prevent-select">
       <div id="new-file" class="menu-item">New File</div>
     </div>
-    <div id="file-contextmenu" class="hide"></div>
+    <div id="file-contextmenu" class="hide prevent-select"></div>
     <script src="js/files.js"></script>
+    <script src="js/taskbar.js"></script>
     <script src="js/desktop.js"></script>
     <script src="js/index.js"></script>
   </body>

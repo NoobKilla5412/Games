@@ -2,13 +2,13 @@ const desktopContextmenu = document.getElementById("desktop-contextmenu")!;
 var windows: { frame: HTMLDivElement; i: number }[] = [];
 const windowsElem = document.getElementById("windows")!;
 
-desktop.addEventListener("contextmenu", (e) => {
+desktop.addEventListener("contextmenu", e => {
   e.preventDefault();
   desktopContextmenu.style.left = e.x + "px";
   desktopContextmenu.style.top = e.y + "px";
   desktopContextmenu.classList.toggle("hide", false);
 });
-desktop.addEventListener("click", (e) => {
+desktop.addEventListener("click", e => {
   desktopContextmenu.classList.toggle("hide", true);
   fileContextmenu.classList.toggle("hide", true);
 });
@@ -63,7 +63,7 @@ function openApp(app: string, appName: string) {
 
 function updateWindows() {
   windowsElem.innerHTML = "";
-  windows.forEach((window) => {
+  windows.forEach(window => {
     windowsElem.append(window.frame);
   });
 }

@@ -1,4 +1,3 @@
-"use strict";
 function getCaretPosition(editableDiv) {
   var caretPos = 0,
     sel,
@@ -44,6 +43,7 @@ function setSelectionRange(el, start, end) {
     var foundStart = false;
     var charCount = 0,
       endCharCount;
+
     for (var i = 0, textNode; (textNode = textNodes[i++]); ) {
       endCharCount = charCount + textNode.length;
       if (!foundStart && start >= charCount && (start < endCharCount || (start == endCharCount && i <= textNodes.length))) {
@@ -56,6 +56,7 @@ function setSelectionRange(el, start, end) {
       }
       charCount = endCharCount;
     }
+
     var sel = window.getSelection();
     sel.removeAllRanges();
     sel.addRange(range);
