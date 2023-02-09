@@ -58,7 +58,11 @@ function save1(content: string) {
   if (localStorage.getItem(file) != null) localStorage.setItem(file, content);
   else {
     var tempName = prompt("Save as...\n" + listFiles1().join("\n"));
-    if (tempName) localStorage.setItem("file:" + tempName, content);
+    if (tempName) {
+      localStorage.setItem("file:" + tempName, content);
+      file = "file:" + tempName;
+      reloadText();
+    }
   }
   // setSelectionRange(edit, caretPos, caretPos);
 }
@@ -88,5 +92,7 @@ function rename1(filePath: string, to: string) {
     var data = localStorage.getItem("file:" + filePath)!;
     localStorage.removeItem("file:" + filePath);
     localStorage.setItem("file:" + to, data);
+    file = "file:" + to;
+    reloadText();
   }
 }

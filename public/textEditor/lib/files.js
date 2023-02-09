@@ -62,8 +62,11 @@ function save1(content) {
         localStorage.setItem(file, content);
     else {
         var tempName = prompt("Save as...\n" + listFiles1().join("\n"));
-        if (tempName)
+        if (tempName) {
             localStorage.setItem("file:" + tempName, content);
+            file = "file:" + tempName;
+            reloadText();
+        }
     }
     // setSelectionRange(edit, caretPos, caretPos);
 }
@@ -93,5 +96,7 @@ function rename1(filePath, to) {
         var data = localStorage.getItem("file:" + filePath);
         localStorage.removeItem("file:" + filePath);
         localStorage.setItem("file:" + to, data);
+        file = "file:" + to;
+        reloadText();
     }
 }
