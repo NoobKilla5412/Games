@@ -20,9 +20,9 @@ document.getElementById("delete")!.addEventListener("click", () => {
   deleteFile1();
 });
 
-document.getElementById("rename")!.addEventListener("click", () => {
-  rename1(file, prompt(`Rename file ${getFileName1(file.slice(5))} to`) || "");
-});
+// document.getElementById("rename")!.addEventListener("click", () => {
+//   rename1(file, prompt(`Rename file ${getFileName1(file.slice(5))} to`) || "");
+// });
 window.addEventListener("keydown", (e) => {
   if (e.key == "s" && e.ctrlKey) {
     e.preventDefault();
