@@ -80,7 +80,7 @@ function loadTaskbarApps() {
       var tempElem = document.createElement("img");
       tempElem.style.display = "inline-block";
       tempElem.style.marginRight = "5px";
-      tempElem.src = data.link;
+      tempElem.src = data.icon;
       tempElem.height = 35;
       tempElem.width = 35;
       tempElem.title = app;
