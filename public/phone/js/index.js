@@ -2,18 +2,18 @@ var apps = {};
 var defaultApps = {};
 var games = {};
 var settings = { darkMode: false };
-if (!localStorage.getItem('settings')) {
-  localStorage.setItem('settings', JSON.stringify(settings));
+if (!localStorage.getItem("settings")) {
+  localStorage.setItem("settings", JSON.stringify(settings));
 } else {
-  settings = JSON.parse(localStorage.getItem('settings'));
+  settings = JSON.parse(localStorage.getItem("settings"));
 }
 
 if (settings.darkMode) {
-  document.body.style.background = 'black';
-  document.body.style.color = 'white';
+  document.body.style.background = "black";
+  document.body.style.color = "white";
 } else {
-  document.body.style.background = 'white';
-  document.body.style.color = 'black';
+  document.body.style.background = "white";
+  document.body.style.color = "black";
 }
 var activeApp;
 var appLibrary = {};
@@ -37,32 +37,32 @@ function mouseY(e) {
   }
 }
 function load(game) {
-  if (game.title == 'Update') {
+  if (game.title == "Update") {
     location.reload();
   } else {
     if (game.options) {
-      document.getElementById('game').innerHTML = `<iframe src="${game.link}" ${game.options} />`;
+      document.getElementById("game").innerHTML = `<iframe src="${game.link}" ${game.options} />`;
     } else {
-      document.getElementById('game').innerHTML = `<iframe src="${game.link}" />`;
+      document.getElementById("game").innerHTML = `<iframe src="${game.link}" />`;
     }
-    document.getElementById('containerGames').style.display = 'none';
-    document.getElementById('containerApps').style.display = 'none';
-    document.title = `${game.title} ${game.version ? 'v' + game.version : ''}`;
+    document.getElementById("containerGames").style.display = "none";
+    document.getElementById("containerApps").style.display = "none";
+    document.title = `${game.title} ${game.version ? "v" + game.version : ""}`;
   }
   activeApp = game.title;
-  document.head.removeChild(document.getElementsByTagName('title')[0]);
-  let newTitle = document.createElement('title');
+  document.head.removeChild(document.getElementsByTagName("title")[0]);
+  let newTitle = document.createElement("title");
   newTitle.innerHTML = `${game.title} &#8211; Noob Killa&rsquo;s OS`;
   document.head.appendChild(newTitle);
-  document.getElementById('game').style.display = 'block';
-  document.getElementById('container').style.display = 'none';
+  document.getElementById("game").style.display = "block";
+  document.getElementById("container").style.display = "none";
 }
 
-function deleteGame(game, type = 'game') {
+function deleteGame(game, type = "game") {
   if (confirm(`Are you sure you want to delete ${game.title}?`)) {
     appLibrary[game.title] = false;
-    localStorage.setItem('apps', JSON.stringify(appLibrary));
-    if (type == 'game') {
+    localStorage.setItem("apps", JSON.stringify(appLibrary));
+    if (type == "game") {
       if (!confirm(`Do you want to keep save data for ${game.title}? Ok for save, Cancel for delete`)) {
         localStorage.removeItem(game.id);
         if (game.otherData) {
@@ -77,50 +77,50 @@ function deleteGame(game, type = 'game') {
   }
 }
 function home() {
-  if (activeApp != 'App Store' && activeApp != 'Settings') {
-    document.getElementById('game').innerHTML = '';
-    document.getElementById('containerGames').style.display = 'flex';
-    document.getElementById('containerApps').style.display = 'flex';
+  if (activeApp != "App Store" && activeApp != "Settings") {
+    document.getElementById("game").innerHTML = "";
+    document.getElementById("containerGames").style.display = "flex";
+    document.getElementById("containerApps").style.display = "flex";
   } else {
     location.reload();
   }
-  document.head.removeChild(document.getElementsByTagName('title')[0]);
-  let newTitle = document.createElement('title');
+  document.head.removeChild(document.getElementsByTagName("title")[0]);
+  let newTitle = document.createElement("title");
   newTitle.innerHTML = "Noob Killa's OS";
   document.head.appendChild(newTitle);
-  document.getElementById('game').style.display = 'none';
-  document.getElementById('container').style.display = 'block';
+  document.getElementById("game").style.display = "none";
+  document.getElementById("container").style.display = "block";
 }
-fetch('json/apps.json')
+fetch("json/apps.json")
   .then((response) => response.json())
   .then((data) => {
     apps = data;
-    fetch('json/defaultApps.json')
+    fetch("json/defaultApps.json")
       .then((response) => response.json())
       .then((data1) => {
         defaultApps = data1;
-        fetch('json/games.json')
+        fetch("json/games.json")
           .then((response) => response.json())
           .then((data2) => {
             games = data2;
-            if (!localStorage.getItem('apps')) {
-              localStorage.setItem('apps', JSON.stringify(appLibrary));
+            if (!localStorage.getItem("apps")) {
+              localStorage.setItem("apps", JSON.stringify(appLibrary));
             } else {
-              appLibrary = JSON.parse(localStorage.getItem('apps'));
+              appLibrary = JSON.parse(localStorage.getItem("apps"));
             }
             for (const game in games) {
               if (Object.hasOwnProperty.call(games, game)) {
                 const value = games[game];
                 if (appLibrary[value.title]) {
-                  document.getElementById('containerGames').innerHTML += `
+                  document.getElementById("containerGames").innerHTML += `
             <br style="display:none" id="${game}Br" />
             <div class="app">
-              <img src="${value.image}" id="${game}" class="image" /><br>
+              <img src="/${value.image}" id="${game}" class="image" /><br>
               <caption>
-                ${value.title} ${value.version ? 'v' + value.version : ''}
+                ${value.title} ${value.version ? "v" + value.version : ""}
               </caption>
             </div>`;
-                  document.getElementById('r-click-div').innerHTML += `
+                  document.getElementById("r-click-div").innerHTML += `
             <div class="hide" id="rmenu-${game}">
               <button id="delete-${game}">Delete</button>
             </div>`;
@@ -130,12 +130,12 @@ fetch('json/apps.json')
             for (const app in defaultApps) {
               if (Object.hasOwnProperty.call(defaultApps, app)) {
                 const value = defaultApps[app];
-                document.getElementById('containerApps').innerHTML += `
+                document.getElementById("containerApps").innerHTML += `
             <br style="display:none" id="${app}Br" />
             <div class="app">
               <img src="${value.image}" id="${app}" class="image" ><br>
               <caption>
-                ${value.title} ${value.version ? 'v' + value.version : ''}
+                ${value.title} ${value.version ? "v" + value.version : ""}
               </caption>
             </div>`;
               }
@@ -144,15 +144,15 @@ fetch('json/apps.json')
               if (Object.hasOwnProperty.call(apps, app)) {
                 const value = apps[app];
                 if (appLibrary[value.title]) {
-                  document.getElementById('containerApps').innerHTML += `
+                  document.getElementById("containerApps").innerHTML += `
             <br style="display:none" id="${app}Br" />
             <div class="app">
               <img src="${value.image}" id="${app}" class="image" ><br>
               <caption>
-                ${value.title} ${value.version ? 'v' + value.version : ''}
+                ${value.title} ${value.version ? "v" + value.version : ""}
               </caption>
             </div>`;
-                  document.getElementById('r-click-div').innerHTML += `
+                  document.getElementById("r-click-div").innerHTML += `
             <div class="hide" id="rmenu-${app}">
               <button id="delete-${app}">Delete</button>
             </div>`;
@@ -167,7 +167,7 @@ fetch('json/apps.json')
 
                 if (appLibrary[value.title]) {
                   document.getElementById(game).onclick = () => load(value);
-                  document.getElementById('delete-' + game).onclick = () => deleteGame(value);
+                  document.getElementById("delete-" + game).onclick = () => deleteGame(value);
                 }
               }
             }
@@ -184,22 +184,22 @@ fetch('json/apps.json')
                 if (!value.link) value.link = `apps/${value.title}/Launch.html`;
                 if (appLibrary[value.title]) {
                   document.getElementById(app).onclick = () => load(value);
-                  document.getElementById('delete-' + app).onclick = () => deleteGame(value, 'app');
+                  document.getElementById("delete-" + app).onclick = () => deleteGame(value, "app");
                 }
               }
             }
 
-            updateBr.style.display = 'initial';
+            updateBr.style.display = "initial";
 
             for (const game in games) {
               if (Object.hasOwnProperty.call(games, game)) {
                 const value = games[game];
                 if (appLibrary[value.title]) {
-                  document.getElementById(game).addEventListener('contextmenu', (e) => {
+                  document.getElementById(game).addEventListener("contextmenu", (e) => {
                     e.preventDefault();
-                    document.getElementById(`rmenu-${game}`).className = 'show';
-                    document.getElementById(`rmenu-${game}`).style.top = mouseY(event) + 'px';
-                    document.getElementById(`rmenu-${game}`).style.left = mouseX(event) + 'px';
+                    document.getElementById(`rmenu-${game}`).className = "show";
+                    document.getElementById(`rmenu-${game}`).style.top = mouseY(event) + "px";
+                    document.getElementById(`rmenu-${game}`).style.left = mouseX(event) + "px";
                   });
                 }
               }
@@ -208,11 +208,11 @@ fetch('json/apps.json')
               if (Object.hasOwnProperty.call(apps, app)) {
                 const value = apps[app];
                 if (appLibrary[value.title]) {
-                  document.getElementById(app).addEventListener('contextmenu', (e) => {
+                  document.getElementById(app).addEventListener("contextmenu", (e) => {
                     e.preventDefault();
-                    document.getElementById(`rmenu-${app}`).className = 'show';
-                    document.getElementById(`rmenu-${app}`).style.top = mouseY(event) + 'px';
-                    document.getElementById(`rmenu-${app}`).style.left = mouseX(event) + 'px';
+                    document.getElementById(`rmenu-${app}`).className = "show";
+                    document.getElementById(`rmenu-${app}`).style.top = mouseY(event) + "px";
+                    document.getElementById(`rmenu-${app}`).style.left = mouseX(event) + "px";
                   });
                 }
               }
@@ -220,23 +220,23 @@ fetch('json/apps.json')
             for (const app in defaultApps) {
               if (Object.hasOwnProperty.call(defaultApps, app)) {
                 const value = defaultApps[app];
-                document.getElementById(app).addEventListener('contextmenu', (e) => {
+                document.getElementById(app).addEventListener("contextmenu", (e) => {
                   e.preventDefault();
                 });
               }
             }
 
-            document.addEventListener('click', (e) => {
+            document.addEventListener("click", (e) => {
               for (const game in games) {
                 if (Object.hasOwnProperty.call(games, game)) {
                   const value = games[game];
-                  if (appLibrary[value.title]) document.getElementById(`rmenu-${game}`).className = 'hide';
+                  if (appLibrary[value.title]) document.getElementById(`rmenu-${game}`).className = "hide";
                 }
               }
               for (const app in apps) {
                 if (Object.hasOwnProperty.call(apps, app)) {
                   const value = apps[app];
-                  if (appLibrary[value.title]) document.getElementById(`rmenu-${app}`).className = 'hide';
+                  if (appLibrary[value.title]) document.getElementById(`rmenu-${app}`).className = "hide";
                 }
               }
             });
