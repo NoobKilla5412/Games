@@ -98,5 +98,6 @@ function rename1(filePath, to) {
         localStorage.setItem("file:" + to, data);
         file = "file:" + to;
         reloadText();
+        save1(edit.value);
     }
 }
