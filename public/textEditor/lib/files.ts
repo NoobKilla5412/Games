@@ -64,6 +64,7 @@ function save1(content: string) {
       reloadText();
     }
   }
+  saved = true;
   // setSelectionRange(edit, caretPos, caretPos);
 }
 function getFileDir(filePath: string) {

@@ -14,7 +14,9 @@ function openApp(app: string, appName: string) {
   var titleBar = document.createElement("div");
   titleBar.style.width = "calc(100% - 10px)";
   titleBar.style.height = "10px";
-  titleBar.innerHTML = `${appName}`;
+  var nameElem = document.createElement("span");
+  nameElem.innerHTML = `${appName}`;
+  titleBar.appendChild(nameElem);
   titleBar.id = `title-${appName.replace(/ /, "-")}-${i}`;
   frame.id = appName.replace(/ /, "-") + "-" + i;
   titleBar.addEventListener("dblclick", () => {
@@ -33,12 +35,15 @@ function openApp(app: string, appName: string) {
   var dragging = false;
   frame.classList.toggle("prevent-select", true);
   frame.append(titleBar, document.createElement("hr"));
-  var iframe = document.createElement("iframe");
+  var iframe = document.createElement("object");
   iframe.style.width = "100%";
-  iframe.style.height = "100%";
-  iframe.src = app;
+  iframe.style.height = "90%";
+  iframe.data = app;
   iframe.style.border = "none";
   frame.append(iframe);
+  setInterval(() => {
+    nameElem.innerHTML = iframe.contentDocument?.title || "";
+  }, 100);
   windows.push({ frame, i, maximized: false });
   windowsElem.append(frame);
   dragElement(frame, i);
@@ -48,6 +53,10 @@ const apps = {
   "Text Editor": {
     link: (file?: string) => `/textEditor/index.html${file ? "?file=" + file : ""}`,
     icon: "/file.png"
+  },
+  Gmail: {
+    link: () => `https://gmail.com`,
+    icon: "https://www.youtube.com/s/desktop/5191a190/img/favicon_144x144.png"
   },
   Bird: {
     link: () => `/games/Bird/index.html`,

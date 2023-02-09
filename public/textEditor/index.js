@@ -2,8 +2,8 @@
 function reloadText() {
     var filePath = file.slice(5);
     var fileName = filePath.split("/")[filePath.split("/").length - 1];
-    document.title = (fileName == "untitled.txt" ? "" : fileName + " - ") + "Text Editor";
-    document.getElementById("currentFile").innerHTML = fileName;
+    document.title = (fileName == "untitled.txt" ? "" : fileName + " - ") + "Text Editor" + (saved ? "" : " *");
+    // document.getElementById("currentFile")!.innerHTML = fileName;
 }
 const edit = document.getElementById("edit");
 // setInterval(() => {
@@ -23,6 +23,8 @@ document.getElementById("delete").addEventListener("click", () => {
 //   rename1(file, prompt(`Rename file ${getFileName1(file.slice(5))} to`) || "");
 // });
 window.addEventListener("keydown", (e) => {
+    if (!e.ctrlKey && !e.altKey && !e.metaKey && !e.key.includes("Arrow") && e.key != "Tab")
+        saved = false;
     if (e.key == "s" && e.ctrlKey) {
         e.preventDefault();
         save1(edit.value);
