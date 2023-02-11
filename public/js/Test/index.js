@@ -1,9 +1,9 @@
 "use strict";
 // @ts-ignore
-const canvas = document.querySelector('canvas');
+const canvas = document.querySelector("canvas");
 canvas.width += 100;
 // @ts-ignore
-const c = canvas.getContext('2d');
+const c = canvas.getContext("2d");
 class newNumber {
     _value;
     constructor(value) {
@@ -20,40 +20,40 @@ const level = [
     [1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1]
 ];
 const colorMap = {
-    R: 'red',
-    G: 'green',
-    B: 'blue',
-    Y: 'yellow',
-    O: 'orange',
-    I: 'indigo',
-    V: 'violet',
-    BL: 'black'
+    R: "red",
+    G: "green",
+    B: "blue",
+    Y: "yellow",
+    O: "orange",
+    I: "indigo",
+    V: "violet",
+    BL: "black"
 };
 const brickGap = 0;
 const brickWidth = 16;
 const brickHeight = 16;
 const wallSize = 12;
 const bricks = [];
-function gen(type = 'color') {
+function gen(type = "color") {
     for (let row = 0; row < level.length; row++) {
         for (let col = 0; col < level[row].length; col++) {
             const colorCode = level[row][col];
-            if (type == 'color') {
-                var resColor = '#0000';
-                if (colorCode[0] == '#') {
-                    resColor = colorCode;
+            if (type == "color") {
+                var resColor = "#0000";
+                if (colorCode.toString()[0] == "#") {
+                    resColor = colorCode.toString();
                 } /*  else if (colorCode.slice(0, 3) == 'rgb(') {
               resColor = colorCode;
             } */
-                else if (colorCode != ' ' && colorCode != '  ' && colorCode) {
-                    resColor = colorMap[colorCode.toUpperCase()];
+                else if (colorCode != " " && colorCode != "  " && colorCode) {
+                    resColor = colorMap[colorCode.toString().toUpperCase()];
                 }
             }
             else {
                 if (colorCode)
-                    resColor = 'black';
+                    resColor = "black";
                 else
-                    resColor = 'white';
+                    resColor = "white";
             }
             bricks.push({
                 x: wallSize + (brickWidth + brickGap) * col,
@@ -65,7 +65,7 @@ function gen(type = 'color') {
         }
     }
 }
-gen('1');
+gen("1");
 setInterval(() => {
     bricks.forEach((brick) => {
         c.fillStyle = brick.color;

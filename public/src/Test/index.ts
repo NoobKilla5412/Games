@@ -1,8 +1,8 @@
 // @ts-ignore
-const canvas: HTMLCanvasElement = document.querySelector('canvas');
+const canvas: HTMLCanvasElement = document.querySelector("canvas");
 canvas.width += 100;
 // @ts-ignore
-const c: CanvasRenderingContext2D = canvas.getContext('2d');
+const c: CanvasRenderingContext2D = canvas.getContext("2d");
 type number1 = {
   hi: string;
 };
@@ -25,23 +25,23 @@ const level: number[][] | string[][] = [
 
 const colorMap: {
   [index: string]: string;
-  R: 'red';
-  G: 'green';
-  B: 'blue';
-  Y: 'yellow';
-  O: 'orange';
-  I: 'indigo';
-  V: 'violet';
-  BL: 'black';
+  R: "red";
+  G: "green";
+  B: "blue";
+  Y: "yellow";
+  O: "orange";
+  I: "indigo";
+  V: "violet";
+  BL: "black";
 } = {
-  R: 'red',
-  G: 'green',
-  B: 'blue',
-  Y: 'yellow',
-  O: 'orange',
-  I: 'indigo',
-  V: 'violet',
-  BL: 'black'
+  R: "red",
+  G: "green",
+  B: "blue",
+  Y: "yellow",
+  O: "orange",
+  I: "indigo",
+  V: "violet",
+  BL: "black"
 };
 
 const brickGap: number = 0;
@@ -56,22 +56,22 @@ const bricks: {
   width: number;
   height: number;
 }[] = [];
-function gen(type: string = 'color') {
+function gen(type: string = "color") {
   for (let row = 0; row < level.length; row++) {
     for (let col = 0; col < level[row].length; col++) {
       const colorCode = level[row][col];
-      if (type == 'color') {
-        var resColor: string = '#0000';
-        if (colorCode[0] == '#') {
-          resColor = colorCode;
+      if (type == "color") {
+        var resColor: string = "#0000";
+        if (colorCode.toString()[0] == "#") {
+          resColor = colorCode.toString();
         } /*  else if (colorCode.slice(0, 3) == 'rgb(') {
       resColor = colorCode;
-    } */ else if (colorCode != ' ' && colorCode != '  ' && colorCode) {
-          resColor = colorMap[colorCode.toUpperCase()];
+    } */ else if (colorCode != " " && colorCode != "  " && colorCode) {
+          resColor = colorMap[colorCode.toString().toUpperCase()];
         }
       } else {
-        if (colorCode) resColor = 'black';
-        else resColor = 'white';
+        if (colorCode) resColor = "black";
+        else resColor = "white";
       }
 
       bricks.push({
@@ -84,7 +84,7 @@ function gen(type: string = 'color') {
     }
   }
 }
-gen('1');
+gen("1");
 
 setInterval(() => {
   bricks.forEach((brick) => {
