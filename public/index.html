@@ -13,7 +13,7 @@
       #desktop {
         height: calc(100vh - 40px);
         width: 100%;
-        background: url('wallpaper.jpg');
+        background: url("wallpaper.jpg");
       }
 
       #taskbar {
@@ -25,13 +25,13 @@
         width: 140px;
         position: absolute;
         border: 1px black solid;
-        border-radius: .3rem;
+        border-radius: 0.3rem;
         background-color: white;
       }
 
       .menu-item {
         border: 1px black solid;
-        border-radius: .3rem;
+        border-radius: 0.3rem;
         width: calc(100% - 10px);
         cursor: pointer;
         padding: 5px;
@@ -62,9 +62,6 @@
       <div id="new-file" class="menu-item">New File</div>
     </div>
     <div id="file-contextmenu" class="hide prevent-select"></div>
-    <script src="js/files.js"></script>
-    <script src="js/taskbar.js"></script>
-    <script src="js/desktop.js"></script>
-    <script src="js/index.js"></script>
+    <script src="bundle.js"></script>
   </body>
 </html>
