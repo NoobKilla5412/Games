@@ -1,1 +1,0 @@
-watchify js/textEditor/index.js -o textEditor/bundle.js -v

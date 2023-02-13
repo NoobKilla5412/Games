@@ -42,11 +42,10 @@ function loadDesktopFiles() {
             //       )
             //   );
             if (file.endsWith(".mp4"))
-                (0, index_2.openApp)("data://video/mp4," + localStorage.getItem("file:" + file), file.slice(0, file.length - 4));
-            else if (file.endsWith(".lnk"))
-                (0, index_2.openApp)(localStorage.getItem("file:" + file), localStorage.getItem("file:" + file));
+                (0, index_2.openApp)({ name: file.slice(0, file.length - 4), link: () => "data://video/mp4," + localStorage.getItem("file:" + file), icon: "" });
+            // else if (file.endsWith(".lnk")) openApp(localStorage.getItem("file:" + file)!, localStorage.getItem("file:" + file)!);
             else
-                (0, index_2.openApp)(apps_1.apps["Text Editor"].link(file), "Text Editor");
+                (0, index_2.openApp)(apps_1.apps[(0, apps_1.findAppByName)("Notepad")], file);
         });
         tempElem.addEventListener("contextmenu", (e) => {
             e.preventDefault();
@@ -70,7 +69,7 @@ function loadDesktopFiles() {
                 loadDesktopFiles();
             });
             document.getElementById(`edit-${file}`).addEventListener("click", () => {
-                (0, index_2.openApp)(apps_1.apps["Text Editor"].link(file), "Text Editor");
+                (0, index_2.openApp)(apps_1.apps[(0, apps_1.findAppByName)("Text Editor")], file);
                 exports.fileContextmenu.classList.toggle("hide", true);
                 index_1.desktopContextmenu.classList.toggle("hide", true);
             });

@@ -1,28 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.openApp = exports.windows = void 0;
+const apps_1 = require("../apps");
 exports.windows = [];
 const windowsElem = document.getElementById("windows");
-function openApp(app, appName) {
+const iframeType = "iframe";
+function openApp(app, file) {
+    if (!(0, apps_1.hasApp)((0, apps_1.findAppByName)(app.name)) && app.name != "App Store")
+        return;
     var i = exports.windows.length;
     var frame = document.createElement("div");
-    frame.style.position = "absolute";
-    frame.style.width = "500px";
-    frame.style.height = "420px";
-    frame.style.left = "calc(50% - 250px)";
-    frame.style.top = "calc(50vh - 210px)";
-    frame.style.background = "white";
-    frame.style.overflow = "hidden";
-    frame.style.border = "1px lightblue solid";
-    frame.style.resize = "both";
+    frame.className = "window";
     var titleBar = document.createElement("div");
-    titleBar.style.width = "calc(100% - 10px)";
-    titleBar.style.height = "10px";
+    titleBar.className = "titleBar";
     var nameElem = document.createElement("span");
-    nameElem.innerHTML = `${appName}`;
+    nameElem.innerHTML = `${app.name}`;
     titleBar.appendChild(nameElem);
-    titleBar.id = `title-${appName.replace(/ /, "-")}-${i}`;
-    frame.id = appName.replace(/ /, "-") + "-" + i;
+    titleBar.id = `title-${app.name.replace(/ /, "-")}-${i}`;
+    frame.id = app.name.replace(/ /, "-") + "-" + i;
     titleBar.addEventListener("dblclick", () => {
         maximize(frame, i);
     });
@@ -30,34 +25,83 @@ function openApp(app, appName) {
     xBtn.src = "x.png";
     xBtn.style.float = "right";
     xBtn.height = 20;
+    titleBar.appendChild(xBtn);
+    titleBar.style.padding = "5px";
+    frame.classList.toggle("prevent-select", true);
+    titleBar.append(document.createElement("hr"));
+    frame.append(titleBar);
+    var iframe = document.createElement(iframeType);
+    iframe.style.width = "100%";
+    iframe.style.height = "90%";
+    iframe.src = app.link(file);
+    iframe.style.border = "none";
+    frame.append(iframe);
+    setInterval(() => {
+        nameElem.innerHTML = iframe.contentDocument?.title || app.name;
+    }, 100);
+    exports.windows.push({ frame, i, maximized: false, app });
+    windowsElem.append(frame);
+    addEventListeners(i);
+    bringToFront(i);
+    removeWindows();
+}
+exports.openApp = openApp;
+function addEventListeners(i) {
+    const frame = exports.windows[i]?.frame;
+    dragElement(frame, i);
+    frame.addEventListener("pointerenter", () => {
+        bringToFront(i);
+    });
+    frame.addEventListener("pointerleave", () => {
+        bringToFront(-1);
+    });
+    frame.addEventListener("keydown", (e) => {
+        if (e.ctrlKey && e.key == "q") {
+            console.log("hi");
+            e.preventDefault();
+            close(i);
+        }
+    });
+    const xBtn = frame.querySelector("img");
     xBtn.addEventListener("click", () => {
-        if (nameElem.innerHTML.endsWith("*") && iframe.contentDocument?.getElementById("edit")?.value) {
+        close(i);
+    });
+}
+function bringToFront(i) {
+    for (let j = 0; j < exports.windows.length; j++) {
+        const element = exports.windows[j];
+        if (j != i) {
+            element?.frame.classList.toggle("front", false);
+            element?.frame.querySelector(iframeType)?.blur();
+        }
+    }
+    exports.windows[i]?.frame.classList.toggle("front", true);
+    exports.windows[i]?.frame.querySelector(iframeType)?.focus();
+}
+function close(i) {
+    var currentWindow = exports.windows[i];
+    if (currentWindow) {
+        console.log(currentWindow.frame.querySelector("span")?.innerHTML);
+        if (currentWindow.frame.querySelector("span")?.innerHTML.endsWith("*") &&
+            currentWindow.frame.querySelector(iframeType)?.contentDocument?.getElementById("edit")?.value &&
+            currentWindow.app.name == "Notepad") {
             if (!confirm("You have unsaved changes, are you sure you want to close this window?")) {
                 return;
             }
         }
-        exports.windows.splice(i, 1);
-        windowsElem.removeChild(frame);
-    });
-    titleBar.appendChild(xBtn);
-    titleBar.style.padding = "5px";
-    var dragging = false;
-    frame.classList.toggle("prevent-select", true);
-    frame.append(titleBar, document.createElement("hr"));
-    var iframe = document.createElement("object");
-    iframe.style.width = "100%";
-    iframe.style.height = "90%";
-    iframe.data = app;
-    iframe.style.border = "none";
-    frame.append(iframe);
-    setInterval(() => {
-        nameElem.innerHTML = iframe.contentDocument?.title || appName;
-    }, 100);
-    exports.windows.push({ frame, i, maximized: false });
-    windowsElem.append(frame);
-    dragElement(frame, i);
+        windowsElem.removeChild(currentWindow.frame);
+        exports.windows[i] = null;
+    }
+    removeWindows();
 }
-exports.openApp = openApp;
+function removeWindows() {
+    for (let i = 0; i < exports.windows.length; i++) {
+        const element = exports.windows[i];
+        if (element != null)
+            return;
+    }
+    exports.windows = [];
+}
 function dragElement(elmnt, i) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     if (document.getElementById(`title-${elmnt.id}`)) {
@@ -79,7 +123,7 @@ function dragElement(elmnt, i) {
         document.onmousemove = elementDrag;
     }
     function elementDrag(e) {
-        if (exports.windows[i].maximized) {
+        if (exports.windows[i]?.maximized) {
             maximize(elmnt, i, false);
             elmnt.style.left = e.clientX - 250 + "px";
             dragMouseDown(e);
@@ -107,7 +151,7 @@ function dragElement(elmnt, i) {
     }
 }
 function maximize(frame, i, move = true) {
-    if (exports.windows[i].maximized) {
+    if (exports.windows[i]?.maximized) {
         frame.style.width = "500px";
         frame.style.height = "420px";
         if (move) {

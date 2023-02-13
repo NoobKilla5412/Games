@@ -52,6 +52,31 @@
         -ms-user-select: none; /* IE 10 and IE 11 */
         user-select: none; /* Standard syntax */
       }
+
+      .front {
+        z-index: 100;
+      }
+
+      .window {
+        position: absolute;
+        width: 500px;
+        height: 420px;
+        left: calc(50% - 250px);
+        top: calc(50vh - 210px);
+        background: white;
+        overflow: hidden;
+        border: 1px lightblue solid;
+        resize: both;
+      }
+
+      .titleBar {
+        width: calc(100% - 10px);
+        height: 20px;
+      }
+
+      .front .titleBar {
+        background-color: #0aa;
+      }
     </style>
   </head>
   <body>

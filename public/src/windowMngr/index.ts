@@ -1,30 +1,29 @@
-export var windows: {
+import { App, findAppByName, hasApp } from "../apps";
+
+interface Window {
   frame: HTMLDivElement;
   i: number;
   maximized: boolean;
-}[] = [];
+  app: App;
+}
+
+export var windows: (Window | null)[] = [];
 const windowsElem = document.getElementById("windows")!;
 
-export function openApp(app: string, appName: string) {
+const iframeType = "iframe";
+
+export function openApp(app: App, file?: string) {
+  if (!hasApp(findAppByName(app.name)) && app.name != "App Store") return;
   var i = windows.length;
   var frame = document.createElement("div");
-  frame.style.position = "absolute";
-  frame.style.width = "500px";
-  frame.style.height = "420px";
-  frame.style.left = "calc(50% - 250px)";
-  frame.style.top = "calc(50vh - 210px)";
-  frame.style.background = "white";
-  frame.style.overflow = "hidden";
-  frame.style.border = "1px lightblue solid";
-  frame.style.resize = "both";
+  frame.className = "window";
   var titleBar = document.createElement("div");
-  titleBar.style.width = "calc(100% - 10px)";
-  titleBar.style.height = "10px";
+  titleBar.className = "titleBar";
   var nameElem = document.createElement("span");
-  nameElem.innerHTML = `${appName}`;
+  nameElem.innerHTML = `${app.name}`;
   titleBar.appendChild(nameElem);
-  titleBar.id = `title-${appName.replace(/ /, "-")}-${i}`;
-  frame.id = appName.replace(/ /, "-") + "-" + i;
+  titleBar.id = `title-${app.name.replace(/ /, "-")}-${i}`;
+  frame.id = app.name.replace(/ /, "-") + "-" + i;
   titleBar.addEventListener("dblclick", () => {
     maximize(frame, i);
   });
@@ -32,32 +31,89 @@ export function openApp(app: string, appName: string) {
   xBtn.src = "x.png";
   xBtn.style.float = "right";
   xBtn.height = 20;
+  titleBar.appendChild(xBtn);
+  titleBar.style.padding = "5px";
+  frame.classList.toggle("prevent-select", true);
+  titleBar.append(document.createElement("hr"));
+  frame.append(titleBar);
+  var iframe = document.createElement(iframeType);
+  iframe.style.width = "100%";
+  iframe.style.height = "90%";
+  iframe.src = app.link(file);
+  iframe.style.border = "none";
+  frame.append(iframe);
+  setInterval(() => {
+    nameElem.innerHTML = iframe.contentDocument?.title || app.name;
+  }, 100);
+  windows.push({ frame, i, maximized: false, app });
+  windowsElem.append(frame);
+  addEventListeners(i);
+
+  bringToFront(i);
+  removeWindows();
+}
+
+function addEventListeners(i: number) {
+  const frame = windows[i]?.frame!;
+
+  dragElement(frame, i);
+
+  frame.addEventListener("pointerenter", () => {
+    bringToFront(i);
+  });
+  frame.addEventListener("pointerleave", () => {
+    bringToFront(-1);
+  });
+  frame.addEventListener("keydown", (e) => {
+    if (e.ctrlKey && e.key == "q") {
+      console.log("hi");
+      e.preventDefault();
+      close(i);
+    }
+  });
+  const xBtn = frame.querySelector("img")!;
   xBtn.addEventListener("click", () => {
-    if (nameElem.innerHTML.endsWith("*") && (iframe.contentDocument?.getElementById("edit") as HTMLTextAreaElement)?.value) {
+    close(i);
+  });
+}
+
+function bringToFront(i: number) {
+  for (let j = 0; j < windows.length; j++) {
+    const element = windows[j];
+    if (j != i) {
+      element?.frame.classList.toggle("front", false);
+      element?.frame.querySelector(iframeType)?.blur();
+    }
+  }
+  windows[i]?.frame.classList.toggle("front", true);
+  windows[i]?.frame.querySelector(iframeType)?.focus();
+}
+
+function close(i: number) {
+  var currentWindow = windows[i];
+  if (currentWindow) {
+    console.log(currentWindow.frame.querySelector("span")?.innerHTML);
+    if (
+      currentWindow.frame.querySelector("span")?.innerHTML.endsWith("*") &&
+      (currentWindow.frame.querySelector(iframeType)?.contentDocument?.getElementById("edit") as HTMLTextAreaElement)?.value &&
+      currentWindow.app.name == "Notepad"
+    ) {
       if (!confirm("You have unsaved changes, are you sure you want to close this window?")) {
         return;
       }
     }
-    windows.splice(i, 1);
-    windowsElem.removeChild(frame);
-  });
-  titleBar.appendChild(xBtn);
-  titleBar.style.padding = "5px";
-  var dragging = false;
-  frame.classList.toggle("prevent-select", true);
-  frame.append(titleBar, document.createElement("hr"));
-  var iframe = document.createElement("object");
-  iframe.style.width = "100%";
-  iframe.style.height = "90%";
-  iframe.data = app;
-  iframe.style.border = "none";
-  frame.append(iframe);
-  setInterval(() => {
-    nameElem.innerHTML = iframe.contentDocument?.title || appName;
-  }, 100);
-  windows.push({ frame, i, maximized: false });
-  windowsElem.append(frame);
-  dragElement(frame, i);
+    windowsElem.removeChild(currentWindow.frame);
+    windows[i] = null;
+  }
+  removeWindows();
+}
+
+function removeWindows() {
+  for (let i = 0; i < windows.length; i++) {
+    const element = windows[i];
+    if (element != null) return;
+  }
+  windows = [];
 }
 
 function dragElement(elmnt: HTMLDivElement, i: number) {
@@ -85,7 +141,7 @@ function dragElement(elmnt: HTMLDivElement, i: number) {
   }
 
   function elementDrag(e: MouseEvent) {
-    if (windows[i].maximized) {
+    if (windows[i]?.maximized) {
       maximize(elmnt, i, false);
       elmnt.style.left = e.clientX - 250 + "px";
       dragMouseDown(e);
@@ -115,7 +171,7 @@ function dragElement(elmnt: HTMLDivElement, i: number) {
 }
 
 function maximize(frame: HTMLDivElement, i: number, move: boolean = true) {
-  if (windows[i].maximized) {
+  if (windows[i]?.maximized) {
     frame.style.width = "500px";
     frame.style.height = "420px";
     if (move) {
@@ -124,7 +180,7 @@ function maximize(frame: HTMLDivElement, i: number, move: boolean = true) {
     }
     frame.style.resize = "both";
     frame.style.border = "1px lightblue solid";
-    windows[i].maximized = false;
+    windows[i]!.maximized = false;
   } else {
     frame.style.width = "100%";
     frame.style.height = "calc(100% - 40px)";
@@ -134,6 +190,6 @@ function maximize(frame: HTMLDivElement, i: number, move: boolean = true) {
     }
     frame.style.resize = "none";
     frame.style.border = "none";
-    windows[i].maximized = true;
+    windows[i]!.maximized = true;
   }
 }

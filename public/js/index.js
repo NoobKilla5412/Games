@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.desktopContextmenu = void 0;
-const taskbar_1 = require("./taskbar");
 const desktop_1 = require("./desktop");
 const files_1 = require("./files");
+const taskbar_1 = require("./taskbar");
 exports.desktopContextmenu = document.getElementById("desktop-contextmenu");
 desktop_1.desktop.addEventListener("contextmenu", (e) => {
     e.preventDefault();
@@ -21,5 +21,7 @@ newFile.addEventListener("click", () => {
     exports.desktopContextmenu.classList.toggle("hide", true);
     desktop_1.fileContextmenu.classList.toggle("hide", true);
 });
-(0, taskbar_1.loadTaskbarApps)();
-(0, desktop_1.loadDesktopFiles)();
+setInterval(() => {
+    (0, taskbar_1.loadTaskbarApps)();
+    (0, desktop_1.loadDesktopFiles)();
+}, 1000);

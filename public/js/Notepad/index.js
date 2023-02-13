@@ -5,7 +5,7 @@ const files_1 = require("./files");
 function reloadText() {
     var filePath = exports.file.slice(5);
     var fileName = filePath.split("/")[filePath.split("/").length - 1];
-    document.title = (fileName == "untitled.txt" ? "" : fileName + " - ") + "Text Editor" + (exports.saved ? "" : " *");
+    document.title = (fileName == "untitled.txt" ? "" : fileName + " - ") + "Notepad" + (!exports.saved && exports.edit.value ? " *" : "");
     // document.getElementById("currentFile")!.innerHTML = fileName;
 }
 exports.reloadText = reloadText;
@@ -37,9 +37,16 @@ document.getElementById("delete").addEventListener("click", () => {
 window.addEventListener("keydown", (e) => {
     if (!e.ctrlKey && !e.altKey && !e.metaKey && !e.key.includes("Arrow") && e.key != "Tab")
         exports.saved = false;
-    if (e.key == "s" && e.ctrlKey) {
+    if (e.ctrlKey) {
         e.preventDefault();
-        (0, files_1.save)(exports.edit.value);
+        switch (e.key) {
+            case "s":
+                (0, files_1.save)(exports.edit.value);
+                break;
+            case "o":
+                (0, files_1.openFile)(true);
+                break;
+        }
     }
     reloadText();
 });

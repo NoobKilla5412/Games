@@ -1,6 +1,6 @@
-import { loadTaskbarApps } from './taskbar';
-import { loadDesktopFiles, fileContextmenu, desktop } from './desktop';
-import { createFile } from './files';
+import { desktop, fileContextmenu, loadDesktopFiles } from "./desktop";
+import { createFile } from "./files";
+import { loadTaskbarApps } from "./taskbar";
 export const desktopContextmenu = document.getElementById("desktop-contextmenu")!;
 
 desktop.addEventListener("contextmenu", (e) => {
@@ -19,6 +19,7 @@ newFile.addEventListener("click", () => {
   desktopContextmenu.classList.toggle("hide", true);
   fileContextmenu.classList.toggle("hide", true);
 });
-
-loadTaskbarApps();
-loadDesktopFiles();
+setInterval(() => {
+  loadTaskbarApps();
+  loadDesktopFiles();
+}, 1000);

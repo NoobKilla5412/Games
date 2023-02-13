@@ -3,7 +3,7 @@ import { deleteFile, openFile, save } from "./files";
 export function reloadText() {
   var filePath = file.slice(5);
   var fileName = filePath.split("/")[filePath.split("/").length - 1];
-  document.title = (fileName == "untitled.txt" ? "" : fileName + " - ") + "Text Editor" + (saved ? "" : " *");
+  document.title = (fileName == "untitled.txt" ? "" : fileName + " - ") + "Notepad" + (!saved && edit.value ? " *" : "");
   // document.getElementById("currentFile")!.innerHTML = fileName;
 }
 
@@ -33,9 +33,16 @@ document.getElementById("delete")!.addEventListener("click", () => {
 // });
 window.addEventListener("keydown", (e) => {
   if (!e.ctrlKey && !e.altKey && !e.metaKey && !e.key.includes("Arrow") && e.key != "Tab") saved = false;
-  if (e.key == "s" && e.ctrlKey) {
+  if (e.ctrlKey) {
     e.preventDefault();
-    save(edit.value);
+    switch (e.key) {
+      case "s":
+        save(edit.value);
+        break;
+      case "o":
+        openFile(true);
+        break;
+    }
   }
   reloadText();
 });

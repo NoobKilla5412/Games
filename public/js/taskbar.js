@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loadTaskbarApps = void 0;
-const index_1 = require("./windowMngr/index");
 const apps_1 = require("./apps");
+const windowMngr_1 = require("./windowMngr");
 const taskbar = document.getElementById("taskbar");
 function objectIncludes(obj, key) {
     for (const key1 in obj) {
@@ -13,31 +13,38 @@ function objectIncludes(obj, key) {
     }
     return true;
 }
+function loadApp(app) {
+    if (app) {
+        var tempElem = document.createElement("img");
+        tempElem.style.display = "inline-block";
+        tempElem.style.marginRight = "5px";
+        tempElem.src = app.icon;
+        tempElem.height = 35;
+        tempElem.width = 35;
+        tempElem.title = app.name;
+        tempElem.addEventListener("click", () => {
+            (0, windowMngr_1.openApp)(app);
+        });
+        taskbar.append(tempElem);
+    }
+}
 function loadTaskbarApps() {
     taskbar.innerHTML = "";
-    var taskbarApps = [];
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key.slice(0, 4) == "app:") {
-            taskbarApps.push(key.slice(4));
-        }
+    // var taskbarApps = [];
+    // for (let i = 0; i < localStorage.length; i++) {
+    //   const key = localStorage.key(i)!;
+    //   if (key.slice(0, 4) == "app:") {
+    //     taskbarApps.push(Number.parseInt(key.slice(4)));
+    //   }
+    // }
+    for (let i = 0; i < apps_1.apps.length; i++) {
+        const app = apps_1.apps[i];
+        if ((0, apps_1.hasApp)(i))
+            loadApp(app);
     }
-    for (const app in apps_1.apps) {
-        if (Object.hasOwnProperty.call(apps_1.apps, app)) {
-            // @ts-ignore
-            const data = apps_1.apps[app];
-            var tempElem = document.createElement("img");
-            tempElem.style.display = "inline-block";
-            tempElem.style.marginRight = "5px";
-            tempElem.src = data.icon;
-            tempElem.height = 35;
-            tempElem.width = 35;
-            tempElem.title = app;
-            tempElem.addEventListener("click", () => {
-                (0, index_1.openApp)(data.link(), app);
-            });
-            taskbar.append(tempElem);
-        }
+    for (let i = 0; i < apps_1.nativeApps.length; i++) {
+        const app = apps_1.nativeApps[i];
+        loadApp(app);
     }
     var dateElem = document.createElement("div");
     dateElem.style.float = "right";

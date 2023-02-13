@@ -30,13 +30,14 @@ export function openFile(userOpen: boolean) {
       files.push(element.slice(5));
     }
   }
-  if (userOpen) var tempFileName = prompt("file\n" + files.join("\n"));
-  else var tempFileName = new URL(location.href).searchParams.get("file");
+  var tempFileName = userOpen ? prompt("file\n" + files.join("\n")) : new URL(location.href).searchParams.get("file");
 
   if (!tempFileName) return;
   if (localStorage.getItem("file:" + tempFileName) == null) {
     if (!confirm("This file does not exist, create it?")) {
       return;
+    } else {
+      localStorage.setItem("file:" + tempFileName, "");
     }
   }
   edit.contentEditable = true + "";

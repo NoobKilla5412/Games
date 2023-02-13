@@ -1,49 +1,86 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.apps = void 0;
-exports.apps = {
-    "Text Editor": {
-        link: (file) => `/textEditor/index.html${file ? "?file=" + file : ""}`,
+exports.findAppByName = exports.apps = exports.nativeApps = exports.hasApp = exports.deleteApp = exports.installApp = void 0;
+function installApp(i) {
+    localStorage.setItem("app:" + i, "true");
+    location.reload();
+}
+exports.installApp = installApp;
+function deleteApp(i) {
+    if (confirm(`Are you sure you want to delete "${exports.apps[i].name}"?`)) {
+        localStorage.setItem("app:" + i, "false");
+        location.reload();
+    }
+}
+exports.deleteApp = deleteApp;
+function hasApp(i) {
+    return localStorage.getItem("app:" + i) == "true";
+}
+exports.hasApp = hasApp;
+exports.nativeApps = [
+    {
+        name: "App Store",
+        link: () => `/apps/App Store/`,
+        icon: ""
+    }
+];
+exports.apps = [
+    {
+        name: "Notepad",
+        link: (file) => `/apps/Notepad/${file ? "?file=" + file : ""}`,
         icon: "/file.png"
     },
-    Gmail: {
-        link: () => `https://gmail.com`,
-        icon: "https://www.youtube.com/s/desktop/5191a190/img/favicon_144x144.png"
-    },
-    Bird: {
-        link: () => `/games/Bird/index.html`,
+    {
+        name: "Bird",
+        link: () => `/games/Bird/`,
         icon: "/image/bird.svg"
     },
-    "Emoji Match": {
-        link: () => `/games/Emoji Match/index.html`,
-        icon: "/image/emojiMatch.svg"
-    },
-    "Europe Takeover": {
-        link: () => `/games/Europe Takeover/index.html`,
+    // {
+    //   name: "Emoji Match",
+    //   link: () => `/games/Emoji Match/`,
+    //   icon: "/image/emojiMatch.svg"
+    // },
+    {
+        name: "Europe Takeover",
+        link: () => `/games/Europe Takeover/`,
         icon: "/image/europe.svg"
     },
-    "Gold Miner": {
-        link: () => `/games/Gold Miner/index.html`,
+    {
+        name: "Gold Miner",
+        link: () => `/games/Gold Miner/`,
         icon: "/image/goldMiner.svg"
     },
-    "Idle Taco": {
-        link: () => `/games/Idle Taco/index.html`,
+    {
+        name: "Idle Taco",
+        link: () => `/games/Idle Taco/`,
         icon: "/image/taco.svg"
     },
-    "Idle Taco 2": {
-        link: () => `/games/Idle Taco 2/index.html`,
+    {
+        name: "Idle Taco 2",
+        link: () => `/games/Idle Taco 2/`,
         icon: "/image/taco.svg"
     },
-    "Pig Farmer": {
-        link: () => `/games/Pig Farmer/index.html`,
+    {
+        name: "Pig Farmer",
+        link: () => `/games/Pig Farmer/`,
         icon: "/image/pigFarmer.svg"
     },
-    "Taco Clicker": {
-        link: () => `/games/Taco Clicker/index.html`,
+    {
+        name: "Taco Clicker",
+        link: () => `/games/Taco Clicker/`,
         icon: "/image/taco.svg"
     }
-};
+];
+function findAppByName(name) {
+    for (let i = 0; i < exports.apps.length; i++) {
+        const app = exports.apps[i];
+        if (app.name == name)
+            return i;
+    }
+    return -1;
+}
+exports.findAppByName = findAppByName;
 
 },{}],2:[function(require,module,exports){
 "use strict";
@@ -90,11 +127,10 @@ function loadDesktopFiles() {
             //       )
             //   );
             if (file.endsWith(".mp4"))
-                (0, index_2.openApp)("data://video/mp4," + localStorage.getItem("file:" + file), file.slice(0, file.length - 4));
-            else if (file.endsWith(".lnk"))
-                (0, index_2.openApp)(localStorage.getItem("file:" + file), localStorage.getItem("file:" + file));
+                (0, index_2.openApp)({ name: file.slice(0, file.length - 4), link: () => "data://video/mp4," + localStorage.getItem("file:" + file), icon: "" });
+            // else if (file.endsWith(".lnk")) openApp(localStorage.getItem("file:" + file)!, localStorage.getItem("file:" + file)!);
             else
-                (0, index_2.openApp)(apps_1.apps["Text Editor"].link(file), "Text Editor");
+                (0, index_2.openApp)(apps_1.apps[(0, apps_1.findAppByName)("Notepad")], file);
         });
         tempElem.addEventListener("contextmenu", (e) => {
             e.preventDefault();
@@ -118,7 +154,7 @@ function loadDesktopFiles() {
                 loadDesktopFiles();
             });
             document.getElementById(`edit-${file}`).addEventListener("click", () => {
-                (0, index_2.openApp)(apps_1.apps["Text Editor"].link(file), "Text Editor");
+                (0, index_2.openApp)(apps_1.apps[(0, apps_1.findAppByName)("Text Editor")], file);
                 exports.fileContextmenu.classList.toggle("hide", true);
                 index_1.desktopContextmenu.classList.toggle("hide", true);
             });
@@ -226,9 +262,9 @@ exports.rename = rename;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.desktopContextmenu = void 0;
-const taskbar_1 = require("./taskbar");
 const desktop_1 = require("./desktop");
 const files_1 = require("./files");
+const taskbar_1 = require("./taskbar");
 exports.desktopContextmenu = document.getElementById("desktop-contextmenu");
 desktop_1.desktop.addEventListener("contextmenu", (e) => {
     e.preventDefault();
@@ -246,15 +282,17 @@ newFile.addEventListener("click", () => {
     exports.desktopContextmenu.classList.toggle("hide", true);
     desktop_1.fileContextmenu.classList.toggle("hide", true);
 });
-(0, taskbar_1.loadTaskbarApps)();
-(0, desktop_1.loadDesktopFiles)();
+setInterval(() => {
+    (0, taskbar_1.loadTaskbarApps)();
+    (0, desktop_1.loadDesktopFiles)();
+}, 1000);
 
 },{"./desktop":2,"./files":3,"./taskbar":5}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loadTaskbarApps = void 0;
-const index_1 = require("./windowMngr/index");
 const apps_1 = require("./apps");
+const windowMngr_1 = require("./windowMngr");
 const taskbar = document.getElementById("taskbar");
 function objectIncludes(obj, key) {
     for (const key1 in obj) {
@@ -265,31 +303,38 @@ function objectIncludes(obj, key) {
     }
     return true;
 }
+function loadApp(app) {
+    if (app) {
+        var tempElem = document.createElement("img");
+        tempElem.style.display = "inline-block";
+        tempElem.style.marginRight = "5px";
+        tempElem.src = app.icon;
+        tempElem.height = 35;
+        tempElem.width = 35;
+        tempElem.title = app.name;
+        tempElem.addEventListener("click", () => {
+            (0, windowMngr_1.openApp)(app);
+        });
+        taskbar.append(tempElem);
+    }
+}
 function loadTaskbarApps() {
     taskbar.innerHTML = "";
-    var taskbarApps = [];
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key.slice(0, 4) == "app:") {
-            taskbarApps.push(key.slice(4));
-        }
+    // var taskbarApps = [];
+    // for (let i = 0; i < localStorage.length; i++) {
+    //   const key = localStorage.key(i)!;
+    //   if (key.slice(0, 4) == "app:") {
+    //     taskbarApps.push(Number.parseInt(key.slice(4)));
+    //   }
+    // }
+    for (let i = 0; i < apps_1.apps.length; i++) {
+        const app = apps_1.apps[i];
+        if ((0, apps_1.hasApp)(i))
+            loadApp(app);
     }
-    for (const app in apps_1.apps) {
-        if (Object.hasOwnProperty.call(apps_1.apps, app)) {
-            // @ts-ignore
-            const data = apps_1.apps[app];
-            var tempElem = document.createElement("img");
-            tempElem.style.display = "inline-block";
-            tempElem.style.marginRight = "5px";
-            tempElem.src = data.icon;
-            tempElem.height = 35;
-            tempElem.width = 35;
-            tempElem.title = app;
-            tempElem.addEventListener("click", () => {
-                (0, index_1.openApp)(data.link(), app);
-            });
-            taskbar.append(tempElem);
-        }
+    for (let i = 0; i < apps_1.nativeApps.length; i++) {
+        const app = apps_1.nativeApps[i];
+        loadApp(app);
     }
     var dateElem = document.createElement("div");
     dateElem.style.float = "right";
@@ -308,32 +353,27 @@ function loadTaskbarApps() {
 }
 exports.loadTaskbarApps = loadTaskbarApps;
 
-},{"./apps":1,"./windowMngr/index":6}],6:[function(require,module,exports){
+},{"./apps":1,"./windowMngr":6}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.openApp = exports.windows = void 0;
+const apps_1 = require("../apps");
 exports.windows = [];
 const windowsElem = document.getElementById("windows");
-function openApp(app, appName) {
+const iframeType = "iframe";
+function openApp(app, file) {
+    if (!(0, apps_1.hasApp)((0, apps_1.findAppByName)(app.name)) && app.name != "App Store")
+        return;
     var i = exports.windows.length;
     var frame = document.createElement("div");
-    frame.style.position = "absolute";
-    frame.style.width = "500px";
-    frame.style.height = "420px";
-    frame.style.left = "calc(50% - 250px)";
-    frame.style.top = "calc(50vh - 210px)";
-    frame.style.background = "white";
-    frame.style.overflow = "hidden";
-    frame.style.border = "1px lightblue solid";
-    frame.style.resize = "both";
+    frame.className = "window";
     var titleBar = document.createElement("div");
-    titleBar.style.width = "calc(100% - 10px)";
-    titleBar.style.height = "10px";
+    titleBar.className = "titleBar";
     var nameElem = document.createElement("span");
-    nameElem.innerHTML = `${appName}`;
+    nameElem.innerHTML = `${app.name}`;
     titleBar.appendChild(nameElem);
-    titleBar.id = `title-${appName.replace(/ /, "-")}-${i}`;
-    frame.id = appName.replace(/ /, "-") + "-" + i;
+    titleBar.id = `title-${app.name.replace(/ /, "-")}-${i}`;
+    frame.id = app.name.replace(/ /, "-") + "-" + i;
     titleBar.addEventListener("dblclick", () => {
         maximize(frame, i);
     });
@@ -341,34 +381,83 @@ function openApp(app, appName) {
     xBtn.src = "x.png";
     xBtn.style.float = "right";
     xBtn.height = 20;
+    titleBar.appendChild(xBtn);
+    titleBar.style.padding = "5px";
+    frame.classList.toggle("prevent-select", true);
+    titleBar.append(document.createElement("hr"));
+    frame.append(titleBar);
+    var iframe = document.createElement(iframeType);
+    iframe.style.width = "100%";
+    iframe.style.height = "90%";
+    iframe.src = app.link(file);
+    iframe.style.border = "none";
+    frame.append(iframe);
+    setInterval(() => {
+        nameElem.innerHTML = iframe.contentDocument?.title || app.name;
+    }, 100);
+    exports.windows.push({ frame, i, maximized: false, app });
+    windowsElem.append(frame);
+    addEventListeners(i);
+    bringToFront(i);
+    removeWindows();
+}
+exports.openApp = openApp;
+function addEventListeners(i) {
+    const frame = exports.windows[i]?.frame;
+    dragElement(frame, i);
+    frame.addEventListener("pointerenter", () => {
+        bringToFront(i);
+    });
+    frame.addEventListener("pointerleave", () => {
+        bringToFront(-1);
+    });
+    frame.addEventListener("keydown", (e) => {
+        if (e.ctrlKey && e.key == "q") {
+            console.log("hi");
+            e.preventDefault();
+            close(i);
+        }
+    });
+    const xBtn = frame.querySelector("img");
     xBtn.addEventListener("click", () => {
-        if (nameElem.innerHTML.endsWith("*") && iframe.contentDocument?.getElementById("edit")?.value) {
+        close(i);
+    });
+}
+function bringToFront(i) {
+    for (let j = 0; j < exports.windows.length; j++) {
+        const element = exports.windows[j];
+        if (j != i) {
+            element?.frame.classList.toggle("front", false);
+            element?.frame.querySelector(iframeType)?.blur();
+        }
+    }
+    exports.windows[i]?.frame.classList.toggle("front", true);
+    exports.windows[i]?.frame.querySelector(iframeType)?.focus();
+}
+function close(i) {
+    var currentWindow = exports.windows[i];
+    if (currentWindow) {
+        console.log(currentWindow.frame.querySelector("span")?.innerHTML);
+        if (currentWindow.frame.querySelector("span")?.innerHTML.endsWith("*") &&
+            currentWindow.frame.querySelector(iframeType)?.contentDocument?.getElementById("edit")?.value &&
+            currentWindow.app.name == "Notepad") {
             if (!confirm("You have unsaved changes, are you sure you want to close this window?")) {
                 return;
             }
         }
-        exports.windows.splice(i, 1);
-        windowsElem.removeChild(frame);
-    });
-    titleBar.appendChild(xBtn);
-    titleBar.style.padding = "5px";
-    var dragging = false;
-    frame.classList.toggle("prevent-select", true);
-    frame.append(titleBar, document.createElement("hr"));
-    var iframe = document.createElement("object");
-    iframe.style.width = "100%";
-    iframe.style.height = "90%";
-    iframe.data = app;
-    iframe.style.border = "none";
-    frame.append(iframe);
-    setInterval(() => {
-        nameElem.innerHTML = iframe.contentDocument?.title || appName;
-    }, 100);
-    exports.windows.push({ frame, i, maximized: false });
-    windowsElem.append(frame);
-    dragElement(frame, i);
+        windowsElem.removeChild(currentWindow.frame);
+        exports.windows[i] = null;
+    }
+    removeWindows();
 }
-exports.openApp = openApp;
+function removeWindows() {
+    for (let i = 0; i < exports.windows.length; i++) {
+        const element = exports.windows[i];
+        if (element != null)
+            return;
+    }
+    exports.windows = [];
+}
 function dragElement(elmnt, i) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     if (document.getElementById(`title-${elmnt.id}`)) {
@@ -390,7 +479,7 @@ function dragElement(elmnt, i) {
         document.onmousemove = elementDrag;
     }
     function elementDrag(e) {
-        if (exports.windows[i].maximized) {
+        if (exports.windows[i]?.maximized) {
             maximize(elmnt, i, false);
             elmnt.style.left = e.clientX - 250 + "px";
             dragMouseDown(e);
@@ -418,7 +507,7 @@ function dragElement(elmnt, i) {
     }
 }
 function maximize(frame, i, move = true) {
-    if (exports.windows[i].maximized) {
+    if (exports.windows[i]?.maximized) {
         frame.style.width = "500px";
         frame.style.height = "420px";
         if (move) {
@@ -442,4 +531,4 @@ function maximize(frame, i, move = true) {
     }
 }
 
-},{}]},{},[4]);
+},{"../apps":1}]},{},[4]);

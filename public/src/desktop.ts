@@ -1,4 +1,4 @@
-import { apps } from "./apps";
+import { apps, findAppByName } from "./apps";
 import { deleteFile, getFileName, rename } from "./files";
 import { desktopContextmenu } from "./index";
 import { loadTaskbarApps } from "./taskbar";
@@ -39,9 +39,10 @@ export function loadDesktopFiles() {
       //         file.split("/")[file.split("/").length - 1].length - 4
       //       )
       //   );
-      if (file.endsWith(".mp4")) openApp("data://video/mp4," + localStorage.getItem("file:" + file), file.slice(0, file.length - 4));
-      else if (file.endsWith(".lnk")) openApp(localStorage.getItem("file:" + file)!, localStorage.getItem("file:" + file)!);
-      else openApp(apps["Text Editor"].link(file), "Text Editor");
+      if (file.endsWith(".mp4"))
+        openApp({ name: file.slice(0, file.length - 4), link: () => "data://video/mp4," + localStorage.getItem("file:" + file), icon: "" });
+      // else if (file.endsWith(".lnk")) openApp(localStorage.getItem("file:" + file)!, localStorage.getItem("file:" + file)!);
+      else openApp(apps[findAppByName("Notepad")], file);
     });
     tempElem.addEventListener("contextmenu", (e) => {
       e.preventDefault();
@@ -65,7 +66,7 @@ export function loadDesktopFiles() {
         loadDesktopFiles();
       });
       document.getElementById(`edit-${file}`)!.addEventListener("click", () => {
-        openApp(apps["Text Editor"].link(file), "Text Editor");
+        openApp(apps[findAppByName("Text Editor")], file);
         fileContextmenu.classList.toggle("hide", true);
         desktopContextmenu.classList.toggle("hide", true);
       });

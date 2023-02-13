@@ -1,3 +1,4 @@
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.save = exports.listFiles = exports.openFile = exports.deleteFile = void 0;
@@ -33,15 +34,15 @@ function openFile(userOpen) {
             files.push(element.slice(5));
         }
     }
-    if (userOpen)
-        var tempFileName = prompt("file\n" + files.join("\n"));
-    else
-        var tempFileName = new URL(location.href).searchParams.get("file");
+    var tempFileName = userOpen ? prompt("file\n" + files.join("\n")) : new URL(location.href).searchParams.get("file");
     if (!tempFileName)
         return;
     if (localStorage.getItem("file:" + tempFileName) == null) {
         if (!confirm("This file does not exist, create it?")) {
             return;
+        }
+        else {
+            localStorage.setItem("file:" + tempFileName, "");
         }
     }
     index_1.edit.contentEditable = true + "";
@@ -110,3 +111,65 @@ function rename(filePath, to) {
         save(index_1.edit.value);
     }
 }
+
+},{"./index":2}],2:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.setFile = exports.file = exports.setSaved = exports.saved = exports.edit = exports.reloadText = void 0;
+const files_1 = require("./files");
+function reloadText() {
+    var filePath = exports.file.slice(5);
+    var fileName = filePath.split("/")[filePath.split("/").length - 1];
+    document.title = (fileName == "untitled.txt" ? "" : fileName + " - ") + "Notepad" + (!exports.saved && exports.edit.value ? " *" : "");
+    // document.getElementById("currentFile")!.innerHTML = fileName;
+}
+exports.reloadText = reloadText;
+exports.edit = document.getElementById("edit");
+// setInterval(() => {
+// var options = Parse2.parse2DefaultOptions;
+// options.spellCheck = false;
+exports.saved = false;
+const setSaved = (value) => {
+    exports.saved = value;
+};
+exports.setSaved = setSaved;
+exports.file = "file:untitled.txt";
+const setFile = (value) => {
+    exports.file = value;
+};
+exports.setFile = setFile;
+(0, files_1.openFile)(false);
+exports.edit.innerHTML = localStorage.getItem(exports.file) || "";
+document.getElementById("open").addEventListener("click", () => {
+    (0, files_1.openFile)(true);
+});
+document.getElementById("delete").addEventListener("click", () => {
+    (0, files_1.deleteFile)();
+});
+// document.getElementById("rename")!.addEventListener("click", () => {
+//   rename1(file, prompt(`Rename file ${getFileName1(file.slice(5))} to`) || "");
+// });
+window.addEventListener("keydown", (e) => {
+    if (!e.ctrlKey && !e.altKey && !e.metaKey && !e.key.includes("Arrow") && e.key != "Tab")
+        exports.saved = false;
+    if (e.ctrlKey) {
+        e.preventDefault();
+        switch (e.key) {
+            case "s":
+                (0, files_1.save)(exports.edit.value);
+                break;
+            case "o":
+                (0, files_1.openFile)(true);
+                break;
+        }
+    }
+    reloadText();
+});
+reloadText();
+// });
+// for (let i = 0; i < localStorage.length; i++) {
+//   const element = localStorage.key(i);
+//   document.write(element + "<br>");
+// }
+
+},{"./files":1}]},{},[2]);
