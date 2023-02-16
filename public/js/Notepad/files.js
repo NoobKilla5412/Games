@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.save = exports.listFiles = exports.openFile = exports.deleteFile = void 0;
+exports.save = exports.openFile = exports.deleteFile = void 0;
+const files_1 = require("../files");
 const index_1 = require("./index");
 function deleteFile() {
     var files = [];
@@ -51,23 +52,12 @@ function openFile(userOpen) {
     (0, index_1.reloadText)();
 }
 exports.openFile = openFile;
-function listFiles() {
-    var files = [];
-    for (let i = 0; i < localStorage.length; i++) {
-        const element = localStorage.key(i);
-        if (element.slice(0, 5) == "file:") {
-            files.push(element.slice(5));
-        }
-    }
-    return files;
-}
-exports.listFiles = listFiles;
 function save(content) {
     // var caretPos = getCaretPosition(edit);
     if (localStorage.getItem(index_1.file) != null)
         localStorage.setItem(index_1.file, content);
     else {
-        var tempName = prompt("Save as...\n" + listFiles().join("\n"));
+        var tempName = prompt("Save as...\n" + (0, files_1.listFiles)().paths().join("\n"));
         if (tempName) {
             localStorage.setItem("file:" + tempName, content);
             (0, index_1.setFile)("file:" + tempName);
@@ -79,34 +69,31 @@ function save(content) {
     // setSelectionRange(edit, caretPos, caretPos);
 }
 exports.save = save;
-function getFileDir(filePath) {
-    var fileDir = filePath.split("/");
-    fileDir.splice(fileDir.length - 1, 1);
-    return fileDir.join("/") + "/";
-}
-function getFileName(filePath) {
-    return filePath.split("/")[filePath.split("/").length - 1] || "";
-}
-function getFileExt(fileName) {
-    var names = fileName.split(".");
-    if (names.length > 1)
-        return names[names.length - 1];
-    return "";
-}
-function rename(filePath, to) {
-    if (localStorage.getItem("file:" + to) != null) {
-        alert("That file already exists.");
-    }
-    else if (to && localStorage.getItem("file:" + filePath) != null) {
-        if (getFileExt(getFileName(to)) != getFileExt(getFileName(filePath))) {
-            if (!confirm("This file has a different file extension than the old name. Are you sure that you want to do this?"))
-                return;
-        }
-        var data = localStorage.getItem("file:" + filePath);
-        localStorage.removeItem("file:" + filePath);
-        localStorage.setItem("file:" + to, data);
-        (0, index_1.setFile)("file:" + to);
-        (0, index_1.reloadText)();
-        save(index_1.edit.value);
-    }
-}
+// function getFileDir(filePath: string) {
+//   var fileDir = filePath.split("/");
+//   fileDir.splice(fileDir.length - 1, 1);
+//   return fileDir.join("/") + "/";
+// }
+// function getFileName(filePath: string) {
+//   return filePath.split("/")[filePath.split("/").length - 1] || "";
+// }
+// function getFileExt(fileName: string) {
+//   var names = fileName.split(".");
+//   if (names.length > 1) return names[names.length - 1];
+//   return "";
+// }
+// function rename(filePath: string, to: string) {
+//   if (localStorage.getItem("file:" + to) != null) {
+//     alert("That file already exists.");
+//   } else if (to && localStorage.getItem("file:" + filePath) != null) {
+//     if (getFileExt(getFileName(to)) != getFileExt(getFileName(filePath))) {
+//       if (!confirm("This file has a different file extension than the old name. Are you sure that you want to do this?")) return;
+//     }
+//     var data = localStorage.getItem("file:" + filePath)!;
+//     localStorage.removeItem("file:" + filePath);
+//     localStorage.setItem("file:" + to, data);
+//     setFile("file:" + to);
+//     reloadText();
+//     save(edit.value);
+//   }
+// }

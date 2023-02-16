@@ -1,86 +1,128 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findAppByName = exports.apps = exports.nativeApps = exports.hasApp = exports.deleteApp = exports.installApp = void 0;
-function installApp(i) {
-    localStorage.setItem("app:" + i, "true");
+exports.getAppByName = exports.getIndexOfAppByName = exports.apps = exports.nativeApps = exports.hasApp = exports.deleteApp = exports.installApp = void 0;
+function installApp(app) {
+    localStorage.setItem("app:" + app.name, "true");
     location.reload();
 }
 exports.installApp = installApp;
-function deleteApp(i) {
-    if (confirm(`Are you sure you want to delete "${exports.apps[i].name}"?`)) {
-        localStorage.setItem("app:" + i, "false");
+function deleteApp(app) {
+    if (confirm(`Are you sure you want to delete "${app.name}"?`)) {
+        localStorage.setItem("app:" + app.name, "false");
         location.reload();
     }
 }
 exports.deleteApp = deleteApp;
-function hasApp(i) {
-    return localStorage.getItem("app:" + i) == "true";
+function hasApp(app) {
+    if (localStorage.getItem("app:" + app.name) == "true")
+        return true;
+    for (let i = 0; i < exports.nativeApps.length; i++) {
+        const app1 = exports.nativeApps[i];
+        if (app.name == app1.name)
+            return true;
+    }
+    return false;
 }
 exports.hasApp = hasApp;
 exports.nativeApps = [
-    {
-        name: "App Store",
-        link: () => `/apps/App Store/`,
-        icon: ""
-    }
-];
-exports.apps = [
     {
         name: "Notepad",
         link: (file) => `/apps/Notepad/${file ? "?file=" + file : ""}`,
         icon: "/file.png"
     },
     {
+        name: "App Store",
+        link: `/apps/App Store/`,
+        icon: "/apps/App Store/icon.png"
+    }
+];
+exports.apps = [
+    {
+        name: "Slides",
+        link: `/apps/Slides/`,
+        icon: ""
+    },
+    // {
+    //   name: "BeepBox",
+    //   link: `https://www.beepbox.co`,
+    //   icon: "https://www.beepbox.co/apple-touch-icon.png"
+    // },
+    {
+        name: "Guesser",
+        link: `/apps/Guesser/`,
+        icon: ""
+    },
+    {
         name: "Bird",
-        link: () => `/games/Bird/`,
+        link: `/games/Bird/`,
         icon: "/image/bird.svg"
     },
     // {
     //   name: "Emoji Match",
-    //   link: () => `/games/Emoji Match/`,
+    //   link: `/games/Emoji Match/`,
     //   icon: "/image/emojiMatch.svg"
     // },
     {
         name: "Europe Takeover",
-        link: () => `/games/Europe Takeover/`,
+        link: `/games/Europe Takeover/`,
         icon: "/image/europe.svg"
     },
     {
         name: "Gold Miner",
-        link: () => `/games/Gold Miner/`,
+        link: `/games/Gold Miner/`,
         icon: "/image/goldMiner.svg"
     },
     {
         name: "Idle Taco",
-        link: () => `/games/Idle Taco/`,
+        link: `/games/Idle Taco/`,
         icon: "/image/taco.svg"
     },
     {
         name: "Idle Taco 2",
-        link: () => `/games/Idle Taco 2/`,
+        link: `/games/Idle Taco 2/`,
         icon: "/image/taco.svg"
     },
     {
         name: "Pig Farmer",
-        link: () => `/games/Pig Farmer/`,
-        icon: "/image/pigFarmer.svg"
+        link: `/games/Pig Farmer/`,
+        icon: "/image/pigFarmer.svg",
+        dev: "Snowman 8326"
     },
     {
         name: "Taco Clicker",
-        link: () => `/games/Taco Clicker/`,
+        link: `/games/Taco Clicker/`,
         icon: "/image/taco.svg"
     }
 ];
-function findAppByName(name) {
+function getIndexOfAppByName(name) {
     for (let i = 0; i < exports.apps.length; i++) {
         const app = exports.apps[i];
         if (app.name == name)
             return i;
     }
+    for (let i = 0; i < exports.nativeApps.length; i++) {
+        const app = exports.nativeApps[i];
+        if (app.name == name)
+            return i;
+    }
     return -1;
 }
-exports.findAppByName = findAppByName;
+exports.getIndexOfAppByName = getIndexOfAppByName;
+function getAppByName(name) {
+    for (let i = 0; i < exports.apps.length; i++) {
+        const app = exports.apps[i];
+        if (app.name == name)
+            return app;
+    }
+    for (let i = 0; i < exports.nativeApps.length; i++) {
+        const app = exports.nativeApps[i];
+        if (app.name == name)
+            return app;
+    }
+    return null;
+}
+exports.getAppByName = getAppByName;
 
 },{}],2:[function(require,module,exports){
 "use strict";
@@ -130,42 +172,45 @@ function loadDesktopFiles() {
                 (0, index_2.openApp)({ name: file.slice(0, file.length - 4), link: () => "data://video/mp4," + localStorage.getItem("file:" + file), icon: "" });
             // else if (file.endsWith(".lnk")) openApp(localStorage.getItem("file:" + file)!, localStorage.getItem("file:" + file)!);
             else
-                (0, index_2.openApp)(apps_1.apps[(0, apps_1.findAppByName)("Notepad")], file);
+                (0, index_2.openApp)((0, apps_1.getAppByName)("Notepad"), file);
         });
         tempElem.addEventListener("contextmenu", (e) => {
-            e.preventDefault();
-            exports.fileContextmenu.innerHTML = `<div id="delete-${file}" class="menu-item">Delete</div>
-      <div id="rename-${file}" class="menu-item">Rename</div>
-      <div id="edit-${file}" class="menu-item">Edit with text editor</div>`;
-            document.getElementById(`delete-${file}`).addEventListener("click", () => {
-                (0, files_1.deleteFile)(file);
-                index_1.desktopContextmenu.classList.toggle("hide", true);
-                exports.fileContextmenu.classList.toggle("hide", true);
-                loadDesktopFiles();
-            });
-            document.getElementById(`rename-${file}`).addEventListener("click", () => {
-                // document.write(file);
-                var newName = prompt('Rename "' + (0, files_1.getFileName)(file) + '" to?');
-                if (newName) {
-                    (0, files_1.rename)(file, "desktop/" + newName);
-                }
-                index_1.desktopContextmenu.classList.toggle("hide", true);
-                exports.fileContextmenu.classList.toggle("hide", true);
-                loadDesktopFiles();
-            });
-            document.getElementById(`edit-${file}`).addEventListener("click", () => {
-                (0, index_2.openApp)(apps_1.apps[(0, apps_1.findAppByName)("Text Editor")], file);
-                exports.fileContextmenu.classList.toggle("hide", true);
-                index_1.desktopContextmenu.classList.toggle("hide", true);
-            });
-            exports.fileContextmenu.style.left = e.x + "px";
-            exports.fileContextmenu.style.top = e.y + "px";
-            exports.fileContextmenu.classList.toggle("hide", false);
+            fileContextmenuListener(e, file);
         });
         exports.desktop.append(tempElem);
     });
 }
 exports.loadDesktopFiles = loadDesktopFiles;
+function fileContextmenuListener(e, file) {
+    e.preventDefault();
+    exports.fileContextmenu.innerHTML = `<div id="delete-${file}" class="menu-item">Delete</div>
+      <div id="rename-${file}" class="menu-item">Rename</div>
+      <div id="edit-${file}" class="menu-item">Edit with text editor</div>`;
+    document.getElementById(`delete-${file}`).addEventListener("click", () => {
+        (0, files_1.deleteFile)(file);
+        index_1.desktopContextmenu.classList.toggle("hide", true);
+        exports.fileContextmenu.classList.toggle("hide", true);
+        loadDesktopFiles();
+    });
+    document.getElementById(`rename-${file}`).addEventListener("click", () => {
+        // document.write(file);
+        var newName = prompt('Rename "' + (0, files_1.getFileName)(file) + '" to?');
+        if (newName) {
+            (0, files_1.rename)(file, "desktop/" + newName);
+        }
+        index_1.desktopContextmenu.classList.toggle("hide", true);
+        exports.fileContextmenu.classList.toggle("hide", true);
+        loadDesktopFiles();
+    });
+    document.getElementById(`edit-${file}`).addEventListener("click", () => {
+        (0, index_2.openApp)(apps_1.apps[(0, apps_1.getIndexOfAppByName)("Text Editor")], file);
+        exports.fileContextmenu.classList.toggle("hide", true);
+        index_1.desktopContextmenu.classList.toggle("hide", true);
+    });
+    exports.fileContextmenu.style.left = e.x + "px";
+    exports.fileContextmenu.style.top = e.y + "px";
+    exports.fileContextmenu.classList.toggle("hide", false);
+}
 window.addEventListener("keydown", (e) => {
     if ((e.key == "r" && e.ctrlKey) || e.key == "F5") {
         e.preventDefault();
@@ -177,18 +222,43 @@ window.addEventListener("keydown", (e) => {
 },{"./apps":1,"./files":3,"./index":4,"./taskbar":5,"./windowMngr/index":6}],3:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.rename = exports.getFileName = exports.createFile = exports.openFile = exports.deleteFile = void 0;
+exports.rename = exports.getFileName = exports.listFiles = exports.createFile = exports.openFile = exports.deleteFile = exports.Files = void 0;
 const desktop_1 = require("./desktop");
-var files = [];
+class Files {
+    value = [];
+    constructor(value) {
+        this.value = value || [];
+    }
+    names() {
+        let res = [];
+        for (let i = 0; i < this.value.length; i++) {
+            const file = this.value[i];
+            res.push(file.name);
+        }
+        return res;
+    }
+    paths() {
+        let res = [];
+        for (let i = 0; i < this.value.length; i++) {
+            const file = this.value[i];
+            res.push(file.path);
+        }
+        return res;
+    }
+    push = this.value.push;
+}
+exports.Files = Files;
 function deleteFile(fileToDelete) {
+    let files = [];
     for (let i = 0; i < localStorage.length; i++) {
         const element = localStorage.key(i);
         if (element.slice(0, 5) == "file:") {
-            files.push(element.slice(5));
+            let path = element.slice(5);
+            files.push({ path, name: getFileName(path) });
         }
     }
-    var filePath = fileToDelete;
-    var fileName = filePath.split("/")[filePath.split("/").length - 1];
+    let filePath = fileToDelete;
+    let fileName = filePath.split("/")[filePath.split("/").length - 1];
     if (localStorage.getItem("file:" + fileToDelete) == null) {
         alert("That file does not exist.");
     }
@@ -197,16 +267,10 @@ function deleteFile(fileToDelete) {
     }
 }
 exports.deleteFile = deleteFile;
-function openFile(userOpen, elem) {
-    var files = [];
-    for (let i = 0; i < localStorage.length; i++) {
-        const element = localStorage.key(i);
-        if (element.slice(0, 5) == "file:") {
-            files.push(element.slice(5));
-        }
-    }
+function openFile(userOpen) {
+    let files = listFiles();
     if (userOpen)
-        var tempFileName = prompt("file\n" + files.join("\n"));
+        var tempFileName = prompt("file\n" + files.paths().join("\n"));
     else {
         var tempFileName = new URL(location.href).searchParams.get("file");
     }
@@ -220,7 +284,7 @@ function openFile(userOpen, elem) {
 }
 exports.openFile = openFile;
 function createFile(dir) {
-    var tempFileName = prompt("Name of the file?");
+    let tempFileName = prompt("Name of the file?");
     if (!tempFileName)
         return;
     if (localStorage.getItem("file:" + dir + tempFileName) == null) {
@@ -232,6 +296,18 @@ function createFile(dir) {
     }
 }
 exports.createFile = createFile;
+function listFiles() {
+    var files = new Files();
+    for (let i = 0; i < localStorage.length; i++) {
+        const element = localStorage.key(i);
+        if (element.slice(0, 5) == "file:") {
+            let path = element.slice(5);
+            files.push({ path, name: getFileName(path) });
+        }
+    }
+    return files;
+}
+exports.listFiles = listFiles;
 function getFileName(filePath) {
     return filePath.split("/")[filePath.split("/").length - 1] || "";
 }
@@ -272,7 +348,7 @@ desktop_1.desktop.addEventListener("contextmenu", (e) => {
     exports.desktopContextmenu.style.top = e.y + "px";
     exports.desktopContextmenu.classList.toggle("hide", false);
 });
-desktop_1.desktop.addEventListener("click", (e) => {
+desktop_1.desktop.addEventListener("click", () => {
     exports.desktopContextmenu.classList.toggle("hide", true);
     desktop_1.fileContextmenu.classList.toggle("hide", true);
 });
@@ -282,6 +358,9 @@ newFile.addEventListener("click", () => {
     exports.desktopContextmenu.classList.toggle("hide", true);
     desktop_1.fileContextmenu.classList.toggle("hide", true);
 });
+// window.addEventListener("click", () => {
+//   bringToFront(-1);
+// });
 setInterval(() => {
     (0, taskbar_1.loadTaskbarApps)();
     (0, desktop_1.loadDesktopFiles)();
@@ -294,15 +373,14 @@ exports.loadTaskbarApps = void 0;
 const apps_1 = require("./apps");
 const windowMngr_1 = require("./windowMngr");
 const taskbar = document.getElementById("taskbar");
-function objectIncludes(obj, key) {
-    for (const key1 in obj) {
-        if (Object.hasOwnProperty.call(obj, key)) {
-            if (key1 != key)
-                return false;
-        }
-    }
-    return true;
-}
+// function objectIncludes<T>(obj: T, key: keyof T) {
+//   for (const key1 in obj) {
+//     if (Object.hasOwnProperty.call(obj, key)) {
+//       if (key1 != key) return false;
+//     }
+//   }
+//   return true;
+// }
 function loadApp(app) {
     if (app) {
         var tempElem = document.createElement("img");
@@ -329,7 +407,7 @@ function loadTaskbarApps() {
     // }
     for (let i = 0; i < apps_1.apps.length; i++) {
         const app = apps_1.apps[i];
-        if ((0, apps_1.hasApp)(i))
+        if ((0, apps_1.hasApp)(app))
             loadApp(app);
     }
     for (let i = 0; i < apps_1.nativeApps.length; i++) {
@@ -362,7 +440,7 @@ exports.windows = [];
 const windowsElem = document.getElementById("windows");
 const iframeType = "iframe";
 function openApp(app, file) {
-    if (!(0, apps_1.hasApp)((0, apps_1.findAppByName)(app.name)) && app.name != "App Store")
+    if (!(0, apps_1.hasApp)(app))
         return;
     var i = exports.windows.length;
     var frame = document.createElement("div");
@@ -388,8 +466,8 @@ function openApp(app, file) {
     frame.append(titleBar);
     var iframe = document.createElement(iframeType);
     iframe.style.width = "100%";
-    iframe.style.height = "90%";
-    iframe.src = app.link(file);
+    iframe.style.height = "calc(100% - 30px)";
+    iframe.src = typeof app.link == "function" ? app.link(file) : app.link;
     iframe.style.border = "none";
     frame.append(iframe);
     setInterval(() => {
@@ -405,15 +483,20 @@ exports.openApp = openApp;
 function addEventListeners(i) {
     const frame = exports.windows[i]?.frame;
     dragElement(frame, i);
-    frame.addEventListener("pointerenter", () => {
+    frame.addEventListener("mouseenter", () => {
         bringToFront(i);
     });
-    frame.addEventListener("pointerleave", () => {
+    frame.addEventListener("mouseleave", () => {
         bringToFront(-1);
     });
+    // frame.querySelector(iframeType)?.addEventListener("focus", () => {
+    //   bringToFront(i);
+    // });
+    // frame.addEventListener("click", () => {
+    //   bringToFront(i);
+    // });
     frame.addEventListener("keydown", (e) => {
         if (e.ctrlKey && e.key == "q") {
-            console.log("hi");
             e.preventDefault();
             close(i);
         }
@@ -429,6 +512,7 @@ function bringToFront(i) {
         if (j != i) {
             element?.frame.classList.toggle("front", false);
             element?.frame.querySelector(iframeType)?.blur();
+            // (<HTMLElement>document.activeElement)?.blur();
         }
     }
     exports.windows[i]?.frame.classList.toggle("front", true);
@@ -437,7 +521,6 @@ function bringToFront(i) {
 function close(i) {
     var currentWindow = exports.windows[i];
     if (currentWindow) {
-        console.log(currentWindow.frame.querySelector("span")?.innerHTML);
         if (currentWindow.frame.querySelector("span")?.innerHTML.endsWith("*") &&
             currentWindow.frame.querySelector(iframeType)?.contentDocument?.getElementById("edit")?.value &&
             currentWindow.app.name == "Notepad") {
@@ -484,7 +567,7 @@ function dragElement(elmnt, i) {
             elmnt.style.left = e.clientX - 250 + "px";
             dragMouseDown(e);
         }
-        if (+elmnt.style.top.replace(/px/, "") < 0) {
+        if (e.clientY <= 0) {
             maximize(elmnt, i);
             closeDragElement();
             return;
@@ -520,7 +603,7 @@ function maximize(frame, i, move = true) {
     }
     else {
         frame.style.width = "100%";
-        frame.style.height = "calc(100% - 40px)";
+        frame.style.height = "calc(100% - 40.5px)";
         if (move) {
             frame.style.top = "0px";
             frame.style.left = "0px";

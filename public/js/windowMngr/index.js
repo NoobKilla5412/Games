@@ -6,7 +6,7 @@ exports.windows = [];
 const windowsElem = document.getElementById("windows");
 const iframeType = "iframe";
 function openApp(app, file) {
-    if (!(0, apps_1.hasApp)((0, apps_1.findAppByName)(app.name)) && app.name != "App Store")
+    if (!(0, apps_1.hasApp)(app))
         return;
     var i = exports.windows.length;
     var frame = document.createElement("div");
@@ -32,8 +32,8 @@ function openApp(app, file) {
     frame.append(titleBar);
     var iframe = document.createElement(iframeType);
     iframe.style.width = "100%";
-    iframe.style.height = "90%";
-    iframe.src = app.link(file);
+    iframe.style.height = "calc(100% - 30px)";
+    iframe.src = typeof app.link == "function" ? app.link(file) : app.link;
     iframe.style.border = "none";
     frame.append(iframe);
     setInterval(() => {
@@ -49,15 +49,20 @@ exports.openApp = openApp;
 function addEventListeners(i) {
     const frame = exports.windows[i]?.frame;
     dragElement(frame, i);
-    frame.addEventListener("pointerenter", () => {
+    frame.addEventListener("mouseenter", () => {
         bringToFront(i);
     });
-    frame.addEventListener("pointerleave", () => {
+    frame.addEventListener("mouseleave", () => {
         bringToFront(-1);
     });
+    // frame.querySelector(iframeType)?.addEventListener("focus", () => {
+    //   bringToFront(i);
+    // });
+    // frame.addEventListener("click", () => {
+    //   bringToFront(i);
+    // });
     frame.addEventListener("keydown", (e) => {
         if (e.ctrlKey && e.key == "q") {
-            console.log("hi");
             e.preventDefault();
             close(i);
         }
@@ -73,6 +78,7 @@ function bringToFront(i) {
         if (j != i) {
             element?.frame.classList.toggle("front", false);
             element?.frame.querySelector(iframeType)?.blur();
+            // (<HTMLElement>document.activeElement)?.blur();
         }
     }
     exports.windows[i]?.frame.classList.toggle("front", true);
@@ -81,7 +87,6 @@ function bringToFront(i) {
 function close(i) {
     var currentWindow = exports.windows[i];
     if (currentWindow) {
-        console.log(currentWindow.frame.querySelector("span")?.innerHTML);
         if (currentWindow.frame.querySelector("span")?.innerHTML.endsWith("*") &&
             currentWindow.frame.querySelector(iframeType)?.contentDocument?.getElementById("edit")?.value &&
             currentWindow.app.name == "Notepad") {
@@ -128,7 +133,7 @@ function dragElement(elmnt, i) {
             elmnt.style.left = e.clientX - 250 + "px";
             dragMouseDown(e);
         }
-        if (+elmnt.style.top.replace(/px/, "") < 0) {
+        if (e.clientY <= 0) {
             maximize(elmnt, i);
             closeDragElement();
             return;
@@ -164,7 +169,7 @@ function maximize(frame, i, move = true) {
     }
     else {
         frame.style.width = "100%";
-        frame.style.height = "calc(100% - 40px)";
+        frame.style.height = "calc(100% - 40.5px)";
         if (move) {
             frame.style.top = "0px";
             frame.style.left = "0px";

@@ -11,7 +11,7 @@ desktop_1.desktop.addEventListener("contextmenu", (e) => {
     exports.desktopContextmenu.style.top = e.y + "px";
     exports.desktopContextmenu.classList.toggle("hide", false);
 });
-desktop_1.desktop.addEventListener("click", (e) => {
+desktop_1.desktop.addEventListener("click", () => {
     exports.desktopContextmenu.classList.toggle("hide", true);
     desktop_1.fileContextmenu.classList.toggle("hide", true);
 });
@@ -21,6 +21,9 @@ newFile.addEventListener("click", () => {
     exports.desktopContextmenu.classList.toggle("hide", true);
     desktop_1.fileContextmenu.classList.toggle("hide", true);
 });
+// window.addEventListener("click", () => {
+//   bringToFront(-1);
+// });
 setInterval(() => {
     (0, taskbar_1.loadTaskbarApps)();
     (0, desktop_1.loadDesktopFiles)();

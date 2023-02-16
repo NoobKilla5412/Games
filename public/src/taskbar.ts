@@ -3,14 +3,14 @@ import { openApp } from "./windowMngr";
 
 const taskbar = document.getElementById("taskbar")!;
 
-function objectIncludes<T>(obj: T, key: keyof T) {
-  for (const key1 in obj) {
-    if (Object.hasOwnProperty.call(obj, key)) {
-      if (key1 != key) return false;
-    }
-  }
-  return true;
-}
+// function objectIncludes<T>(obj: T, key: keyof T) {
+//   for (const key1 in obj) {
+//     if (Object.hasOwnProperty.call(obj, key)) {
+//       if (key1 != key) return false;
+//     }
+//   }
+//   return true;
+// }
 
 function loadApp(app: App) {
   if (app) {
@@ -40,7 +40,7 @@ export function loadTaskbarApps() {
 
   for (let i = 0; i < apps.length; i++) {
     const app = apps[i];
-    if (hasApp(i)) loadApp(app);
+    if (hasApp(app)) loadApp(app);
   }
 
   for (let i = 0; i < nativeApps.length; i++) {

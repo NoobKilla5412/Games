@@ -1,17 +1,42 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.rename = exports.getFileName = exports.createFile = exports.openFile = exports.deleteFile = void 0;
+exports.rename = exports.getFileName = exports.listFiles = exports.createFile = exports.openFile = exports.deleteFile = exports.Files = void 0;
 const desktop_1 = require("./desktop");
-var files = [];
+class Files {
+    value = [];
+    constructor(value) {
+        this.value = value || [];
+    }
+    names() {
+        let res = [];
+        for (let i = 0; i < this.value.length; i++) {
+            const file = this.value[i];
+            res.push(file.name);
+        }
+        return res;
+    }
+    paths() {
+        let res = [];
+        for (let i = 0; i < this.value.length; i++) {
+            const file = this.value[i];
+            res.push(file.path);
+        }
+        return res;
+    }
+    push = this.value.push;
+}
+exports.Files = Files;
 function deleteFile(fileToDelete) {
+    let files = [];
     for (let i = 0; i < localStorage.length; i++) {
         const element = localStorage.key(i);
         if (element.slice(0, 5) == "file:") {
-            files.push(element.slice(5));
+            let path = element.slice(5);
+            files.push({ path, name: getFileName(path) });
         }
     }
-    var filePath = fileToDelete;
-    var fileName = filePath.split("/")[filePath.split("/").length - 1];
+    let filePath = fileToDelete;
+    let fileName = filePath.split("/")[filePath.split("/").length - 1];
     if (localStorage.getItem("file:" + fileToDelete) == null) {
         alert("That file does not exist.");
     }
@@ -20,16 +45,10 @@ function deleteFile(fileToDelete) {
     }
 }
 exports.deleteFile = deleteFile;
-function openFile(userOpen, elem) {
-    var files = [];
-    for (let i = 0; i < localStorage.length; i++) {
-        const element = localStorage.key(i);
-        if (element.slice(0, 5) == "file:") {
-            files.push(element.slice(5));
-        }
-    }
+function openFile(userOpen) {
+    let files = listFiles();
     if (userOpen)
-        var tempFileName = prompt("file\n" + files.join("\n"));
+        var tempFileName = prompt("file\n" + files.paths().join("\n"));
     else {
         var tempFileName = new URL(location.href).searchParams.get("file");
     }
@@ -43,7 +62,7 @@ function openFile(userOpen, elem) {
 }
 exports.openFile = openFile;
 function createFile(dir) {
-    var tempFileName = prompt("Name of the file?");
+    let tempFileName = prompt("Name of the file?");
     if (!tempFileName)
         return;
     if (localStorage.getItem("file:" + dir + tempFileName) == null) {
@@ -55,6 +74,18 @@ function createFile(dir) {
     }
 }
 exports.createFile = createFile;
+function listFiles() {
+    var files = new Files();
+    for (let i = 0; i < localStorage.length; i++) {
+        const element = localStorage.key(i);
+        if (element.slice(0, 5) == "file:") {
+            let path = element.slice(5);
+            files.push({ path, name: getFileName(path) });
+        }
+    }
+    return files;
+}
+exports.listFiles = listFiles;
 function getFileName(filePath) {
     return filePath.split("/")[filePath.split("/").length - 1] || "";
 }

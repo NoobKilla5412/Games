@@ -1,19 +1,6 @@
-// @ts-ignore
-const canvas: HTMLCanvasElement = document.querySelector("canvas");
+const canvas = document.querySelector("canvas")!;
 canvas.width += 100;
-// @ts-ignore
-const c: CanvasRenderingContext2D = canvas.getContext("2d");
-type number1 = {
-  hi: string;
-};
-class newNumber {
-  private _value: any;
-  constructor(value: any) {
-    this._value = value;
-  }
-}
-var hi = new Number(3);
-console.log(hi);
+const c = canvas.getContext("2d")!;
 
 const level: number[][] | string[][] = [
   [1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1],

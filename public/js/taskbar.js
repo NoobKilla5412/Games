@@ -4,15 +4,14 @@ exports.loadTaskbarApps = void 0;
 const apps_1 = require("./apps");
 const windowMngr_1 = require("./windowMngr");
 const taskbar = document.getElementById("taskbar");
-function objectIncludes(obj, key) {
-    for (const key1 in obj) {
-        if (Object.hasOwnProperty.call(obj, key)) {
-            if (key1 != key)
-                return false;
-        }
-    }
-    return true;
-}
+// function objectIncludes<T>(obj: T, key: keyof T) {
+//   for (const key1 in obj) {
+//     if (Object.hasOwnProperty.call(obj, key)) {
+//       if (key1 != key) return false;
+//     }
+//   }
+//   return true;
+// }
 function loadApp(app) {
     if (app) {
         var tempElem = document.createElement("img");
@@ -39,7 +38,7 @@ function loadTaskbarApps() {
     // }
     for (let i = 0; i < apps_1.apps.length; i++) {
         const app = apps_1.apps[i];
-        if ((0, apps_1.hasApp)(i))
+        if ((0, apps_1.hasApp)(app))
             loadApp(app);
     }
     for (let i = 0; i < apps_1.nativeApps.length; i++) {

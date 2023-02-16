@@ -20,10 +20,10 @@ function loadText(lang: [string, number]) {
       if (Object.hasOwnProperty.call(currentLang, key)) {
         const keys = key.split(".");
         const element = currentLang[key];
-        // @ts-ignore
-        if (keys[1] != "back")
-          document.querySelector(`${keys[0] == "generic" ? "" : "#" + keys[0]} #${keys[1]}${keys[2] ? " #" + keys[2] : ""}`).innerHTML = element;
-        else {
+        if (keys[1] != "back") {
+          let tempElem = document.querySelector(`${keys[0] == "generic" ? "" : "#" + keys[0]} #${keys[1]}${keys[2] ? " #" + keys[2] : ""}`);
+          if (tempElem) tempElem.innerHTML = element;
+        } else {
           for (let i = 0; i < backBtns.length; i++) {
             const btn = backBtns[i];
             btn.innerHTML = currentLang["generic.back"];
@@ -37,10 +37,13 @@ function loadText(lang: [string, number]) {
     for (const key in langs["en-US"]) {
       if (Object.hasOwnProperty.call(langs["en-US"], key)) {
         const keys = key.split(".");
-        const element = langs["en-US"][key];
-        // @ts-ignore
-        if (keys[1] != "back") document.querySelector(`${keys[0] == "generic" ? "" : "#" + keys[0]} #${keys[1]}${keys[2] ? " #" + keys[2] : ""}`).innerHTML = key;
-        else {
+        // const element = langs["en-US"][key];
+        if (keys[1] != "back") {
+          let selectors = `${keys[0] == "generic" ? "" : "#" + keys[0]} #${keys[1]}${keys[2] ? " #" + keys[2] : ""}`;
+          let tempElem = document.querySelector(selectors);
+          if (tempElem) tempElem.innerHTML = key;
+          else throw new Error(`Could not find element "${selectors}"`);
+        } else {
           for (let i = 0; i < backBtns.length; i++) {
             const btn = backBtns[i];
             btn.innerHTML = "generic.back";
@@ -52,8 +55,7 @@ function loadText(lang: [string, number]) {
     document.title = "menu.title";
     console.log(`languages loaded`);
   }
-  // @ts-ignore
-  document.getElementById("version").innerHTML += version;
+  document.getElementById("version")!.innerHTML += version;
   langSetting = lang;
   localStorage.setItem("tacoGame2:lang", JSON.stringify(langSetting));
   console.log(`saved language prefs`);
@@ -81,15 +83,14 @@ function loadMusic(type: string) {
   var currentSong = Math.floor(random * song.length);
   song[currentSong].play();
 }
-document.addEventListener("click", (e) => {
+document.addEventListener("click", () => {
   if (!started) {
     document.getElementById("clickMe")!.style.display = "none";
     var settings = { darkMode: false };
     if (!localStorage.getItem("settings")) {
       localStorage.setItem("settings", JSON.stringify(settings));
     } else {
-      // @ts-ignore
-      settings = JSON.parse(localStorage.getItem("settings"));
+      settings = JSON.parse(localStorage.getItem("settings") || "");
     }
     if (testing) {
       document.getElementById("intro1")!.style.display = "none";
@@ -126,22 +127,21 @@ document.addEventListener("click", (e) => {
     started = true;
   }
 });
-var langSetting: [string, number];
+let langSetting: [string, number];
+let defaultLangSetting: [string, number] = ["en-US", 0];
 fetch("json/langs.json")
   .then((data) => data.json())
   .then((langs1) => {
     langs = langs1;
     // loadText('dev');
     // parseCommand('give')
-    // @ts-ignore
-    langSetting = JSON.parse(localStorage.getItem("tacoGame2:lang")) || ["en-US", 0];
+    langSetting = JSON.parse(localStorage.getItem("tacoGame2:lang") || JSON.stringify(defaultLangSetting)) || defaultLangSetting;
     if (langSetting) console.log(`loaded language settings`);
     else throw new Error("could not load language settings");
-    // @ts-ignore
-    var select: HTMLSelectElement = document.querySelector("#options #lang");
-    select.options.selectedIndex = langSetting[1];
-    // @ts-ignore
-    backBtns = document.getElementsByClassName("back");
+    var select: HTMLSelectElement | null = document.querySelector("#options #lang");
+    if (select) select.options.selectedIndex = langSetting[1];
+    else throw new Error('Could not find element "#options #lang"');
+    backBtns = <HTMLCollectionOf<HTMLButtonElement>>document.getElementsByClassName("back");
     loadText(langSetting);
     console.log(`loaded menu`);
     // loadText('es-ES');
@@ -160,7 +160,7 @@ fetch("json/langs.json")
     //#endregion menu
     for (let i = 0; i < backBtns.length; i++) {
       const btn = backBtns[i];
-      btn.addEventListener("click", (e) => {
+      btn.addEventListener("click", () => {
         document.getElementById("options")!.style.display = "none";
         document.getElementById("credits")!.style.display = "none";
         document.getElementById("menu")!.style.display = "block";
@@ -169,8 +169,8 @@ fetch("json/langs.json")
     }
     //#region options
     document.querySelector("#options #lang")!.addEventListener("change", () => {
-      // @ts-ignore
-      loadText([select.options[select.options.selectedIndex].id, select.options.selectedIndex]);
+      if (select) loadText([select.options[select.options.selectedIndex].id, select.options.selectedIndex]);
+      else throw new Error('Could not find element "#options #lang"');
     });
     //#endregion options
     //#region credits

@@ -35,8 +35,6 @@ document.getElementById("delete").addEventListener("click", () => {
 //   rename1(file, prompt(`Rename file ${getFileName1(file.slice(5))} to`) || "");
 // });
 window.addEventListener("keydown", (e) => {
-    if (!e.ctrlKey && !e.altKey && !e.metaKey && !e.key.includes("Arrow") && e.key != "Tab")
-        exports.saved = false;
     if (e.ctrlKey) {
         e.preventDefault();
         switch (e.key) {
@@ -49,6 +47,10 @@ window.addEventListener("keydown", (e) => {
         }
     }
     reloadText();
+});
+exports.edit.addEventListener("keydown", (e) => {
+    if (!e.ctrlKey && !e.altKey && !e.metaKey && !e.key.includes("Arrow") && e.key != "Tab")
+        exports.saved = false;
 });
 reloadText();
 // });

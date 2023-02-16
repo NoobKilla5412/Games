@@ -45,42 +45,45 @@ function loadDesktopFiles() {
                 (0, index_2.openApp)({ name: file.slice(0, file.length - 4), link: () => "data://video/mp4," + localStorage.getItem("file:" + file), icon: "" });
             // else if (file.endsWith(".lnk")) openApp(localStorage.getItem("file:" + file)!, localStorage.getItem("file:" + file)!);
             else
-                (0, index_2.openApp)(apps_1.apps[(0, apps_1.findAppByName)("Notepad")], file);
+                (0, index_2.openApp)((0, apps_1.getAppByName)("Notepad"), file);
         });
         tempElem.addEventListener("contextmenu", (e) => {
-            e.preventDefault();
-            exports.fileContextmenu.innerHTML = `<div id="delete-${file}" class="menu-item">Delete</div>
-      <div id="rename-${file}" class="menu-item">Rename</div>
-      <div id="edit-${file}" class="menu-item">Edit with text editor</div>`;
-            document.getElementById(`delete-${file}`).addEventListener("click", () => {
-                (0, files_1.deleteFile)(file);
-                index_1.desktopContextmenu.classList.toggle("hide", true);
-                exports.fileContextmenu.classList.toggle("hide", true);
-                loadDesktopFiles();
-            });
-            document.getElementById(`rename-${file}`).addEventListener("click", () => {
-                // document.write(file);
-                var newName = prompt('Rename "' + (0, files_1.getFileName)(file) + '" to?');
-                if (newName) {
-                    (0, files_1.rename)(file, "desktop/" + newName);
-                }
-                index_1.desktopContextmenu.classList.toggle("hide", true);
-                exports.fileContextmenu.classList.toggle("hide", true);
-                loadDesktopFiles();
-            });
-            document.getElementById(`edit-${file}`).addEventListener("click", () => {
-                (0, index_2.openApp)(apps_1.apps[(0, apps_1.findAppByName)("Text Editor")], file);
-                exports.fileContextmenu.classList.toggle("hide", true);
-                index_1.desktopContextmenu.classList.toggle("hide", true);
-            });
-            exports.fileContextmenu.style.left = e.x + "px";
-            exports.fileContextmenu.style.top = e.y + "px";
-            exports.fileContextmenu.classList.toggle("hide", false);
+            fileContextmenuListener(e, file);
         });
         exports.desktop.append(tempElem);
     });
 }
 exports.loadDesktopFiles = loadDesktopFiles;
+function fileContextmenuListener(e, file) {
+    e.preventDefault();
+    exports.fileContextmenu.innerHTML = `<div id="delete-${file}" class="menu-item">Delete</div>
+      <div id="rename-${file}" class="menu-item">Rename</div>
+      <div id="edit-${file}" class="menu-item">Edit with text editor</div>`;
+    document.getElementById(`delete-${file}`).addEventListener("click", () => {
+        (0, files_1.deleteFile)(file);
+        index_1.desktopContextmenu.classList.toggle("hide", true);
+        exports.fileContextmenu.classList.toggle("hide", true);
+        loadDesktopFiles();
+    });
+    document.getElementById(`rename-${file}`).addEventListener("click", () => {
+        // document.write(file);
+        var newName = prompt('Rename "' + (0, files_1.getFileName)(file) + '" to?');
+        if (newName) {
+            (0, files_1.rename)(file, "desktop/" + newName);
+        }
+        index_1.desktopContextmenu.classList.toggle("hide", true);
+        exports.fileContextmenu.classList.toggle("hide", true);
+        loadDesktopFiles();
+    });
+    document.getElementById(`edit-${file}`).addEventListener("click", () => {
+        (0, index_2.openApp)(apps_1.apps[(0, apps_1.getIndexOfAppByName)("Text Editor")], file);
+        exports.fileContextmenu.classList.toggle("hide", true);
+        index_1.desktopContextmenu.classList.toggle("hide", true);
+    });
+    exports.fileContextmenu.style.left = e.x + "px";
+    exports.fileContextmenu.style.top = e.y + "px";
+    exports.fileContextmenu.classList.toggle("hide", false);
+}
 window.addEventListener("keydown", (e) => {
     if ((e.key == "r" && e.ctrlKey) || e.key == "F5") {
         e.preventDefault();

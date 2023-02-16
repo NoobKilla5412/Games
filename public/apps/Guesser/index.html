@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guesser</title>
+  </head>
+
+  <body>
+    <script src="guesser.js"></script>
+    <!-- <script>
+      var min = 1;
+      var max = 1000;
+      function getRandom() {
+        return Math.floor(Math.random() * (max - min) + min);
+      }
+      function main() {
+        // var randomNum = getRandom();
+        var tries = 0;
+        var interval = setInterval(() => {
+          var randomInt = getRandom();
+          console.log("Guess:", randomInt);
+          tries++;
+          var ltGt = prompt(
+            `${randomInt} is greater or less than number (1 = >; 0 = <; 2 = ==;)`
+          );
+          if (ltGt == 0) {
+            min = randomInt;
+          } else if (ltGt == 1) {
+            max = randomInt;
+          } else if (ltGt == 2) {
+            clearInterval(interval);
+            console.log("Tries:", tries);
+          } else if (ltGt == "exit") {
+            clearInterval(interval);
+          }
+        }, 100);
+      }
+      main();
+    </script> -->
+  </body>
+</html>

@@ -1,17 +1,7 @@
 "use strict";
-// @ts-ignore
 const canvas = document.querySelector("canvas");
 canvas.width += 100;
-// @ts-ignore
 const c = canvas.getContext("2d");
-class newNumber {
-    _value;
-    constructor(value) {
-        this._value = value;
-    }
-}
-var hi = new Number(3);
-console.log(hi);
 const level = [
     [1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1],
     [0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0],

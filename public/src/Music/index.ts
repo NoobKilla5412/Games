@@ -12,20 +12,18 @@ var ownedSongs: {
   _value: { [x: string]: boolean };
   value: { [x: string]: boolean };
 } = {
-  // @ts-ignore
-  _value: JSON.parse(localStorage.getItem('music:ownedSongs')) || {},
+  _value: JSON.parse(localStorage.getItem("music:ownedSongs") || "{}") || {},
   set value(setValue: { [x: string]: boolean }) {
     this._value = setValue;
-    localStorage.setItem('music:ownedSongs', typeof setValue == 'object' ? JSON.stringify(setValue) : setValue);
+    localStorage.setItem("music:ownedSongs", typeof setValue == "object" ? JSON.stringify(setValue) : setValue);
   }
 };
-// @ts-ignore
-var songsElem: HTMLDivElement = document.getElementById('songs');
-function download<evT>(song: Song, e: evT) {
+var songsElem = <HTMLDivElement>document.getElementById("songs")!;
+function download(song: Song) {
   console.log(song);
   ownedSongs.value[song.id] = true;
 }
-fetch('json/songs.json')
+fetch("json/songs.json")
   .then((data) => data.json())
   .then((data1) => {
     songs = data1;
@@ -44,16 +42,15 @@ fetch('json/songs.json')
                                 </div>`;
       }
     }
-    // @ts-ignore
-    downloadBtns = document.getElementsByClassName('download');
+    downloadBtns = <HTMLCollectionOf<HTMLButtonElement>>document.getElementsByClassName("download");
     for (let i = 0; i < downloadBtns.length; i++) {
       const btn = downloadBtns[i];
-      btn.addEventListener('click', (e) => {
-        download(songs[btn.id.split('-')[1]], e);
+      btn.addEventListener("click", () => {
+        download(songs[btn.id.split("-")[1]]);
       });
     }
   });
-Object.defineProperty(String.prototype, 'forEach', {
+Object.defineProperty(String.prototype, "forEach", {
   value(callback: (value: string, index: number, array: ThisType<any>) => any) {
     if (this) {
       for (let i = 0; i < this.length; i++) {

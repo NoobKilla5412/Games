@@ -1,4 +1,4 @@
-import { apps, findAppByName } from "./apps";
+import { apps, getAppByName, getIndexOfAppByName } from "./apps";
 import { deleteFile, getFileName, rename } from "./files";
 import { desktopContextmenu } from "./index";
 import { loadTaskbarApps } from "./taskbar";
@@ -42,41 +42,46 @@ export function loadDesktopFiles() {
       if (file.endsWith(".mp4"))
         openApp({ name: file.slice(0, file.length - 4), link: () => "data://video/mp4," + localStorage.getItem("file:" + file), icon: "" });
       // else if (file.endsWith(".lnk")) openApp(localStorage.getItem("file:" + file)!, localStorage.getItem("file:" + file)!);
-      else openApp(apps[findAppByName("Notepad")], file);
+      else openApp(getAppByName("Notepad")!, file);
     });
     tempElem.addEventListener("contextmenu", (e) => {
-      e.preventDefault();
-      fileContextmenu.innerHTML = `<div id="delete-${file}" class="menu-item">Delete</div>
-      <div id="rename-${file}" class="menu-item">Rename</div>
-      <div id="edit-${file}" class="menu-item">Edit with text editor</div>`;
-      document.getElementById(`delete-${file}`)!.addEventListener("click", () => {
-        deleteFile(file);
-        desktopContextmenu.classList.toggle("hide", true);
-        fileContextmenu.classList.toggle("hide", true);
-        loadDesktopFiles();
-      });
-      document.getElementById(`rename-${file}`)!.addEventListener("click", () => {
-        // document.write(file);
-        var newName = prompt('Rename "' + getFileName(file) + '" to?');
-        if (newName) {
-          rename(file, "desktop/" + newName);
-        }
-        desktopContextmenu.classList.toggle("hide", true);
-        fileContextmenu.classList.toggle("hide", true);
-        loadDesktopFiles();
-      });
-      document.getElementById(`edit-${file}`)!.addEventListener("click", () => {
-        openApp(apps[findAppByName("Text Editor")], file);
-        fileContextmenu.classList.toggle("hide", true);
-        desktopContextmenu.classList.toggle("hide", true);
-      });
-      fileContextmenu.style.left = e.x + "px";
-      fileContextmenu.style.top = e.y + "px";
-      fileContextmenu.classList.toggle("hide", false);
+      fileContextmenuListener(e, file);
     });
     desktop.append(tempElem);
   });
 }
+
+function fileContextmenuListener(e: MouseEvent, file: string) {
+  e.preventDefault();
+  fileContextmenu.innerHTML = `<div id="delete-${file}" class="menu-item">Delete</div>
+      <div id="rename-${file}" class="menu-item">Rename</div>
+      <div id="edit-${file}" class="menu-item">Edit with text editor</div>`;
+  document.getElementById(`delete-${file}`)!.addEventListener("click", () => {
+    deleteFile(file);
+    desktopContextmenu.classList.toggle("hide", true);
+    fileContextmenu.classList.toggle("hide", true);
+    loadDesktopFiles();
+  });
+  document.getElementById(`rename-${file}`)!.addEventListener("click", () => {
+    // document.write(file);
+    var newName = prompt('Rename "' + getFileName(file) + '" to?');
+    if (newName) {
+      rename(file, "desktop/" + newName);
+    }
+    desktopContextmenu.classList.toggle("hide", true);
+    fileContextmenu.classList.toggle("hide", true);
+    loadDesktopFiles();
+  });
+  document.getElementById(`edit-${file}`)!.addEventListener("click", () => {
+    openApp(apps[getIndexOfAppByName("Text Editor")], file);
+    fileContextmenu.classList.toggle("hide", true);
+    desktopContextmenu.classList.toggle("hide", true);
+  });
+  fileContextmenu.style.left = e.x + "px";
+  fileContextmenu.style.top = e.y + "px";
+  fileContextmenu.classList.toggle("hide", false);
+}
+
 window.addEventListener("keydown", (e) => {
   if ((e.key == "r" && e.ctrlKey) || e.key == "F5") {
     e.preventDefault();

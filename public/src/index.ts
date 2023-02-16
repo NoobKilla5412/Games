@@ -1,6 +1,7 @@
 import { desktop, fileContextmenu, loadDesktopFiles } from "./desktop";
 import { createFile } from "./files";
 import { loadTaskbarApps } from "./taskbar";
+
 export const desktopContextmenu = document.getElementById("desktop-contextmenu")!;
 
 desktop.addEventListener("contextmenu", (e) => {
@@ -9,7 +10,7 @@ desktop.addEventListener("contextmenu", (e) => {
   desktopContextmenu.style.top = e.y + "px";
   desktopContextmenu.classList.toggle("hide", false);
 });
-desktop.addEventListener("click", (e) => {
+desktop.addEventListener("click", () => {
   desktopContextmenu.classList.toggle("hide", true);
   fileContextmenu.classList.toggle("hide", true);
 });
@@ -19,6 +20,9 @@ newFile.addEventListener("click", () => {
   desktopContextmenu.classList.toggle("hide", true);
   fileContextmenu.classList.toggle("hide", true);
 });
+// window.addEventListener("click", () => {
+//   bringToFront(-1);
+// });
 setInterval(() => {
   loadTaskbarApps();
   loadDesktopFiles();
