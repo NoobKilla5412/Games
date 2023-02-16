@@ -522,7 +522,9 @@ function close(i) {
     var currentWindow = exports.windows[i];
     if (currentWindow) {
         if (currentWindow.frame.querySelector("span")?.innerHTML.endsWith("*") &&
-            currentWindow.frame.querySelector(iframeType)?.contentDocument?.getElementById("edit")?.value &&
+            currentWindow.frame
+                .querySelector(iframeType)
+                ?.contentDocument?.getElementById("edit")?.value &&
             currentWindow.app.name == "Notepad") {
             if (!confirm("You have unsaved changes, are you sure you want to close this window?")) {
                 return;
@@ -572,6 +574,16 @@ function dragElement(elmnt, i) {
             closeDragElement();
             return;
         }
+        if (e.clientX <= 0) {
+            maximizeSide(elmnt, i, "left");
+            closeDragElement();
+            return;
+        }
+        if (e.clientX >= +getComputedStyle(document.body).width.replace(/[^\d.]/g, "") - 1) {
+            maximizeSide(elmnt, i, "right");
+            closeDragElement();
+            return;
+        }
         e = e || window.event;
         e.preventDefault();
         // calculate the new cursor position:
@@ -609,6 +621,33 @@ function maximize(frame, i, move = true) {
             frame.style.left = "0px";
         }
         frame.style.resize = "none";
+        frame.style.border = "none";
+        exports.windows[i].maximized = true;
+    }
+}
+function maximizeSide(frame, i, side) {
+    if (exports.windows[i]?.maximized) {
+        frame.style.width = "500px";
+        frame.style.height = "420px";
+        frame.style.left = "calc(50% - 250px)";
+        frame.style.top = "calc(50vh - 210px)";
+        frame.style.resize = "both";
+        frame.style.border = "1px lightblue solid";
+        exports.windows[i].maximized = false;
+    }
+    else {
+        frame.style.width = "50%";
+        frame.style.height = "calc(100% - 40.5px)";
+        frame.style.top = "0px";
+        if (side == "left") {
+            frame.style.right = "unset";
+            frame.style.left = "0px";
+        }
+        else {
+            frame.style.left = "unset";
+            frame.style.right = "0px";
+        }
+        frame.style.resize = "both";
         frame.style.border = "none";
         exports.windows[i].maximized = true;
     }
