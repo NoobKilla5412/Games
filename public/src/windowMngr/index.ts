@@ -224,7 +224,7 @@ function maximizeSide(frame: HTMLDivElement, i: number, side: "left" | "right") 
     windows[i]!.maximized = false;
   } else {
     frame.style.width = "50%";
-    frame.style.height = "calc(100% - 40.5px)";
+    frame.style.height = "calc(100% - 40px)";
     frame.style.top = "0px";
     if (side == "left") {
       frame.style.right = "unset";
