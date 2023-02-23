@@ -11,7 +11,7 @@ function deleteFile() {
             files.push(element.slice(5));
         }
     }
-    var fileToDelete = prompt("File to delete\n" + files.join("\n"));
+    var fileToDelete = prompt("File to delete\n" + files.join("\n"), index_1.file.slice(5));
     if (fileToDelete)
         if (localStorage.getItem("file:" + fileToDelete) == null) {
             alert("That file does not exist.");
@@ -34,7 +34,9 @@ function openFile(userOpen) {
             files.push(element.slice(5));
         }
     }
-    var tempFileName = userOpen ? prompt("file\n" + files.join("\n")) : new URL(location.href).searchParams.get("file");
+    var tempFileName = userOpen
+        ? prompt("file\n" + files.join("\n"), (0, files_1.getFilePath)(index_1.file.slice(5)))
+        : new URL(location.href).searchParams.get("file");
     if (!tempFileName)
         return;
     if (localStorage.getItem("file:" + tempFileName) == null) {

@@ -92,6 +92,12 @@ export function getFileName(filePath: string) {
   return filePath.split("/")[filePath.split("/").length - 1] || "";
 }
 
+export function getFilePath(filePath: string) {
+  let arr = filePath.split("/");
+  arr.pop();
+  return arr.join("/") + "/";
+}
+
 function getFileExt(fileName: string) {
   var names = fileName.split(".");
   if (names.length > 1) return names[names.length - 1];
@@ -99,11 +105,16 @@ function getFileExt(fileName: string) {
 }
 
 export function rename(filePath: string, to: string) {
-  if (localStorage.getItem("file:" + to) != null) {
+  if (localStorage.getItem("file:" + to) != null && filePath != to) {
     alert("That file already exists.");
   } else if (to && localStorage.getItem("file:" + filePath) != null) {
     if (getFileExt(getFileName(to)) != getFileExt(getFileName(filePath))) {
-      if (!confirm("This file has a different file extension than the old name. Are you sure that you want to do this?")) return;
+      if (
+        !confirm(
+          "This file has a different file extension than the old name. Are you sure that you want to do this?"
+        )
+      )
+        return;
     }
     var data = localStorage.getItem("file:" + filePath)!;
     localStorage.removeItem("file:" + filePath);

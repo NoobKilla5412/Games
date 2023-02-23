@@ -174,7 +174,11 @@ function loadDesktopFiles() {
             //       )
             //   );
             if (file.endsWith(".mp4"))
-                (0, index_2.openApp)({ name: file.slice(0, file.length - 4), link: () => "data://video/mp4," + localStorage.getItem("file:" + file), icon: "" });
+                (0, index_2.openApp)({
+                    name: file.slice(0, file.length - 4),
+                    link: () => "data://video/mp4," + localStorage.getItem("file:" + file),
+                    icon: ""
+                });
             // else if (file.endsWith(".lnk")) openApp(localStorage.getItem("file:" + file)!, localStorage.getItem("file:" + file)!);
             else
                 (0, index_2.openApp)((0, apps_1.getAppByName)("Notepad"), file);
@@ -199,7 +203,7 @@ function fileContextmenuListener(e, file) {
     });
     document.getElementById(`rename-${file}`).addEventListener("click", () => {
         // document.write(file);
-        var newName = prompt('Rename "' + (0, files_1.getFileName)(file) + '" to?');
+        var newName = prompt('Rename "' + (0, files_1.getFileName)(file) + '" to?', (0, files_1.getFileName)(file));
         if (newName) {
             (0, files_1.rename)(file, "desktop/" + newName);
         }
@@ -227,7 +231,7 @@ window.addEventListener("keydown", (e) => {
 },{"./apps":1,"./files":3,"./index":4,"./taskbar":5,"./windowMngr/index":6}],3:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.rename = exports.getFileName = exports.listFiles = exports.createFile = exports.openFile = exports.deleteFile = exports.Files = void 0;
+exports.rename = exports.getFilePath = exports.getFileName = exports.listFiles = exports.createFile = exports.openFile = exports.deleteFile = exports.Files = void 0;
 const desktop_1 = require("./desktop");
 class Files {
     value = [];
@@ -317,6 +321,12 @@ function getFileName(filePath) {
     return filePath.split("/")[filePath.split("/").length - 1] || "";
 }
 exports.getFileName = getFileName;
+function getFilePath(filePath) {
+    let arr = filePath.split("/");
+    arr.pop();
+    return arr.join("/") + "/";
+}
+exports.getFilePath = getFilePath;
 function getFileExt(fileName) {
     var names = fileName.split(".");
     if (names.length > 1)
@@ -324,7 +334,7 @@ function getFileExt(fileName) {
     return "";
 }
 function rename(filePath, to) {
-    if (localStorage.getItem("file:" + to) != null) {
+    if (localStorage.getItem("file:" + to) != null && filePath != to) {
         alert("That file already exists.");
     }
     else if (to && localStorage.getItem("file:" + filePath) != null) {
@@ -347,18 +357,18 @@ const desktop_1 = require("./desktop");
 const files_1 = require("./files");
 const taskbar_1 = require("./taskbar");
 exports.desktopContextmenu = document.getElementById("desktop-contextmenu");
-desktop_1.desktop.addEventListener("contextmenu", (e) => {
+desktop_1.desktop?.addEventListener("contextmenu", (e) => {
     e.preventDefault();
     exports.desktopContextmenu.style.left = e.x + "px";
     exports.desktopContextmenu.style.top = e.y + "px";
     exports.desktopContextmenu.classList.toggle("hide", false);
 });
-desktop_1.desktop.addEventListener("click", () => {
+desktop_1.desktop?.addEventListener("click", () => {
     exports.desktopContextmenu.classList.toggle("hide", true);
     desktop_1.fileContextmenu.classList.toggle("hide", true);
 });
 const newFile = document.getElementById("new-file");
-newFile.addEventListener("click", () => {
+newFile?.addEventListener("click", () => {
     (0, files_1.createFile)("desktop/");
     exports.desktopContextmenu.classList.toggle("hide", true);
     desktop_1.fileContextmenu.classList.toggle("hide", true);

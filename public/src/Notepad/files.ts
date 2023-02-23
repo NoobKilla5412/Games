@@ -1,4 +1,4 @@
-import { listFiles } from "../files";
+import { getFilePath, listFiles } from "../files";
 import { edit, file, reloadText, setFile, setSaved } from "./index";
 
 export function deleteFile() {
@@ -9,7 +9,7 @@ export function deleteFile() {
       files.push(element.slice(5));
     }
   }
-  var fileToDelete = prompt("File to delete\n" + files.join("\n"));
+  var fileToDelete = prompt("File to delete\n" + files.join("\n"), file.slice(5));
   if (fileToDelete)
     if (localStorage.getItem("file:" + fileToDelete) == null) {
       alert("That file does not exist.");
@@ -31,7 +31,9 @@ export function openFile(userOpen: boolean) {
       files.push(element.slice(5));
     }
   }
-  var tempFileName = userOpen ? prompt("file\n" + files.join("\n")) : new URL(location.href).searchParams.get("file");
+  var tempFileName = userOpen
+    ? prompt("file\n" + files.join("\n"), getFilePath(file.slice(5)))
+    : new URL(location.href).searchParams.get("file");
 
   if (!tempFileName) return;
   if (localStorage.getItem("file:" + tempFileName) == null) {

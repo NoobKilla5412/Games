@@ -4,18 +4,18 @@ import { loadTaskbarApps } from "./taskbar";
 
 export const desktopContextmenu = document.getElementById("desktop-contextmenu")!;
 
-desktop.addEventListener("contextmenu", (e) => {
+desktop?.addEventListener("contextmenu", (e) => {
   e.preventDefault();
   desktopContextmenu.style.left = e.x + "px";
   desktopContextmenu.style.top = e.y + "px";
   desktopContextmenu.classList.toggle("hide", false);
 });
-desktop.addEventListener("click", () => {
+desktop?.addEventListener("click", () => {
   desktopContextmenu.classList.toggle("hide", true);
   fileContextmenu.classList.toggle("hide", true);
 });
 const newFile = document.getElementById("new-file")!;
-newFile.addEventListener("click", () => {
+newFile?.addEventListener("click", () => {
   createFile("desktop/");
   desktopContextmenu.classList.toggle("hide", true);
   fileContextmenu.classList.toggle("hide", true);

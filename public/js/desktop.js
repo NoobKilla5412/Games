@@ -42,7 +42,11 @@ function loadDesktopFiles() {
             //       )
             //   );
             if (file.endsWith(".mp4"))
-                (0, index_2.openApp)({ name: file.slice(0, file.length - 4), link: () => "data://video/mp4," + localStorage.getItem("file:" + file), icon: "" });
+                (0, index_2.openApp)({
+                    name: file.slice(0, file.length - 4),
+                    link: () => "data://video/mp4," + localStorage.getItem("file:" + file),
+                    icon: ""
+                });
             // else if (file.endsWith(".lnk")) openApp(localStorage.getItem("file:" + file)!, localStorage.getItem("file:" + file)!);
             else
                 (0, index_2.openApp)((0, apps_1.getAppByName)("Notepad"), file);
@@ -67,7 +71,7 @@ function fileContextmenuListener(e, file) {
     });
     document.getElementById(`rename-${file}`).addEventListener("click", () => {
         // document.write(file);
-        var newName = prompt('Rename "' + (0, files_1.getFileName)(file) + '" to?');
+        var newName = prompt('Rename "' + (0, files_1.getFileName)(file) + '" to?', (0, files_1.getFileName)(file));
         if (newName) {
             (0, files_1.rename)(file, "desktop/" + newName);
         }
