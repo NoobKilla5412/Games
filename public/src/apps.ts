@@ -1,7 +1,7 @@
 export interface App {
   name: string;
   link: ((file?: string) => string) | string;
-  icon: string;
+  icon?: string;
   dev?: string;
 }
 
@@ -40,6 +40,11 @@ export const nativeApps: readonly App[] = [
 ];
 
 export const apps: readonly App[] = [
+  {
+    name: "Grapher",
+    link: `/apps/Grapher/`,
+    icon: ""
+  },
   {
     name: "Slides",
     link: `/apps/Slides/`,

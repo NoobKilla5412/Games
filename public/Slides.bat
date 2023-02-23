@@ -1,1 +1,0 @@
-watchify "js/Slides/index.js" -o "apps/Slides/bundle.js" -v

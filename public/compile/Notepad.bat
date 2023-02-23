@@ -1,0 +1,1 @@
+watchify ../js/Notepad/index.js -o ../apps/Notepad/bundle.js -v

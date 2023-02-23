@@ -17,7 +17,7 @@ function loadApp(app: App) {
     var tempElem = document.createElement("img");
     tempElem.style.display = "inline-block";
     tempElem.style.marginRight = "5px";
-    tempElem.src = app.icon;
+    if (app.icon) tempElem.src = app.icon;
     tempElem.height = 35;
     tempElem.width = 35;
     tempElem.title = app.name;

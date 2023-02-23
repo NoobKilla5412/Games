@@ -65,6 +65,11 @@ exports.nativeApps = [
 ];
 exports.apps = [
     {
+        name: "Grapher",
+        link: `/apps/Grapher/`,
+        icon: ""
+    },
+    {
         name: "Slides",
         link: `/apps/Slides/`,
         icon: ""
