@@ -5,18 +5,18 @@ const desktop_1 = require("./desktop");
 const files_1 = require("./files");
 const taskbar_1 = require("./taskbar");
 exports.desktopContextmenu = document.getElementById("desktop-contextmenu");
-desktop_1.desktop.addEventListener("contextmenu", (e) => {
+desktop_1.desktop?.addEventListener("contextmenu", (e) => {
     e.preventDefault();
     exports.desktopContextmenu.style.left = e.x + "px";
     exports.desktopContextmenu.style.top = e.y + "px";
     exports.desktopContextmenu.classList.toggle("hide", false);
 });
-desktop_1.desktop.addEventListener("click", () => {
+desktop_1.desktop?.addEventListener("click", () => {
     exports.desktopContextmenu.classList.toggle("hide", true);
     desktop_1.fileContextmenu.classList.toggle("hide", true);
 });
 const newFile = document.getElementById("new-file");
-newFile.addEventListener("click", () => {
+newFile?.addEventListener("click", () => {
     (0, files_1.createFile)("desktop/");
     exports.desktopContextmenu.classList.toggle("hide", true);
     desktop_1.fileContextmenu.classList.toggle("hide", true);

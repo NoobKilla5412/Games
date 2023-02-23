@@ -1,7 +1,7 @@
 export interface App {
   name: string;
   link: ((file?: string) => string) | string;
-  icon: string;
+  icon?: string;
   dev?: string;
 }
 

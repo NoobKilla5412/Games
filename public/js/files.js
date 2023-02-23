@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.rename = exports.getFileName = exports.listFiles = exports.createFile = exports.openFile = exports.deleteFile = exports.Files = void 0;
+exports.rename = exports.getFilePath = exports.getFileName = exports.listFiles = exports.createFile = exports.openFile = exports.deleteFile = exports.Files = void 0;
 const desktop_1 = require("./desktop");
 class Files {
     value = [];
@@ -90,6 +90,12 @@ function getFileName(filePath) {
     return filePath.split("/")[filePath.split("/").length - 1] || "";
 }
 exports.getFileName = getFileName;
+function getFilePath(filePath) {
+    let arr = filePath.split("/");
+    arr.pop();
+    return arr.join("/") + "/";
+}
+exports.getFilePath = getFilePath;
 function getFileExt(fileName) {
     var names = fileName.split(".");
     if (names.length > 1)
@@ -97,7 +103,7 @@ function getFileExt(fileName) {
     return "";
 }
 function rename(filePath, to) {
-    if (localStorage.getItem("file:" + to) != null) {
+    if (localStorage.getItem("file:" + to) != null && filePath != to) {
         alert("That file already exists.");
     }
     else if (to && localStorage.getItem("file:" + filePath) != null) {
