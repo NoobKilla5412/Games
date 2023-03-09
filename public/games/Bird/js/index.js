@@ -32,7 +32,8 @@ var minLengthOfHole = 200;
 var oBSSpeed = -1.3;
 var controlMethod = 0;
 var highScore = 0;
-var BlockSpeed = 1.5; // Speed for arrow use only
+var blockSpeed = 1.5; // Speed for arrow use only
+var score = 0;
 /**
  * Start the game using the mouse
  */
@@ -115,15 +116,15 @@ var myGameArea = {
      * Try to set the highScore var
      */
     if (controlMethod === 0) {
-      if (myObstacles.length / 2 - 1 > parseInt(JSON.parse(localStorage.getItem("Bird")).mouse)) {
+      if (score > parseInt(JSON.parse(localStorage.getItem("Bird")).mouse)) {
         scores = JSON.parse(localStorage.getItem("Bird"));
-        scores.mouse = myObstacles.length / 2 - 1;
+        scores.mouse = score;
         localStorage.setItem("Bird", JSON.stringify(scores));
       }
     } else {
-      if (myObstacles.length / 2 - 1 > parseInt(JSON.parse(localStorage.getItem("Bird")).arrows)) {
+      if (score > parseInt(JSON.parse(localStorage.getItem("Bird")).arrows)) {
         scores = JSON.parse(localStorage.getItem("Bird"));
-        scores.arrows = myObstacles.length / 2 - 1;
+        scores.arrows = score;
         localStorage.setItem("Bird", JSON.stringify(scores));
       }
     }
@@ -150,13 +151,22 @@ class Component {
    */
   update() {
     let ctx = myGameArea.context;
+    // console.log("this.y + this.height: ", this.y + this.height);
+
     if (this.type == "text") {
       ctx.font = this.width + " " + this.height;
       ctx.fillStyle = this.color;
       ctx.fillText(this.text, this.x, this.y);
     } else {
-      ctx.fillStyle = this.color;
-      ctx.fillRect(this.x, this.y, this.width, this.height);
+      if (
+        this.x >= 0 &&
+        this.x + this.width <= myGameArea.canvas.width &&
+        this.y >= 0 &&
+        this.y + this.height <= myGameArea.canvas.height
+      ) {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+      }
     }
   }
   /**
@@ -235,7 +245,7 @@ function updateGameArea() {
     lengthOfGap = 10;
   }
   /**
-   * generate the obstacles
+   * Generate the obstacles
    */
   if (everyInterval(lengthOfGap)) {
     x = myGameArea.canvas.width;
@@ -246,11 +256,27 @@ function updateGameArea() {
     maxGap = maxLengthOfHole;
     gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
     myObstacles.push(new Component(15, height, "green", x, 0));
-    myObstacles.push(new Component(15, x - height - gap, "green", x, height + gap));
+    myObstacles.push(
+      new Component(
+        15,
+        x - height - gap > myGameArea.canvas.height
+          ? myGameArea.canvas.height - (height + gap)
+          : x - height - gap,
+        "green",
+        x,
+        height + gap
+      )
+    );
+    score++;
     //myObstacles.push(new Component(10, 201, "green", x, 0));
     //myObstacles.push(new Component(10, x - height, "green", x, height));
   }
-
+  myObstacles.forEach((obs, i) => {
+    if (obs.x + obs.width + obs.speedX < 0) {
+      myObstacles.splice(i, 1);
+      console.log("myObstacles: ", myObstacles);
+    }
+  });
   //myScore.text = "SCORE: " + Math.floor(myGameArea.frameNo/100);// + ", OBSTACLES: " + myObstacles.length / 2;
   //myScore.text = "OBSTACLES: " + myObstacles.length / 2;
   myGamePiece.speedX = 0; // reset the player's X speed
@@ -259,19 +285,19 @@ function updateGameArea() {
     // if using arrows and not paused
     if (myGameArea.keys && myGameArea.keys[37]) {
       // Up arrow
-      myGamePiece.speedX = -BlockSpeed; // Left
+      myGamePiece.speedX = -blockSpeed; // Left
     }
     if (myGameArea.keys && myGameArea.keys[39]) {
       // Right arrow
-      myGamePiece.speedX = BlockSpeed; // Right
+      myGamePiece.speedX = blockSpeed; // Right
     }
     if (myGameArea.keys && myGameArea.keys[38]) {
       // Up arrow
-      myGamePiece.speedY = -BlockSpeed; // Up
+      myGamePiece.speedY = -blockSpeed; // Up
     }
     if (myGameArea.keys && myGameArea.keys[40]) {
       // Down arrow
-      myGamePiece.speedY = BlockSpeed; // Down
+      myGamePiece.speedY = blockSpeed; // Down
     }
     /**
      * if using mouse and not paused
@@ -321,7 +347,7 @@ function updateGameArea() {
   }
   myGamePiece.update(); // redraw the player
   // see if you have won:
-  if (controlMethod == 0 && myObstacles.length / 2 - 1 >= 100) {
+  if (controlMethod == 0 && score >= 100) {
     winScore.text = "You Win! :D";
     myGameArea.clear();
     winScore.update();
@@ -329,12 +355,13 @@ function updateGameArea() {
   } else {
     // normal
     // update the text of the scoreboard:
-    myScore.text = "SCORE: " + (myObstacles.length / 2 - 1) + " LEVEL: " + (Math.trunc((myObstacles.length / 2 - 1) / 10) + 1) + " HIGH SCORE: " + highScore;
+    myScore.text =
+      "SCORE: " + score + " LEVEL: " + (Math.trunc(score / 10) + 1) + " HIGH SCORE: " + highScore;
     // document.getElementById('speed').innerHTML = "Speed: " + Math.round(10 * oBSSpeed) / 10;
     myScore.update(); // update the scoreboard
   }
   // win if using the arrows:
-  if (controlMethod == 1 && myObstacles.length / 2 - 1 >= 80) {
+  if (controlMethod == 1 && score >= 80) {
     winScore.text = "You Win! :D";
     myGameArea.clear();
     winScore.update();
@@ -342,7 +369,8 @@ function updateGameArea() {
   } else {
     // normal
     // update the text of the scoreboard:
-    myScore.text = "SCORE: " + (myObstacles.length / 2 - 1) + " LEVEL: " + (Math.trunc((myObstacles.length / 2 - 1) / 10) + 1) + " HIGH SCORE: " + highScore;
+    myScore.text =
+      "SCORE: " + score + " LEVEL: " + (Math.trunc(score / 10) + 1) + " HIGH SCORE: " + highScore;
     myScore.update(); // update the scoreboard
   }
 }
