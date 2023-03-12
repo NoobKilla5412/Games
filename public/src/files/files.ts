@@ -1,37 +1,7 @@
-import { loadDesktopFiles } from "./desktop";
-
-export interface File {
-  path: string;
-  name: string;
-}
-
-export class Files {
-  value: File[] = [];
-
-  public constructor(value?: File[]) {
-    this.value = value || [];
-  }
-
-  public names() {
-    let res: string[] = [];
-    for (let i = 0; i < this.value.length; i++) {
-      const file = this.value[i];
-      res.push(file.name);
-    }
-    return res;
-  }
-
-  public paths() {
-    let res: string[] = [];
-    for (let i = 0; i < this.value.length; i++) {
-      const file = this.value[i];
-      res.push(file.path);
-    }
-    return res;
-  }
-
-  public push = this.value.push;
-}
+import { loadDesktopFiles } from "../desktop";
+import { File } from "./File";
+import { getFileName } from "./getFileName";
+import { listFiles } from "./listFiles";
 
 export function deleteFile(fileToDelete: string) {
   let files: File[] = [];
@@ -53,7 +23,7 @@ export function deleteFile(fileToDelete: string) {
 
 export function openFile(userOpen: boolean) {
   let files = listFiles();
-  if (userOpen) var tempFileName = prompt("file\n" + files.paths().join("\n"));
+  if (userOpen) var tempFileName = prompt("file\n" + files.map((value) => value.path).join("\n"));
   else {
     var tempFileName = new URL(location.href).searchParams.get("file");
   }
@@ -76,22 +46,6 @@ export function createFile(dir: string) {
   }
 }
 
-export function listFiles() {
-  var files: Files = new Files();
-  for (let i = 0; i < localStorage.length; i++) {
-    const element = localStorage.key(i)!;
-    if (element.slice(0, 5) == "file:") {
-      let path = element.slice(5);
-      files.push({ path, name: getFileName(path) });
-    }
-  }
-  return files;
-}
-
-export function getFileName(filePath: string) {
-  return filePath.split("/")[filePath.split("/").length - 1] || "";
-}
-
 export function getFilePath(filePath: string) {
   let arr = filePath.split("/");
   arr.pop();
@@ -109,12 +63,7 @@ export function rename(filePath: string, to: string) {
     alert("That file already exists.");
   } else if (to && localStorage.getItem("file:" + filePath) != null) {
     if (getFileExt(getFileName(to)) != getFileExt(getFileName(filePath))) {
-      if (
-        !confirm(
-          "This file has a different file extension than the old name. Are you sure that you want to do this?"
-        )
-      )
-        return;
+      if (!confirm("This file has a different file extension than the old name. Are you sure that you want to do this?")) return;
     }
     var data = localStorage.getItem("file:" + filePath)!;
     localStorage.removeItem("file:" + filePath);

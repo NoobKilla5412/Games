@@ -1,6 +1,9 @@
+import { getAppByName } from "./apps";
 import { desktop, fileContextmenu, loadDesktopFiles } from "./desktop";
-import { createFile } from "./files";
+import { createFile } from "./files/files";
+import { system } from "./system";
 import { loadTaskbarApps } from "./taskbar";
+import { openApp } from "./windowMngr";
 
 export const desktopContextmenu = document.getElementById("desktop-contextmenu")!;
 
@@ -20,6 +23,11 @@ newFile?.addEventListener("click", () => {
   desktopContextmenu.classList.toggle("hide", true);
   fileContextmenu.classList.toggle("hide", true);
 });
+
+system.on("fileOpener", (file, parent) => {
+  openApp(getAppByName("File Explorer")!, undefined, parent);
+});
+
 // window.addEventListener("click", () => {
 //   bringToFront(-1);
 // });

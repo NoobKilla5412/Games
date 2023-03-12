@@ -1,14 +1,15 @@
+import { desktopContextmenu } from ".";
 import { apps, getAppByName, getIndexOfAppByName } from "./apps";
-import { deleteFile, getFileName, rename } from "./files";
-import { desktopContextmenu } from "./index";
+import { deleteFile, rename } from "./files/files";
+import { getFileName } from "./files/getFileName";
 import { loadTaskbarApps } from "./taskbar";
-import { openApp } from "./windowMngr/index";
+import { openApp } from "./windowMngr";
 
 export const desktop = document.getElementById("desktop")!;
 export const fileContextmenu = document.getElementById("file-contextmenu")!;
 export function loadDesktopFiles() {
   desktop.innerHTML = "";
-  var desktopFiles = [];
+  var desktopFiles: string[] = [];
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i)!;
     if (key.slice(0, 13) == "file:desktop/") {

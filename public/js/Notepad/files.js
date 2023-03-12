@@ -1,17 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.save = exports.openFile = exports.deleteFile = void 0;
-const files_1 = require("../files");
+const listFiles_1 = require("../files/listFiles");
+const system_1 = require("../system");
 const index_1 = require("./index");
 function deleteFile() {
-    var files = [];
-    for (let i = 0; i < localStorage.length; i++) {
-        const element = localStorage.key(i);
-        if (element.slice(0, 5) == "file:") {
-            files.push(element.slice(5));
-        }
-    }
-    var fileToDelete = prompt("File to delete\n" + files.join("\n"), index_1.file.slice(5));
+    var files = (0, listFiles_1.listFiles)();
+    var fileToDelete = prompt("File to delete\n" + files.map((value) => value.path).join("\n"), index_1.file.slice(5));
     if (fileToDelete)
         if (localStorage.getItem("file:" + fileToDelete) == null) {
             alert("That file does not exist.");
@@ -26,17 +21,16 @@ function deleteFile() {
         }
 }
 exports.deleteFile = deleteFile;
-function openFile(userOpen) {
-    var files = [];
-    for (let i = 0; i < localStorage.length; i++) {
-        const element = localStorage.key(i);
-        if (element.slice(0, 5) == "file:") {
-            files.push(element.slice(5));
-        }
-    }
-    var tempFileName = userOpen
-        ? prompt("file\n" + files.join("\n"), (0, files_1.getFilePath)(index_1.file.slice(5)))
-        : new URL(location.href).searchParams.get("file");
+async function openFile(userOpen) {
+    // var files = [];
+    // for (let i = 0; i < localStorage.length; i++) {
+    //   const element = localStorage.key(i)!;
+    //   if (element.slice(0, 5) == "file:") {
+    //     files.push(element.slice(5));
+    //   }
+    // }
+    var tempFileName = userOpen ? await system_1.system.emit("fileOpener", [index_1.file, system_1.system.currentWindow]) : new URL(location.href).searchParams.get("file");
+    console.log("tempFileName: ", tempFileName);
     if (!tempFileName)
         return;
     if (localStorage.getItem("file:" + tempFileName) == null) {
@@ -59,7 +53,10 @@ function save(content) {
     if (localStorage.getItem(index_1.file) != null)
         localStorage.setItem(index_1.file, content);
     else {
-        var tempName = prompt("Save as...\n" + (0, files_1.listFiles)().paths().join("\n"));
+        var tempName = prompt("Save as...\n" +
+            (0, listFiles_1.listFiles)()
+                .map((value) => value.path)
+                .join("\n"));
         if (tempName) {
             localStorage.setItem("file:" + tempName, content);
             (0, index_1.setFile)("file:" + tempName);

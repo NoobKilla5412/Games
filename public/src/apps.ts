@@ -36,6 +36,10 @@ export const nativeApps: readonly App[] = [
     name: "App Store",
     link: `/apps/App Store/`,
     icon: "/apps/App Store/icon.png"
+  },
+  {
+    name: "File Explorer",
+    link: "/apps/File Explorer/"
   }
 ];
 

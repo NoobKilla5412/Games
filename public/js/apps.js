@@ -34,6 +34,10 @@ exports.nativeApps = [
         name: "App Store",
         link: `/apps/App Store/`,
         icon: "/apps/App Store/icon.png"
+    },
+    {
+        name: "File Explorer",
+        link: "/apps/File Explorer/"
     }
 ];
 exports.apps = [

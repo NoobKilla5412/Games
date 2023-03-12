@@ -35,7 +35,7 @@ function dragElement(elmnt) {
         pos4 = e.clientY;
         // set the element's new position:
         // @ts-ignore
-        _1.yOffset -= pos2;
+        yOffset -= pos2;
         // @ts-ignore
         _1.xOffset -= pos1;
         _1.evalInput.value = Math.round((-_1.xOffset / _1.zoom / _1.scX) * 10 ** 10) / 10 ** 10 + "";

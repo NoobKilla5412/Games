@@ -35,6 +35,10 @@ exports.nativeApps = [
         name: "App Store",
         link: `/apps/App Store/`,
         icon: "/apps/App Store/icon.png"
+    },
+    {
+        name: "File Explorer",
+        link: "/apps/File Explorer/"
     }
 ];
 exports.apps = [
@@ -133,11 +137,12 @@ exports.getAppByName = getAppByName;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loadDesktopFiles = exports.fileContextmenu = exports.desktop = void 0;
+const _1 = require(".");
 const apps_1 = require("./apps");
-const files_1 = require("./files");
-const index_1 = require("./index");
+const files_1 = require("./files/files");
+const getFileName_1 = require("./files/getFileName");
 const taskbar_1 = require("./taskbar");
-const index_2 = require("./windowMngr/index");
+const windowMngr_1 = require("./windowMngr");
 exports.desktop = document.getElementById("desktop");
 exports.fileContextmenu = document.getElementById("file-contextmenu");
 function loadDesktopFiles() {
@@ -174,14 +179,14 @@ function loadDesktopFiles() {
             //       )
             //   );
             if (file.endsWith(".mp4"))
-                (0, index_2.openApp)({
+                (0, windowMngr_1.openApp)({
                     name: file.slice(0, file.length - 4),
                     link: () => "data://video/mp4," + localStorage.getItem("file:" + file),
                     icon: ""
                 });
             // else if (file.endsWith(".lnk")) openApp(localStorage.getItem("file:" + file)!, localStorage.getItem("file:" + file)!);
             else
-                (0, index_2.openApp)((0, apps_1.getAppByName)("Notepad"), file);
+                (0, windowMngr_1.openApp)((0, apps_1.getAppByName)("Notepad"), file);
         });
         tempElem.addEventListener("contextmenu", (e) => {
             fileContextmenuListener(e, file);
@@ -197,24 +202,24 @@ function fileContextmenuListener(e, file) {
       <div id="edit-${file}" class="menu-item">Edit with text editor</div>`;
     document.getElementById(`delete-${file}`).addEventListener("click", () => {
         (0, files_1.deleteFile)(file);
-        index_1.desktopContextmenu.classList.toggle("hide", true);
+        _1.desktopContextmenu.classList.toggle("hide", true);
         exports.fileContextmenu.classList.toggle("hide", true);
         loadDesktopFiles();
     });
     document.getElementById(`rename-${file}`).addEventListener("click", () => {
         // document.write(file);
-        var newName = prompt('Rename "' + (0, files_1.getFileName)(file) + '" to?', (0, files_1.getFileName)(file));
+        var newName = prompt('Rename "' + (0, getFileName_1.getFileName)(file) + '" to?', (0, getFileName_1.getFileName)(file));
         if (newName) {
             (0, files_1.rename)(file, "desktop/" + newName);
         }
-        index_1.desktopContextmenu.classList.toggle("hide", true);
+        _1.desktopContextmenu.classList.toggle("hide", true);
         exports.fileContextmenu.classList.toggle("hide", true);
         loadDesktopFiles();
     });
     document.getElementById(`edit-${file}`).addEventListener("click", () => {
-        (0, index_2.openApp)(apps_1.apps[(0, apps_1.getIndexOfAppByName)("Text Editor")], file);
+        (0, windowMngr_1.openApp)(apps_1.apps[(0, apps_1.getIndexOfAppByName)("Text Editor")], file);
         exports.fileContextmenu.classList.toggle("hide", true);
-        index_1.desktopContextmenu.classList.toggle("hide", true);
+        _1.desktopContextmenu.classList.toggle("hide", true);
     });
     exports.fileContextmenu.style.left = e.x + "px";
     exports.fileContextmenu.style.top = e.y + "px";
@@ -228,42 +233,20 @@ window.addEventListener("keydown", (e) => {
     }
 });
 
-},{"./apps":1,"./files":3,"./index":4,"./taskbar":5,"./windowMngr/index":6}],3:[function(require,module,exports){
+},{".":6,"./apps":1,"./files/files":3,"./files/getFileName":4,"./taskbar":8,"./windowMngr":9}],3:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.rename = exports.getFilePath = exports.getFileName = exports.listFiles = exports.createFile = exports.openFile = exports.deleteFile = exports.Files = void 0;
-const desktop_1 = require("./desktop");
-class Files {
-    value = [];
-    constructor(value) {
-        this.value = value || [];
-    }
-    names() {
-        let res = [];
-        for (let i = 0; i < this.value.length; i++) {
-            const file = this.value[i];
-            res.push(file.name);
-        }
-        return res;
-    }
-    paths() {
-        let res = [];
-        for (let i = 0; i < this.value.length; i++) {
-            const file = this.value[i];
-            res.push(file.path);
-        }
-        return res;
-    }
-    push = this.value.push;
-}
-exports.Files = Files;
+exports.rename = exports.getFilePath = exports.createFile = exports.openFile = exports.deleteFile = void 0;
+const desktop_1 = require("../desktop");
+const getFileName_1 = require("./getFileName");
+const listFiles_1 = require("./listFiles");
 function deleteFile(fileToDelete) {
     let files = [];
     for (let i = 0; i < localStorage.length; i++) {
         const element = localStorage.key(i);
         if (element.slice(0, 5) == "file:") {
             let path = element.slice(5);
-            files.push({ path, name: getFileName(path) });
+            files.push({ path, name: (0, getFileName_1.getFileName)(path) });
         }
     }
     let filePath = fileToDelete;
@@ -277,9 +260,9 @@ function deleteFile(fileToDelete) {
 }
 exports.deleteFile = deleteFile;
 function openFile(userOpen) {
-    let files = listFiles();
+    let files = (0, listFiles_1.listFiles)();
     if (userOpen)
-        var tempFileName = prompt("file\n" + files.paths().join("\n"));
+        var tempFileName = prompt("file\n" + files.map((value) => value.path).join("\n"));
     else {
         var tempFileName = new URL(location.href).searchParams.get("file");
     }
@@ -305,22 +288,6 @@ function createFile(dir) {
     }
 }
 exports.createFile = createFile;
-function listFiles() {
-    var files = new Files();
-    for (let i = 0; i < localStorage.length; i++) {
-        const element = localStorage.key(i);
-        if (element.slice(0, 5) == "file:") {
-            let path = element.slice(5);
-            files.push({ path, name: getFileName(path) });
-        }
-    }
-    return files;
-}
-exports.listFiles = listFiles;
-function getFileName(filePath) {
-    return filePath.split("/")[filePath.split("/").length - 1] || "";
-}
-exports.getFileName = getFileName;
 function getFilePath(filePath) {
     let arr = filePath.split("/");
     arr.pop();
@@ -338,7 +305,7 @@ function rename(filePath, to) {
         alert("That file already exists.");
     }
     else if (to && localStorage.getItem("file:" + filePath) != null) {
-        if (getFileExt(getFileName(to)) != getFileExt(getFileName(filePath))) {
+        if (getFileExt((0, getFileName_1.getFileName)(to)) != getFileExt((0, getFileName_1.getFileName)(filePath))) {
             if (!confirm("This file has a different file extension than the old name. Are you sure that you want to do this?"))
                 return;
         }
@@ -349,13 +316,43 @@ function rename(filePath, to) {
 }
 exports.rename = rename;
 
-},{"./desktop":2}],4:[function(require,module,exports){
+},{"../desktop":2,"./getFileName":4,"./listFiles":5}],4:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getFileName = void 0;
+function getFileName(filePath) {
+    return filePath.split("/")[filePath.split("/").length - 1] || "";
+}
+exports.getFileName = getFileName;
+
+},{}],5:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.listFiles = void 0;
+const getFileName_1 = require("./getFileName");
+function listFiles() {
+    var files = [];
+    for (let i = 0; i < localStorage.length; i++) {
+        const element = localStorage.key(i);
+        if (element.slice(0, 5) == "file:") {
+            let path = element.slice(5);
+            files.push({ path, name: (0, getFileName_1.getFileName)(path) });
+        }
+    }
+    return files;
+}
+exports.listFiles = listFiles;
+
+},{"./getFileName":4}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.desktopContextmenu = void 0;
+const apps_1 = require("./apps");
 const desktop_1 = require("./desktop");
-const files_1 = require("./files");
+const files_1 = require("./files/files");
+const system_1 = require("./system");
 const taskbar_1 = require("./taskbar");
+const windowMngr_1 = require("./windowMngr");
 exports.desktopContextmenu = document.getElementById("desktop-contextmenu");
 desktop_1.desktop?.addEventListener("contextmenu", (e) => {
     e.preventDefault();
@@ -373,6 +370,9 @@ newFile?.addEventListener("click", () => {
     exports.desktopContextmenu.classList.toggle("hide", true);
     desktop_1.fileContextmenu.classList.toggle("hide", true);
 });
+system_1.system.on("fileOpener", (file, parent) => {
+    (0, windowMngr_1.openApp)((0, apps_1.getAppByName)("File Explorer"), undefined, parent);
+});
 // window.addEventListener("click", () => {
 //   bringToFront(-1);
 // });
@@ -381,7 +381,66 @@ setInterval(() => {
     (0, desktop_1.loadDesktopFiles)();
 }, 1000);
 
-},{"./desktop":2,"./files":3,"./taskbar":5}],5:[function(require,module,exports){
+},{"./apps":1,"./desktop":2,"./files/files":3,"./system":7,"./taskbar":8,"./windowMngr":9}],7:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.system = void 0;
+var system;
+(function (system) {
+    // @ts-ignore
+    let listeners = {};
+    async function emit(name, args) {
+        return new Promise((resolve) => {
+            let tempElem = document.getElementById("syscall");
+            if (!tempElem) {
+                tempElem = document.createElement("span");
+                tempElem.id = "syscall";
+                tempElem.style.display = "none";
+                document.body.appendChild(tempElem);
+            }
+            tempElem.innerHTML = `${name}-${JSON.stringify(args)}`;
+            let interval = setInterval(() => {
+                let tempElem = document.getElementById("syscall-res");
+                if (!tempElem) {
+                    tempElem = document.createElement("span");
+                    tempElem.id = "syscall-res";
+                    tempElem.style.display = "none";
+                    document.body.appendChild(tempElem);
+                }
+                if (tempElem.innerHTML) {
+                    clearInterval(interval);
+                    let value = tempElem.innerHTML;
+                    tempElem.innerHTML = "";
+                    resolve(JSON.parse(value));
+                }
+            });
+        });
+    }
+    system.emit = emit;
+    function isType(syscall, type) {
+        return syscall?.split("-")[0] == type;
+    }
+    system.isType = isType;
+    // type ArgumentTypes<F extends () => any> = F extends (...args: infer A) => any ? A : never;
+    function call(name, document, args) {
+        let tempElem = document.getElementById("syscall-res");
+        if (!tempElem) {
+            tempElem = document.createElement("span");
+            tempElem.id = "syscall-res";
+            tempElem.style.display = "none";
+            document.body.appendChild(tempElem);
+        }
+        // @ts-ignore
+        tempElem.innerHTML = JSON.stringify(listeners[name](...args));
+    }
+    system.call = call;
+    function on(name, callback) {
+        listeners[name] = callback;
+    }
+    system.on = on;
+})(system = exports.system || (exports.system = {}));
+
+},{}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loadTaskbarApps = void 0;
@@ -447,20 +506,28 @@ function loadTaskbarApps() {
 }
 exports.loadTaskbarApps = loadTaskbarApps;
 
-},{"./apps":1,"./windowMngr":6}],6:[function(require,module,exports){
+},{"./apps":1,"./windowMngr":9}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.openApp = exports.windows = void 0;
 const apps_1 = require("../apps");
+const system_1 = require("../system");
 exports.windows = [];
 const windowsElem = document.getElementById("windows");
 const iframeType = "iframe";
-function openApp(app, file) {
+function openApp(app, file, parent) {
     if (!(0, apps_1.hasApp)(app))
         return;
     var i = exports.windows.length;
     var frame = document.createElement("div");
     frame.className = "window";
+    console.log("i: ", i);
+    console.log("windows: ", exports.windows);
+    console.log("lastWindow: ", parent);
+    if (parent) {
+        frame.style.left = +getComputedStyle(parent.frame).left.replace(/[^\d.]/g, "") + 50 + "px";
+        frame.style.top = +getComputedStyle(parent.frame).top.replace(/[^\d.]/g, "") + 50 + "px";
+    }
     var titleBar = document.createElement("div");
     titleBar.className = "titleBar";
     var nameElem = document.createElement("span");
@@ -487,7 +554,15 @@ function openApp(app, file) {
     iframe.style.border = "none";
     frame.append(iframe);
     setInterval(() => {
-        nameElem.innerHTML = iframe.contentDocument?.title || app.name;
+        if (iframe.contentDocument) {
+            nameElem.innerHTML = iframe.contentDocument.title || app.name;
+            let syscall = iframe.contentDocument.getElementById("syscall")?.innerHTML;
+            if (syscall)
+                if (system_1.system.isType(syscall, "fileOpener")) {
+                    system_1.system.call("fileOpener", iframe.contentDocument, JSON.parse(syscall.slice(syscall.indexOf("-") + 1)));
+                    iframe.contentDocument.getElementById("syscall").innerHTML = "";
+                }
+        }
     }, 100);
     exports.windows.push({ frame, i, maximized: false, app });
     windowsElem.append(frame);
@@ -538,9 +613,7 @@ function close(i) {
     var currentWindow = exports.windows[i];
     if (currentWindow) {
         if (currentWindow.frame.querySelector("span")?.innerHTML.endsWith("*") &&
-            currentWindow.frame
-                .querySelector(iframeType)
-                ?.contentDocument?.getElementById("edit")?.value &&
+            currentWindow.frame.querySelector(iframeType)?.contentDocument?.getElementById("edit")?.value &&
             currentWindow.app.name == "Notepad") {
             if (!confirm("You have unsaved changes, are you sure you want to close this window?")) {
                 return;
@@ -669,4 +742,4 @@ function maximizeSide(frame, i, side) {
     }
 }
 
-},{"../apps":1}]},{},[4]);
+},{"../apps":1,"../system":7}]},{},[6]);

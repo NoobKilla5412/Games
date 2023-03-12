@@ -2,15 +2,23 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.openApp = exports.windows = void 0;
 const apps_1 = require("../apps");
+const system_1 = require("../system");
 exports.windows = [];
 const windowsElem = document.getElementById("windows");
 const iframeType = "iframe";
-function openApp(app, file) {
+function openApp(app, file, parent) {
     if (!(0, apps_1.hasApp)(app))
         return;
     var i = exports.windows.length;
     var frame = document.createElement("div");
     frame.className = "window";
+    console.log("i: ", i);
+    console.log("windows: ", exports.windows);
+    console.log("lastWindow: ", parent);
+    if (parent) {
+        frame.style.left = +getComputedStyle(parent.frame).left.replace(/[^\d.]/g, "") + 50 + "px";
+        frame.style.top = +getComputedStyle(parent.frame).top.replace(/[^\d.]/g, "") + 50 + "px";
+    }
     var titleBar = document.createElement("div");
     titleBar.className = "titleBar";
     var nameElem = document.createElement("span");
@@ -37,7 +45,15 @@ function openApp(app, file) {
     iframe.style.border = "none";
     frame.append(iframe);
     setInterval(() => {
-        nameElem.innerHTML = iframe.contentDocument?.title || app.name;
+        if (iframe.contentDocument) {
+            nameElem.innerHTML = iframe.contentDocument.title || app.name;
+            let syscall = iframe.contentDocument.getElementById("syscall")?.innerHTML;
+            if (syscall)
+                if (system_1.system.isType(syscall, "fileOpener")) {
+                    system_1.system.call("fileOpener", iframe.contentDocument, JSON.parse(syscall.slice(syscall.indexOf("-") + 1)));
+                    iframe.contentDocument.getElementById("syscall").innerHTML = "";
+                }
+        }
     }, 100);
     exports.windows.push({ frame, i, maximized: false, app });
     windowsElem.append(frame);
@@ -88,9 +104,7 @@ function close(i) {
     var currentWindow = exports.windows[i];
     if (currentWindow) {
         if (currentWindow.frame.querySelector("span")?.innerHTML.endsWith("*") &&
-            currentWindow.frame
-                .querySelector(iframeType)
-                ?.contentDocument?.getElementById("edit")?.value &&
+            currentWindow.frame.querySelector(iframeType)?.contentDocument?.getElementById("edit")?.value &&
             currentWindow.app.name == "Notepad") {
             if (!confirm("You have unsaved changes, are you sure you want to close this window?")) {
                 return;

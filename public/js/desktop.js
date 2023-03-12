@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loadDesktopFiles = exports.fileContextmenu = exports.desktop = void 0;
+const _1 = require(".");
 const apps_1 = require("./apps");
-const files_1 = require("./files");
-const index_1 = require("./index");
+const files_1 = require("./files/files");
+const getFileName_1 = require("./files/getFileName");
 const taskbar_1 = require("./taskbar");
-const index_2 = require("./windowMngr/index");
+const windowMngr_1 = require("./windowMngr");
 exports.desktop = document.getElementById("desktop");
 exports.fileContextmenu = document.getElementById("file-contextmenu");
 function loadDesktopFiles() {
@@ -42,14 +43,14 @@ function loadDesktopFiles() {
             //       )
             //   );
             if (file.endsWith(".mp4"))
-                (0, index_2.openApp)({
+                (0, windowMngr_1.openApp)({
                     name: file.slice(0, file.length - 4),
                     link: () => "data://video/mp4," + localStorage.getItem("file:" + file),
                     icon: ""
                 });
             // else if (file.endsWith(".lnk")) openApp(localStorage.getItem("file:" + file)!, localStorage.getItem("file:" + file)!);
             else
-                (0, index_2.openApp)((0, apps_1.getAppByName)("Notepad"), file);
+                (0, windowMngr_1.openApp)((0, apps_1.getAppByName)("Notepad"), file);
         });
         tempElem.addEventListener("contextmenu", (e) => {
             fileContextmenuListener(e, file);
@@ -65,24 +66,24 @@ function fileContextmenuListener(e, file) {
       <div id="edit-${file}" class="menu-item">Edit with text editor</div>`;
     document.getElementById(`delete-${file}`).addEventListener("click", () => {
         (0, files_1.deleteFile)(file);
-        index_1.desktopContextmenu.classList.toggle("hide", true);
+        _1.desktopContextmenu.classList.toggle("hide", true);
         exports.fileContextmenu.classList.toggle("hide", true);
         loadDesktopFiles();
     });
     document.getElementById(`rename-${file}`).addEventListener("click", () => {
         // document.write(file);
-        var newName = prompt('Rename "' + (0, files_1.getFileName)(file) + '" to?', (0, files_1.getFileName)(file));
+        var newName = prompt('Rename "' + (0, getFileName_1.getFileName)(file) + '" to?', (0, getFileName_1.getFileName)(file));
         if (newName) {
             (0, files_1.rename)(file, "desktop/" + newName);
         }
-        index_1.desktopContextmenu.classList.toggle("hide", true);
+        _1.desktopContextmenu.classList.toggle("hide", true);
         exports.fileContextmenu.classList.toggle("hide", true);
         loadDesktopFiles();
     });
     document.getElementById(`edit-${file}`).addEventListener("click", () => {
-        (0, index_2.openApp)(apps_1.apps[(0, apps_1.getIndexOfAppByName)("Text Editor")], file);
+        (0, windowMngr_1.openApp)(apps_1.apps[(0, apps_1.getIndexOfAppByName)("Text Editor")], file);
         exports.fileContextmenu.classList.toggle("hide", true);
-        index_1.desktopContextmenu.classList.toggle("hide", true);
+        _1.desktopContextmenu.classList.toggle("hide", true);
     });
     exports.fileContextmenu.style.left = e.x + "px";
     exports.fileContextmenu.style.top = e.y + "px";

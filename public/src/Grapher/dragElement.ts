@@ -1,4 +1,4 @@
-import { displayResults, evalInput, scX, scY, xOffset, yOffset, zoom } from ".";
+import { displayResults, evalInput, scX, scY, xOffset, zoom } from ".";
 import { draw } from "./draw";
 import { drawGrid } from "./drawGrid";
 

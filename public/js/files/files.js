@@ -1,40 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.rename = exports.getFilePath = exports.getFileName = exports.createFile = exports.openFile = exports.deleteFile = exports.Files = void 0;
-const desktop_1 = require("./desktop");
+exports.rename = exports.getFilePath = exports.createFile = exports.openFile = exports.deleteFile = void 0;
+const desktop_1 = require("../desktop");
+const getFileName_1 = require("./getFileName");
 const listFiles_1 = require("./listFiles");
-class Files {
-    value = [];
-    constructor(value) {
-        this.value = value || [];
-    }
-    names() {
-        let res = [];
-        for (let i = 0; i < this.value.length; i++) {
-            const file = this.value[i];
-            res.push(file.name);
-        }
-        return res;
-    }
-    paths() {
-        let res = [];
-        for (let i = 0; i < this.value.length; i++) {
-            const file = this.value[i];
-            res.push(file.path);
-        }
-        return res;
-    }
-    push = this.value.push;
-    join = this.value.join;
-}
-exports.Files = Files;
 function deleteFile(fileToDelete) {
     let files = [];
     for (let i = 0; i < localStorage.length; i++) {
         const element = localStorage.key(i);
         if (element.slice(0, 5) == "file:") {
             let path = element.slice(5);
-            files.push({ path, name: getFileName(path) });
+            files.push({ path, name: (0, getFileName_1.getFileName)(path) });
         }
     }
     let filePath = fileToDelete;
@@ -50,7 +26,7 @@ exports.deleteFile = deleteFile;
 function openFile(userOpen) {
     let files = (0, listFiles_1.listFiles)();
     if (userOpen)
-        var tempFileName = prompt("file\n" + files.paths().join("\n"));
+        var tempFileName = prompt("file\n" + files.map((value) => value.path).join("\n"));
     else {
         var tempFileName = new URL(location.href).searchParams.get("file");
     }
@@ -76,10 +52,6 @@ function createFile(dir) {
     }
 }
 exports.createFile = createFile;
-function getFileName(filePath) {
-    return filePath.split("/")[filePath.split("/").length - 1] || "";
-}
-exports.getFileName = getFileName;
 function getFilePath(filePath) {
     let arr = filePath.split("/");
     arr.pop();
@@ -97,7 +69,7 @@ function rename(filePath, to) {
         alert("That file already exists.");
     }
     else if (to && localStorage.getItem("file:" + filePath) != null) {
-        if (getFileExt(getFileName(to)) != getFileExt(getFileName(filePath))) {
+        if (getFileExt((0, getFileName_1.getFileName)(to)) != getFileExt((0, getFileName_1.getFileName)(filePath))) {
             if (!confirm("This file has a different file extension than the old name. Are you sure that you want to do this?"))
                 return;
         }

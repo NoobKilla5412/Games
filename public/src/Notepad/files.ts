@@ -1,15 +1,10 @@
-import { getFilePath, listFiles } from "../files";
+import { listFiles } from "../files/listFiles";
+import { system } from "../system";
 import { edit, file, reloadText, setFile, setSaved } from "./index";
 
 export function deleteFile() {
-  var files = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    const element = localStorage.key(i)!;
-    if (element.slice(0, 5) == "file:") {
-      files.push(element.slice(5));
-    }
-  }
-  var fileToDelete = prompt("File to delete\n" + files.join("\n"), file.slice(5));
+  var files = listFiles();
+  var fileToDelete = prompt("File to delete\n" + files.map((value) => value.path).join("\n"), file.slice(5));
   if (fileToDelete)
     if (localStorage.getItem("file:" + fileToDelete) == null) {
       alert("That file does not exist.");
@@ -23,17 +18,16 @@ export function deleteFile() {
     }
 }
 
-export function openFile(userOpen: boolean) {
-  var files = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    const element = localStorage.key(i)!;
-    if (element.slice(0, 5) == "file:") {
-      files.push(element.slice(5));
-    }
-  }
-  var tempFileName = userOpen
-    ? prompt("file\n" + files.join("\n"), getFilePath(file.slice(5)))
-    : new URL(location.href).searchParams.get("file");
+export async function openFile(userOpen: boolean) {
+  // var files = [];
+  // for (let i = 0; i < localStorage.length; i++) {
+  //   const element = localStorage.key(i)!;
+  //   if (element.slice(0, 5) == "file:") {
+  //     files.push(element.slice(5));
+  //   }
+  // }
+  var tempFileName = userOpen ? await system.emit("fileOpener", [file, system.currentWindow]) : new URL(location.href).searchParams.get("file");
+  console.log("tempFileName: ", tempFileName);
 
   if (!tempFileName) return;
   if (localStorage.getItem("file:" + tempFileName) == null) {
@@ -54,7 +48,12 @@ export function save(content: string) {
   // var caretPos = getCaretPosition(edit);
   if (localStorage.getItem(file) != null) localStorage.setItem(file, content);
   else {
-    var tempName = prompt("Save as...\n" + listFiles().paths().join("\n"));
+    var tempName = prompt(
+      "Save as...\n" +
+        listFiles()
+          .map((value) => value.path)
+          .join("\n")
+    );
     if (tempName) {
       localStorage.setItem("file:" + tempName, content);
       setFile("file:" + tempName);
