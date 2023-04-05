@@ -102,6 +102,10 @@ exports.apps = [
         name: "Taco Clicker",
         link: `/games/Taco Clicker/`,
         icon: "/image/taco.svg"
+    },
+    {
+        name: "Pellet Chomper",
+        link: "/games/Pellet-Chomper/"
     }
 ];
 function getIndexOfAppByName(name) {
@@ -370,8 +374,9 @@ newFile?.addEventListener("click", () => {
     exports.desktopContextmenu.classList.toggle("hide", true);
     desktop_1.fileContextmenu.classList.toggle("hide", true);
 });
-system_1.system.on("fileOpener", (file, parent) => {
-    (0, windowMngr_1.openApp)((0, apps_1.getAppByName)("File Explorer"), undefined, parent);
+system_1.system.on("fileOpener", (file) => {
+    (0, windowMngr_1.openApp)((0, apps_1.getAppByName)("File Explorer"), undefined);
+    return "";
 });
 // window.addEventListener("click", () => {
 //   bringToFront(-1);

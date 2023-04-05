@@ -128,6 +128,10 @@ exports.apps = [
         name: "Taco Clicker",
         link: `/games/Taco Clicker/`,
         icon: "/image/taco.svg"
+    },
+    {
+        name: "Pellet Chomper",
+        link: "/games/Pellet-Chomper/"
     }
 ];
 function getIndexOfAppByName(name) {

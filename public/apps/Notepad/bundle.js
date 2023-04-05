@@ -30,7 +30,7 @@ async function openFile(userOpen) {
     //     files.push(element.slice(5));
     //   }
     // }
-    var tempFileName = userOpen ? await system_1.system.emit("fileOpener", [index_1.file, system_1.system.currentWindow]) : new URL(location.href).searchParams.get("file");
+    var tempFileName = userOpen ? await system_1.system.emit("fileOpener", [index_1.file]) : new URL(location.href).searchParams.get("file");
     console.log("tempFileName: ", tempFileName);
     if (!tempFileName)
         return;

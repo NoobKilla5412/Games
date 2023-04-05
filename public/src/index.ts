@@ -24,8 +24,9 @@ newFile?.addEventListener("click", () => {
   fileContextmenu.classList.toggle("hide", true);
 });
 
-system.on("fileOpener", (file, parent) => {
-  openApp(getAppByName("File Explorer")!, undefined, parent);
+system.on("fileOpener", (file) => {
+  openApp(getAppByName("File Explorer")!, undefined);
+  return "";
 });
 
 // window.addEventListener("click", () => {

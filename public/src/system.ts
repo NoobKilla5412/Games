@@ -1,8 +1,6 @@
-import { Window } from "./windowMngr";
-
 export namespace system {
   export interface callTypes {
-    fileOpener: (file: string, parent: Window) => string | null;
+    fileOpener: (file: string) => string | null;
   }
   // @ts-ignore
   let listeners: callTypes = {};
